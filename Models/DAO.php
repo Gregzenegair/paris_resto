@@ -51,7 +51,15 @@ class DAO {
         }
     }
 
-    // --- Where non parametré
+    // --- $tValeur doit contenir les deux point lorsque traité
+    // --- Exemple d'utilisation depuis une autre classe par exemple : 
+    // --- Penser à mettre les : devant les valeurs à inserer s'il ne s'agit pas d'une instruction sql
+    // --- 
+    // ---              $tNomChampTable = ["pseudo", "email", "date_inscription", "statut", "actif"];
+    // ---              $tValeurs = [":$pseudo", ":$email", ":$date_inscription", ":$statut", ":$actif"];
+    // ---              $twhere['id'] = $id;
+    // --- Retourne true si l'insertion a fonctionnée
+    
     static function update($bdd, $table, $tNomChampTable, $tValeurs, $twhere = null) {
         $sPrepare = "UPDATE " . $table;
 
