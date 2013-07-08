@@ -1,0 +1,110 @@
+/* 
+    Document   : MainView
+    Created on : 30 juin 2013, 17:53:31
+    Author     : Administrateur
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+html { 
+    background-image: url('./../img/grass.jpg');
+}
+
+body {
+    width: 1200px;
+    background: rgba(240,240,240,0.9);
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+#mainFrame {
+    margin-left: 30%;
+    min-height: 400px;
+    width: 70%;
+}
+#menu {
+    position: absolute;
+    width: 15%;
+    border: 4px solid black;
+    border-radius: 4px;
+}
+
+header {
+    border: 4px solid black;
+    min-height: 100px;
+}
+
+footer {
+    border: 4px solid black;
+}
+
+#menu li {
+    text-decoration: none;
+    list-style: none;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+
+
+#menu a, #menu a:active, #menu a:focus, #menu a:visited {
+    text-decoration: none;
+    color: black;
+
+}
+
+#membres td {
+    padding-right: 1em;
+    padding-right: 1em;
+}
+
+
+.aGreen {
+    text-decoration: none;
+    background-color: #68b12f;
+    background: -webkit-gradient(linear, left top, left bottom, from(#68b12f), to(#50911e));
+    background: -webkit-linear-gradient(top, #68b12f, #50911e);
+    background: -moz-linear-gradient(top, #68b12f, #50911e);
+    background: -ms-linear-gradient(top, #68b12f, #50911e);
+    background: -o-linear-gradient(top, #68b12f, #50911e);
+    background: linear-gradient(top, #68b12f, #50911e);
+    border: 1px solid #509111;
+    border-bottom: 1px solid #5b992b;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    box-shadow: inset 0 1px 0 0 #9fd574;
+    -webkit-box-shadow: 0 1px 0 0 #9fd574 inset ;
+    -moz-box-shadow: 0 1px 0 0 #9fd574 inset;
+    -ms-box-shadow: 0 1px 0 0 #9fd574 inset;
+    -o-box-shadow: 0 1px 0 0 #9fd574 inset;
+    color: white;
+    font-weight: bold;
+    padding: 6px 20px;
+    text-align: center;
+    text-shadow: 0 -1px 0 #396715;
+    display: inline-block;
+    margin: 1em;
+}
+
+.aGreen:hover {
+    opacity:.97;
+    cursor: pointer; 
+}
+
+.aGreen:active {
+    border: 1px solid #20911e;
+    box-shadow: 0 0 10px 5px #356b0b inset; 
+    -webkit-box-shadow:0 0 10px 5px #356b0b inset ;
+    -moz-box-shadow: 0 0 10px 5px #356b0b inset;
+    -ms-box-shadow: 0 0 10px 5px #356b0b inset;
+    -o-box-shadow: 0 0 10px 5px #356b0b inset;
+}
