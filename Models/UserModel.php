@@ -124,9 +124,8 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
         $tNomChampTable = ["pseudo", "email", "date_inscription", "statut", "actif"];
         $tValeurs = [":$pseudo", ":$email", ":$date_inscription", ":$statut", ":$actif"];
         $twhere['id'] = $id;
-        
-        DAO::update($this->_bdd, "users", $tNomChampTable, $tValeurs, $twhere);
 
+        DAO::update($this->_bdd, "users", $tNomChampTable, $tValeurs, $twhere);
     }
 
 // --- Supprimer un utilisateur
