@@ -1,22 +1,13 @@
 <?php
 
 require_once 'DAO.php';
+require_once 'CNX.php';
 
-class UserModel {
-
-    // --- Connexion active à la base
-    private $_bdd;
+class UserModel extends CNX {
 
     // --- Methode de connexion à la base
     public function __construct($base, $user, $pwd) {
-        try {
-            $bdd = new PDO('mysql:host=localhost;dbname=' . $base, $user, $pwd);
-        } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
-        }
-        $bdd->exec("SET CHARACTER SET utf8");
-
-        $this->_bdd = $bdd;
+        parent::__construct($base, $user, $pwd);
     }
 
     // --- Connection d'un utilisateur

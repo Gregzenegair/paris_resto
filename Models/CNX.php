@@ -3,7 +3,7 @@
 class CNX {
 
 // --- Connexion active à la base
-    private $_bdd;
+    protected $_bdd;
 
 // --- Methode de connexion à la base
     public function __construct($base, $user, $pwd) {
