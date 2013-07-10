@@ -12,7 +12,7 @@ if (isset($_GET['action'])) {
     $CNX = new UserModel("paris_resto", "root", "");
 
     switch ($action) {
-        case "Ajout":
+        case "GererRestos":
 
 
             break;

@@ -1,6 +1,6 @@
 <?php
 
-class CNX {
+abstract class CNX {
 
 // --- Connexion active à la base
     protected $_bdd;
@@ -16,7 +16,6 @@ class CNX {
 
         $this->_bdd = $bdd;
     }
-
 }
 
 ?>

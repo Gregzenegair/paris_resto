@@ -270,3 +270,7 @@ option {
 
 }
 
+.hide {
+    font-size: 4em;
+    background: red;
+}

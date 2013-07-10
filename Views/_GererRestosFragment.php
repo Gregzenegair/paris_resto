@@ -1,6 +1,6 @@
 
 <div id="mainFrame">
-
+    <a href="./../Controllers/RestoController.php?action=AjoutResto" class="aGreen">Ajouter restaurant</a>
 
 
     <?php
@@ -16,9 +16,11 @@
                     <td><a class="buttonSubmit" href="./../Controllers/RestoController.php?action=ModifierResto&id=<?PHP echo $value['id']; ?>">Modifier</a></td><td><?PHP echo $value['nom']; ?></td><td><?PHP echo $value['categorie']; ?></td><td><?PHP echo $value['numero_tel']; ?></td><td><?PHP echo $value['email']; ?></td><td><?PHP echo $value['note_moy']; ?></td>
                 </tr>
                 <tr>
-                    <td><?PHP echo $value['adresse']; ?></td><td><?PHP echo $value['ville']; ?></td><td><?PHP echo $value['cp']; ?></td>
+                    <td><?PHP echo $value['adresse']; ?></td>
+                    <td><?PHP echo $value['ville']; ?></td>
+                    <td><?PHP echo $value['cp']; ?></td>
                 </tr>
-                
+
                 <?PHP
             }
             ?>

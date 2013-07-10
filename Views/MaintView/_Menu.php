@@ -9,7 +9,7 @@
                 <li>Liste des restaurants</li>
                 <li>Partenaires</li>
                 <li><a href="./../Controllers/UserController.php?action=GererUtilisateurs">Gérer les utilisateurs</a></li>
-                <li><a href="./../Controllers/RestaurantController.php?action=GererRestaurants">Gérer les restaurants</a></li>
+                <li><a href="./../Controllers/RestoController.php?action=GererRestos">Gérer les restaurants</a></li>
                 <li><a href="./../Controllers/CommentairesController.php?action=GererCommentaires">Gérer les commentaires</a></li>
                 <?PHP
             } else if ($tUser[1] == "0") {
