@@ -6,8 +6,8 @@ if (empty($_SESSION['user'])) {
 
     $elements = array();
     //($name, $legend, $id, $type, $value, $options, $position, $class);
-    $input2 = new Input("email", null, "email", "text", "", "placeholder='email'", 1, null);
-    $input3 = new Input("mdp", null, "mdp", "password", "", "placeholder='mot de passe'", 1, null);
+    $input2 = new Input("email", null, "emailConnection", "text", "", "placeholder='email'", 1, null);
+    $input3 = new Input("mdp", null, "mdpConnection", "password", "", "placeholder='mot de passe'", 1, null);
     $inputsubmit = new Input("valider", null, "valider", "submit", "OK", "", 5, "inputGreen");
 
     array_push($elements, $input2);
