@@ -270,7 +270,11 @@ option {
 
 }
 
-.hide {
-    font-size: 4em;
-    background: red;
+#numero_voie {
+    width: 3em;
+    padding:5px 8px;
+}
+
+#numero_voie:focus {
+    padding:5px 8px;
 }

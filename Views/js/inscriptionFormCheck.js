@@ -17,10 +17,7 @@ $(document).ready(function(){
 	var mdpMessage = $("#mdpMessage");
 	var mdp_check = $("#mdp_check");
 	var mdp_checkMessage = $("#mdp_checkMessage");
-        var inputSubmit = $("valider");
         
-	inputSubmit.value("lol");
-        inputSubmit.addClass("hide");
         
 	//On blur
 	pseudo.blur(validerPseudo);

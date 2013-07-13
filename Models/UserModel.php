@@ -51,7 +51,7 @@ class UserModel extends CNX {
         $tValeurs = [":$pseudo", ":$email", ":$mdp", ":$statut", "now()", ":$email_check"];
 
         $result = DAO::insert($this->_bdd, "users", $tNomChampTable, $tValeurs);
-
+        
         if ($result) {
             $this->sendEmail($pseudo, $email, $email_check);
             return true;
