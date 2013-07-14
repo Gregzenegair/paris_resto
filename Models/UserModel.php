@@ -78,7 +78,7 @@ class UserModel extends CNX {
     private function sendEmail($pseudo, $email, $email_check) {
         $destinataire = $email;
         $sujet = "Activation de votre compte";
-        $entete = "From: gregzenegair@gmail.com";
+        $entete = "From: paris_resto@restos.com";
 
         $message = 'Bienvenue sur Paris Resto,
  

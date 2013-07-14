@@ -1,30 +1,33 @@
 <?php
 
-class RestoModel {
+class RestoModel extends CNX {
 
     // --- Connexion active à la base
     private $_bdd;
 
     // --- Methode de connexion à la base
     public function __construct($base, $user, $pwd) {
-        try {
-            $bdd = new PDO('mysql:host=localhost;dbname=' . $base, $user, $pwd);
-        } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
-        }
-        $bdd->exec("SET CHARACTER SET utf8");
-
-        $this->_bdd = $bdd;
+        parent::__construct($base, $user, $pwd);
     }
 
-    // --- Connection d'un utilisateur
+    // --- Insertion d'un restaurant
 
     function insertResto($nom, $id_categorie, $numero_tel, $email, $id_adresse, $id_note, $id_photo) {
 
         $tNomChampTable = ["nom", "id_categorie", "numero_tel", "email", "id_adresse", "id_note", "id_photo"];
         $tValeurs = [":$nom", ":$id_categorie", ":$numero_tel", ":$email", ":$id_adresse", ":$id_note", ":$id_photo"];
-        
-        $result = DAO::insert($this->_bdd, "restaurants", $tNomChampTable, $tValeurs);
+
+        $bdd = $this->_bdd;
+
+        // --- Demarage de la transaction
+        $bdd->beginTransaction();
+
+        $sPrepare = "INSERT INTO restaurants ('nom' ,'id_categorie' ,'numero_tel' ,'email' ,'id_adresse' ,'id_note' ,'id_photo')
+                        VALUES (:nom,  :id_categorie,  ;numero_tel,  :email,  :id_adresse,  :'id_note',  '1')";
+
+        $req = $bdd->prepare($sPrepare);
+
+        //$result = DAO::insert($this->_bdd, "restaurants", $tNomChampTable, $tValeurs);
 
         if ($result) {
             return true;
