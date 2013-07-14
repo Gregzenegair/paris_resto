@@ -45,7 +45,7 @@ if (isset($_GET['action'])) {
 
             $result = $CNX->showUsers();
             foreach ($result as $key => $value) {
-                $split = split("-", $value['date_inscription']);
+                $split = explode("-", $value['date_inscription']);
                 $date = $split[2] . "/" . $split[1] . "/" . $split[0];
                 $result[$key]['date_inscription'] = $date;
 

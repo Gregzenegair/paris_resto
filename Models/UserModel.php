@@ -42,6 +42,20 @@ class UserModel extends CNX {
         }
     }
 
+    function selectUserEmail($email) {
+        $req = $this->_bdd->prepare('SELECT count(*) as count FROM users where email = :email');
+        $req->bindParam(':email', $email, PDO::PARAM_STR);
+        $req->execute();
+
+        while ($donnees = $req->fetch()) {
+            if ($donnees['count'] == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     // --- Insertion d'un utilisateur
     function insertUser($pseudo, $email, $mdp, $statut) {
 
@@ -51,7 +65,7 @@ class UserModel extends CNX {
         $tValeurs = [":$pseudo", ":$email", ":$mdp", ":$statut", "now()", ":$email_check"];
 
         $result = DAO::insert($this->_bdd, "users", $tNomChampTable, $tValeurs);
-        
+
         if ($result) {
             $this->sendEmail($pseudo, $email, $email_check);
             return true;
@@ -64,7 +78,7 @@ class UserModel extends CNX {
     private function sendEmail($pseudo, $email, $email_check) {
         $destinataire = $email;
         $sujet = "Activation de votre compte";
-        $entete = "From: gregzenegair@gmail.com";
+        $entete = "From: paris_resto@restos.com";
 
         $message = 'Bienvenue sur Paris Resto,
  

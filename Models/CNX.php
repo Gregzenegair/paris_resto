@@ -1,6 +1,6 @@
 <?php
 
-abstract class CNX {
+class CNX {
 
 // --- Connexion active à la base
     protected $_bdd;
@@ -16,6 +16,15 @@ abstract class CNX {
 
         $this->_bdd = $bdd;
     }
+
+    public function get_bdd() {
+        return $this->_bdd;
+    }
+
+    public function set_bdd($_bdd) {
+        $this->_bdd = $_bdd;
+    }
+
 }
 
 ?>

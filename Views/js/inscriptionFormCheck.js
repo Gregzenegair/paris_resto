@@ -1,109 +1,161 @@
-/***************************/
-//@Author: Adrian "yEnS" Mato Gondelle & Ivan Guardado Castro
-//@website: www.yensdesign.com
-//@email: yensamg@gmail.com
-//@license: Feel free to use it, but keep this credits please!					
-/***************************/
+var form = document.getElementById("mainForm");
+var pseudo = document.getElementById("pseudo");
+var pseudoMessage = document.getElementById("pseudoMessage");
+var email = document.getElementById("email");
+var emailMessage = document.getElementById("emailMessage");
+var mdp = document.getElementById("mdp");
+var mdpMessage = document.getElementById("mdpMessage");
+var mdp_check = document.getElementById("mdp_check");
+var mdp_checkMessage = document.getElementById("mdp_checkMessage");
+
+function invalidateInput(elem) {
+    elem.className = "inputInvalid";
+}
+
+function validateInput(elem) {
+    elem.className = "inputValid";
+}
+
+function formChecker() {
+    var pseudoTest = pseudoTester();
+    var emailTest = emailTester();
+    var mdpTest = mdpTester();
+    var mdp_checkTest = mdp_checkTester();
+    if (pseudoTest & emailTest & mdpTest & mdp_checkTest) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+pseudo.onblur = blured;
+email.onblur = blured;
+mdp.onblur = blured;
+mdp_check.onblur = blured;
+
+email.onchange = function() {
+    emailBoolean = false;
+};
+
+function blured(elem) {
+    if (elem.target.id == "pseudo") {
+        pseudoTester();
+    } else if (elem.target.id == "email") {
+        emailTester();
+    } else if (elem.target.id == "mdp") {
+        mdpTester();
+    } else if (elem.target.id == "mdp_check") {
+        mdp_checkTester();
+    }
+}
+
+function pseudoTester() {
+    if (pseudo.value.length <= 4) {
+        pseudoMessage.innerText = "Merci de choisir un pseudonyme de plus de 4 caratères";
+        invalidateInput(pseudo);
+        return false;
+    } else {
+        pseudoMessage.innerText = "";
+        validateInput(pseudo);
+        return true;
+    }
+}
+
+function emailTester() {
+    if (email.value == "") {
+        emailMessage.innerText = "Ce champ ne peut rester vide";
+        invalidateInput(email);
+        return false;
+    } else {
+        if (emailBoolean == true) {
+            validateInput(email);
+            mdpMessage.innerText = "";
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+function mdpTester() {
+    if (mdp.value == "") {
+        mdpMessage.innerText = "Ce champ ne peut rester vide";
+        invalidateInput(mdp);
+        return false;
+    } else {
+        mdpMessage.innerText = "";
+        validateInput(mdp);
+        return true;
+    }
+}
+
+function mdp_checkTester() {
+    if (mdp_check.value != mdp.value) {
+        mdp_checkMessage.innerText = "Les mots de passe saisis sont différents";
+        invalidateInput(mdp_check);
+    } else {
+        mdp_checkMessage.innerText = "";
+        validateInput(mdp_check);
+        return true;
+    }
+}
 
 
-$(document).ready(function(){
-	//global vars
-	var form = $("#mainForm");
-	var pseudo = $("#pseudo");
-	var pseudoMessage = $("#pseudoMessage");
-	var email = $("#email");
-	var emailMessage = $("#emailMessage");
-	var mdp = $("#mdp");
-	var mdpMessage = $("#mdpMessage");
-	var mdp_check = $("#mdp_check");
-	var mdp_checkMessage = $("#mdp_checkMessage");
-        
-        
-	//On blur
-	pseudo.blur(validerPseudo);
-	email.blur(validerEmail);
-	mdp.blur(validerMdp);
-	mdp_check.blur(validerMdp_check);
-	//On key press
-	pseudo.keyup(validerPseudo);
-	mdp.keyup(validerMdp);
-	mdp_check.keyup(validerMdp_check);
-	//On Submitting
-	form.submit(function(){
-		if(validerPseudo() & validerEmail() & validerMdp() & validerMdp_check())
-			return true;
-		else
-			return false;
-	});
-	
-	//validation functions
-	function validerEmail(){
-		//testing regular expression
-		var a = $("#email").val();
-		var filter = /^[a-zA-Z0-9]+[a-zA-Z0-9_.-]+[a-zA-Z0-9_-]+@[a-zA-Z0-9]+[a-zA-Z0-9.-]+[a-zA-Z0-9]+.[a-z]{2,4}$/;
-		//if it's valid email
-		if(filter.test(a)){
-			email.removeClass("error");
-			emailMessage.text("Valid E-mail please, you will need it to log in!");
-			emailMessage.removeClass("error");
-			return true;
-		}
-		//if it's NOT valid
-		else{
-			email.addClass("error");
-			emailMessage.text("Stop cowboy! Type a valid e-mail please :P");
-			emailMessage.addClass("error");
-			return false;
-		}
-	}
-	function validerPseudo(){
-		//if it's NOT valid
-		if(pseudo.val().length < 4){
-			pseudo.addClass("error");
-			pseudoMessage.text("We want pseudos with more than 3 letters!");
-			pseudoMessage.addClass("error");
-			return false;
-		}
-		//if it's valid
-		else{
-			pseudo.removeClass("error");
-			pseudoMessage.text("What's your pseudo?");
-			pseudoMessage.removeClass("error");
-			return true;
-		}
-	}
-	function validerMdp(){
 
-		//it's NOT valid
-		if(mdp.val().length <5){
-			mdp.addClass("error");
-			mdpMessage.text("Ey! Remember: At least 5 characters: letters, numbers and '_'");
-			mdpMessage.addClass("error");
-			return false;
-		}
-		//it's valid
-		else{			
-			mdp.removeClass("error");
-			mdpMessage.text("At least 5 characters: letters, numbers and '_'");
-			mdpMessage.removeClass("error");
-			validerMdp_check();
-			return true;
-		}
-	}
-	function validerMdp_check(){
-		//are NOT valid
-		if( mdp.val() != mdp_check.val() ){
-			mdp_check.addClass("error");
-			mdp_checkMessage.text("Passwords doesn't match!");
-			mdp_checkMessage.addClass("error");
-			return false;
-		}
-		//are valid
-		else{
-			mdp_check.removeClass("error");
-			mdp_checkMessage.text("Confirm password");
-			mdp_checkMessage.removeClass("error");
-			return true;
-		}
-	}
-});
+
+// -- Partie Ajax
+
+var emailBoolean = false;
+
+function getXMLHttpRequest() {
+    var xhr = null;
+
+    if (window.XMLHttpRequest || window.ActiveXObject) {
+        if (window.ActiveXObject) {
+            try {
+                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+        } else {
+            xhr = new XMLHttpRequest();
+        }
+    } else {
+        alert("Votre navigateur ne supporte pas l'objet XMLHTTPRequest...");
+        return null;
+    }
+
+    return xhr;
+}
+
+email.onblur = makeRequest;
+
+function makeRequest() {
+    request(readData);
+}
+
+function request(callback) {
+    var xhr = getXMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+            callback(xhr.responseText);
+        }
+    };
+    var emailAjax = email.value;
+    xhr.open("GET", "js/emailCheck.php?email=" + emailAjax, true);
+    xhr.send(null);
+}
+
+function readData(oData) {
+    emailMessage = document.getElementById("emailMessage");
+    if (oData == "false") {
+        emailMessage.innerText = "L'email saisi existe déjà, veuillez en choisir un autre";
+        invalidateInput(email);
+        emailBoolean = false;
+    } else {
+        emailMessage.innerText = "";
+        validateInput(email);
+        emailBoolean = true;
+    }
+}

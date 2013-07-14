@@ -116,7 +116,7 @@ class Input {
         if ($this->options != "" || $this->options != null) {
             $resultat .= " " . $this->options . " ";
         }
-        if ($this->class != "" || $this->options != null) {
+        if ($this->class != "" || $this->class != null) {
             $resultat .= " class='" . $this->class . "'";
         }
         $resultat .= ">";
