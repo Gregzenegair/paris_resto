@@ -6,9 +6,9 @@ class CNX {
     protected $_bdd;
 
 // --- Methode de connexion à la base
-    public function __construct($base, $user, $pwd) {
+    public function __construct($base, $user, $pwd, $tAttributes = null) {
         try {
-            $bdd = new PDO('mysql:host=localhost;dbname=' . $base, $user, $pwd);
+            $bdd = new PDO('mysql:host=localhost;dbname=' . $base, $user, $pwd, $tAttributes);
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
         }

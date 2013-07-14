@@ -37,22 +37,22 @@ class Select {
             $resultatHTML .= "<legend for=$this->id>$this->legend</legend>";
         }
 
-        $resultatHTML .= "<select name='$this->name'";
+        $resultatHTML .= "<select name=\"$this->name\"";
         
         if ($this->class != "" || $this->options != null) {
-            $resultatHTML .= " class='" . $this->class . "'";
+            $resultatHTML .= " class=\"" . $this->class . "\"";
         }
         
         if ($this->id != null)
-            $resultatHTML .= " id='$this->id'>";
+            $resultatHTML .= " id=\"$this->id\">";
         else
             $resultatHTML .= " >";
 
         foreach ($this->tListeElem as $key => $value) {
             if ($value == $this->selected || $key == $this->selected)
-                $resultatHTML .= '<option value="' . $key . '" selected>' . $value . '</option>';
+                $resultatHTML .= "<option value=\"" . $key . "\" selected>" . $value . "</option>";
             else
-                $resultatHTML .= '<option value="' . $key . '">' . $value . '</option>';
+                $resultatHTML .= "<option value=\"" . $key . "\">" . $value . "</option>";
         }
         $resultatHTML .= "</select>";
         return $resultatHTML;

@@ -22,20 +22,20 @@
 
 
     $inputNom = new Input("nom", "Nom du restaurant :", "nom", "text", "", "required", 1, null);
-    $inputNumero_tel = new Input("numero_tel", "Numéro de téléphone :", "numero_tel", "text", "", "required", 1, null);
+    $inputNumero_tel = new Input("numero_tel", "Numéro de téléphone :", "numero_tel", "text", "", "", 1, null);
     $inputEmail = new Input("email", "Email :", "email", "text", "", null, 1, null);
 
     $selectTypeVoie = new Select("type_voie", "", $tListeElemTypesVoie, "type_voie", null, 1, "required", "select");
-    $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "number", "", "required", 1, null);
+    $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "number", "", "required min='0'", 1, null);
     $inputNomVoie = new Input("nom_voie", "", "nom_voie", "text", "", "required", 1, null);
 
-    $selectCategories1 = new DataList("categorie1", "Categories :", $tListeElemCategories, "categorie1", null, 1, "required", "selectCategorie");
+    $selectCategories1 = new DataList("categorie1", "Categories :", $tListeElemCategories, "categorie1", null, 1, "", "selectCategorie");
     $selectCategories2 = new DataList("categorie2", "", $tListeElemCategories, "categorie2", null, 1, "", "selectCategorie");
     $selectCategories3 = new DataList("categorie3", "", $tListeElemCategories, "categorie3", null, 1, "", "selectCategorie");
 
-    $selectVilles = new DataList("nom_ville", "Ville :", $tListeElemVilles, "nom_ville", null, 1, "required", "select");
+    $selectVilles = new DataList("nom_ville", "Ville :", $tListeElemVilles, "nom_ville", null, 1, "", "select");
 
-    $inputCp = new Input("cp", "Code postal :", "cp", "text", "", "required", 1, null);
+    $inputCp = new Input("cp", "Code postal :", "cp", "text", "", "", 1, null);
 
     $inputSubmit = new Input("ajouter", null, "ajouter", "submit", "Ajouter", "", 5, "inputGreen");
 

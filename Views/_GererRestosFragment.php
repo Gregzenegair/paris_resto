@@ -5,11 +5,11 @@
 
     <?php
     if (!empty($_SESSION['afficherRestos'])) {
-        $tUsers = $_SESSION['afficherRestos'];
+        $tRestos = $_SESSION['afficherRestos'];
         ?>
         <table id="membres">
             <?PHP
-            foreach ($tUsers as $value) {
+            foreach ($tRestos as $value) {
                 ?>
                 <tr><td><br></td></tr>
                 <tr>

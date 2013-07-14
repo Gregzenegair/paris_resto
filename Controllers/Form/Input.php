@@ -38,22 +38,22 @@ class Input {
         $resultat .= "<input";
 
         if ($this->name != "" || $this->name != null) {
-            $resultat .= " name='" . $this->name . "'";
+            $resultat .= " name=\"" . $this->name . "\"";
         }
         if ($this->id != "" || $this->id != null) {
-            $resultat .= " id='" . $this->id . "'";
+            $resultat .= " id=\"" . $this->id . "\"";
         }
         if ($this->type != "" || $this->type != null) {
-            $resultat .= " type='" . $this->type . "'";
+            $resultat .= " type=\"" . $this->type . "\"";
         }
         if ($this->value != "" || $this->value != null) {
-            $resultat .= " value='" . $this->value . "'";
+            $resultat .= " value=\"" . $this->value . "\"";
         }
         if ($this->options != "" || $this->options != null) {
             $resultat .= " " . $this->options . " ";
         }
         if ($this->class != "" || $this->class != null) {
-            $resultat .= " class='" . $this->class . "'";
+            $resultat .= " class=\"" . $this->class . "\"";
         }
         $resultat .= ">";
 

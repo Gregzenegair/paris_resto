@@ -10,9 +10,9 @@ class RestoModel extends CNX {
         parent::__construct($base, $user, $pwd);
     }
 
-    // --- Insertion d'un restaurant
+    // --- Insertion ou selection d'une ville
 
-    function insertVille($nom, $cp) {
+    function selectOrInsertVille($nom, $cp) {
 
         $tNomChampTable = ["nom", "cp"];
         $tValeurs = [":$nom", ":$cp"];
@@ -28,11 +28,13 @@ class RestoModel extends CNX {
                 $resultSelect = $donnees['id'];
             } else {
                 DAO::insert($this->_bdd, "villes", $tNomChampTable, $tValeurs);
-                $this->insertVille($nom, $cp);
+                $this->selectOrInsertVille($nom, $cp);
             }
         }
-
+        $CNX = new RestoModel("paris_resto", "root", "");
         if ($resultSelect) {
+            $CNX->insertResto($_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $resultSelect);
+
             return $resultSelect;
         } else {
             return false;
@@ -58,9 +60,11 @@ class RestoModel extends CNX {
     function showRestos($id = null) {
 
         if (isset($id)) {
-            $req = $this->_bdd->prepare('SELECT *
-                                            FROM restaurants
-                                            id = :id');
+            $req = $this->_bdd->prepare('SELECT r.id, r.nom, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.id_types_voie, v.nom as nom_ville, v.cp 
+                                                    FROM restaurants r 
+                                                    JOIN villes v 
+                                                    ON v.id = r.id_villes 
+                                                    WHERE r.id = :id');
             $req->bindParam(':id', $id, PDO::PARAM_STR);
         } else {
             $req = $this->_bdd->prepare('SELECT *
@@ -115,22 +119,25 @@ class RestoModel extends CNX {
         return $resultat;
     }
 
-    function updateResto($id, $pseudo, $email, $date_inscription, $statut, $actif) {
-        $req = $this->_bdd->prepare('UPDATE users '
-                . ' SET pseudo = :pseudo, email = :email, date_inscription = :date_inscription, statut = :statut, actif = :actif '
-                . ' WHERE id = :id');
-        $req->bindParam(':id', $id, PDO::PARAM_STR);
-        $req->bindParam(':pseudo', $pseudo, PDO::PARAM_STR);
-        $req->bindParam(':email', $email, PDO::PARAM_STR);
-        $req->bindParam(':date_inscription', $date_inscription, PDO::PARAM_STR);
-        $req->bindParam(':statut', $statut, PDO::PARAM_STR);
-        $req->bindParam(':actif', $actif, PDO::PARAM_STR);
-        $req->execute();
-        $req->closeCursor();
+    function updateResto($id, $nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_types_voie, $id_villes) {
+
+        $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_types_voie", "id_villes"];
+        $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_types_voie", ":$id_villes"];
+        $twhere['id'] = $id;
+
+        // --- Demarage de la transaction
+
+        $result = DAO::update($this->_bdd, "restaurants", $tNomChampTable, $tValeurs, $twhere);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function deleteResto($id) {
-        $req = $this->_bdd->prepare('DELETE FROM users WHERE id = :id');
+        $req = $this->_bdd->prepare('DELETE FROM restaurants WHERE id = :id');
         $req->bindParam(':id', $id, PDO::PARAM_STR);
         $req->execute();
         $req->closeCursor();

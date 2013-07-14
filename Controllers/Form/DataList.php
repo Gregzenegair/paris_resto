@@ -33,30 +33,34 @@ class DataList {
         $resultatHTML = "";
 
         if ($this->legend != "") {
-            $resultatHTML .= "<legend for='$this->id" . "input'>$this->legend</legend>";
+            $resultatHTML .= "<legend for=\"$this->id" . "input\">$this->legend</legend>";
         }
 
-        $resultatHTML .= "<input list='$this->name' name='$this->name' type='text'";
+        $resultatHTML .= "<input list=\"$this->name\" name=\"$this->name\" type=\"text\"";
 
         if ($this->class != "" || $this->options != null) {
-            $resultatHTML .= " class='" . $this->class . "'";
+            $resultatHTML .= " class=\"" . $this->class . "\"";
+        }
+
+        if ($this->selected != "") {
+            $resultatHTML .= " value=\"" . $this->selected . "\"";
         }
 
         if ($this->id != null)
-            $resultatHTML .= " id='$this->id" . "input'>";
+            $resultatHTML .= " id=\"$this->id" . "input\">";
         else
             $resultatHTML .= " >";
 
         if ($this->name != null)
-            $resultatHTML .= "<datalist  id='$this->name'>";
+            $resultatHTML .= "<datalist  id=\"$this->name\">";
         else
-            $resultatHTML .= "<datalist id=''>";
+            $resultatHTML .= "<datalist id=\"\">";
 
         foreach ($this->tListeElem as $key => $value) {
             if ($value == $this->selected || $key == $this->selected)
-                $resultatHTML .= '<option value="' . $value . '" selected></option>';
+                $resultatHTML .= "<option value=\"" . $value . "\" selected></option>";
             else
-                $resultatHTML .= '<option value="' . $value . '"></option>';
+                $resultatHTML .= "<option value=\"" . $value . "\"></option>";
         }
         $resultatHTML .= "</datalist>";
         return $resultatHTML;
