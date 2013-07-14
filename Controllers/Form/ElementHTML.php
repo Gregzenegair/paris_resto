@@ -12,14 +12,6 @@ class ElementHTML {
     function __construct($HTML) {
         $this->HTML = $HTML;
     }
-    public function getHTML() {
-        return $this->HTML;
-    }
-
-    public function setHTML($HTML) {
-        $this->HTML = $HTML;
-    }
-
         
     function genererHTML() {
 

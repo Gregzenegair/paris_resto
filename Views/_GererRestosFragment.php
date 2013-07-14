@@ -1,6 +1,6 @@
 
 <div id="mainFrame">
-    <a href="./../Controllers/RestoController.php?action=AjoutResto" class="aGreen">Ajouter restaurant</a>
+    <a href="./../Controllers/RestoController.php?action=AjouterResto" class="aGreen">Ajouter restaurant</a>
 
 
     <?php
@@ -13,12 +13,12 @@
                 ?>
                 <tr><td><br></td></tr>
                 <tr>
-                    <td><a class="buttonSubmit" href="./../Controllers/RestoController.php?action=ModifierResto&id=<?PHP echo $value['id']; ?>">Modifier</a></td><td><?PHP echo $value['nom']; ?></td><td><?PHP echo $value['categorie']; ?></td><td><?PHP echo $value['numero_tel']; ?></td><td><?PHP echo $value['email']; ?></td><td><?PHP echo $value['note_moy']; ?></td>
+                    <td><a class="buttonSubmit" href="./../Controllers/RestoController.php?action=ModifierResto&id=<?PHP echo $value['id']; ?>">Modifier</a></td><td><?PHP echo $value['nom']; ?></td><td><?PHP echo $value['numero_tel']; ?></td><td><?PHP echo $value['email']; ?></td>
                 </tr>
                 <tr>
-                    <td><?PHP echo $value['adresse']; ?></td>
-                    <td><?PHP echo $value['ville']; ?></td>
-                    <td><?PHP echo $value['cp']; ?></td>
+                    <td style="width: 200px;"></td>
+                    <td><?PHP echo $value['nom_voie']; ?></td>
+                    <td><?PHP echo $value['id_villes']; ?></td>
                 </tr>
 
                 <?PHP

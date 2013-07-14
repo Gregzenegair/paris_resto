@@ -6,7 +6,7 @@
  * @author Gregzenegair
  * 
  */
-class Select {
+class DataList {
 
     private $name;
     private $legend;
@@ -28,36 +28,51 @@ class Select {
         $this->class = $class;
     }
 
-
-    function genererSelect() {
+    function genererDataList() {
 
         $resultatHTML = "";
 
         if ($this->legend != "") {
-            $resultatHTML .= "<legend for=$this->id>$this->legend</legend>";
+            $resultatHTML .= "<legend for='$this->id" . "input'>$this->legend</legend>";
         }
 
-        $resultatHTML .= "<select name='$this->name'";
-        
+        $resultatHTML .= "<input list='$this->name' name='$this->name' type='text'";
+
         if ($this->class != "" || $this->options != null) {
             $resultatHTML .= " class='" . $this->class . "'";
         }
-        
+
         if ($this->id != null)
-            $resultatHTML .= " id='$this->id'>";
+            $resultatHTML .= " id='$this->id" . "input'>";
         else
             $resultatHTML .= " >";
 
+        if ($this->name != null)
+            $resultatHTML .= "<datalist  id='$this->name'>";
+        else
+            $resultatHTML .= "<datalist id=''>";
+
         foreach ($this->tListeElem as $key => $value) {
             if ($value == $this->selected || $key == $this->selected)
-                $resultatHTML .= '<option value="' . $key . '" selected>' . $value . '</option>';
+                $resultatHTML .= '<option value="' . $value . '" selected></option>';
             else
-                $resultatHTML .= '<option value="' . $key . '">' . $value . '</option>';
+                $resultatHTML .= '<option value="' . $value . '"></option>';
         }
-        $resultatHTML .= "</select>";
+        $resultatHTML .= "</datalist>";
         return $resultatHTML;
     }
 
 }
-
 ?>
+
+<!--
+
+<legend for="choix_bieres">Indiquez votre bière préférée :</legend>
+<input list="bieres" type="text" id="choix_bieres">
+<datalist id="bieres">
+  <option value="Meteor">
+  <option value="Pils">
+  <option value="Kronenbourg">
+  <option value="Grimbergen">
+</datalist>
+-->

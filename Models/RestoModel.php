@@ -1,9 +1,9 @@
 <?php
 
-class RestoModel extends CNX {
+require_once 'CNX.php';
+require_once 'DAO.php';
 
-    // --- Connexion active à la base
-    private $_bdd;
+class RestoModel extends CNX {
 
     // --- Methode de connexion à la base
     public function __construct($base, $user, $pwd) {
@@ -12,22 +12,41 @@ class RestoModel extends CNX {
 
     // --- Insertion d'un restaurant
 
-    function insertResto($nom, $id_categorie, $numero_tel, $email, $id_adresse, $id_note, $id_photo) {
+    function insertVille($nom, $cp) {
 
-        $tNomChampTable = ["nom", "id_categorie", "numero_tel", "email", "id_adresse", "id_note", "id_photo"];
-        $tValeurs = [":$nom", ":$id_categorie", ":$numero_tel", ":$email", ":$id_adresse", ":$id_note", ":$id_photo"];
+        $tNomChampTable = ["nom", "cp"];
+        $tValeurs = [":$nom", ":$cp"];
+
+        $sPrepareSelect = "SELECT id, count(*) as result FROM villes WHERE nom = :nom AND cp = :cp";
 
         $bdd = $this->_bdd;
+        $req = $bdd->prepare($sPrepareSelect);
+        $req->execute(array(':nom' => $nom, ':cp' => $cp));
+
+        while ($donnees = $req->fetch()) {
+            if ($donnees['result'] == "1") {
+                $resultSelect = $donnees['id'];
+            } else {
+                DAO::insert($this->_bdd, "villes", $tNomChampTable, $tValeurs);
+                $this->insertVille($nom, $cp);
+            }
+        }
+
+        if ($resultSelect) {
+            return $resultSelect;
+        } else {
+            return false;
+        }
+    }
+
+    function insertResto($nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_types_voie, $id_villes) {
+
+        $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_types_voie", "id_villes"];
+        $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_types_voie", ":$id_villes"];
 
         // --- Demarage de la transaction
-        $bdd->beginTransaction();
 
-        $sPrepare = "INSERT INTO restaurants ('nom' ,'id_categorie' ,'numero_tel' ,'email' ,'id_adresse' ,'id_note' ,'id_photo')
-                        VALUES (:nom,  :id_categorie,  ;numero_tel,  :email,  :id_adresse,  :'id_note',  '1')";
-
-        $req = $bdd->prepare($sPrepare);
-
-        //$result = DAO::insert($this->_bdd, "restaurants", $tNomChampTable, $tValeurs);
+        $result = DAO::insert($this->_bdd, "restaurants", $tNomChampTable, $tValeurs);
 
         if ($result) {
             return true;
@@ -39,17 +58,13 @@ class RestoModel extends CNX {
     function showRestos($id = null) {
 
         if (isset($id)) {
-            $req = $this->_bdd->prepare('SELECT u.id, u.pseudo, u.email, s.nom as statut, u.date_inscription, u.actif 
-                                            FROM users u
-                                            JOIN statuts s
-                                            ON u.statut = s.id
-                                            WHERE u.id = :id');
+            $req = $this->_bdd->prepare('SELECT *
+                                            FROM restaurants
+                                            id = :id');
             $req->bindParam(':id', $id, PDO::PARAM_STR);
         } else {
-            $req = $this->_bdd->prepare('SELECT u.id, u.pseudo, u.email, s.nom as statut, u.date_inscription, u.actif 
-                                            FROM users u
-                                            JOIN statuts s
-                                            ON u.statut = s.id');
+            $req = $this->_bdd->prepare('SELECT *
+                                            FROM restaurants');
         }
 
         $req->execute();
@@ -58,16 +73,44 @@ class RestoModel extends CNX {
         return $resultAfficherUsers;
     }
 
-    function showCategoriess() {
+    function showTypesVoie() {
 
-        $req = $this->_bdd->prepare('SELECT s.id, s.nom as statut FROM statuts s');
+        $req = $this->_bdd->prepare('SELECT id, nom FROM types_voie ORDER BY nom');
+        $req->execute();
+        $resultAfficherTypesVoies = $req->fetchAll();
+        $req->closeCursor();
+
+        $resultat = array();
+        foreach ($resultAfficherTypesVoies as $value) {
+            $resultat[$value['id']] = $value['nom'];
+        }
+        return $resultat;
+    }
+
+    function showVilles() {
+
+        $req = $this->_bdd->prepare('SELECT DISTINCT nom FROM villes ORDER BY nom');
+        $req->execute();
+        $resultAfficherVilless = $req->fetchAll();
+        $req->closeCursor();
+
+        $resultat = array();
+        foreach ($resultAfficherVilless as $value) {
+            array_push($resultat, $value['nom']);
+        }
+        return $resultat;
+    }
+
+    function showCategories() {
+
+        $req = $this->_bdd->prepare('SELECT nom FROM categories ORDER BY nom');
         $req->execute();
         $resultAfficherStatuts = $req->fetchAll();
         $req->closeCursor();
 
         $resultat = array();
         foreach ($resultAfficherStatuts as $value) {
-            $resultat[$value['id']] = $value['statut'];
+            array_push($resultat, $value['nom']);
         }
         return $resultat;
     }

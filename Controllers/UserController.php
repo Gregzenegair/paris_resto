@@ -41,6 +41,7 @@ if (isset($_GET['action'])) {
 
             break;
 
+        // --- Lorsque l'on clique sur le bouton pour voir la liste des utilisateurs
         case "GererUtilisateurs":
 
             $result = $CNX->showUsers();
@@ -59,6 +60,7 @@ if (isset($_GET['action'])) {
 
             break;
 
+        // --- Lorsque l'on clique sur le bouton pour aller modifier 1 utilisateur
         case "ModifierUtilisateur":
 
             $result = $CNX->showUsers($_GET['id']);
@@ -72,6 +74,8 @@ if (isset($_GET['action'])) {
             $_SESSION['afficherUser'] = $result;
 
             break;
+
+        // --- Lorsque l'on clique sur le bouton pour modifier (valider la modification) un utilisateur
         case "Modification":
 
             if (!empty($_POST['modifier'])) {
