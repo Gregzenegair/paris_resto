@@ -28,8 +28,10 @@ if (isset($_GET['action'])) {
             break;
 
         case "Ajout":
+            //$CNX->beginTransaction();
             $id_villes = $CNX->selectOrInsertVille($_POST['nom_ville'], $_POST['cp']);
-
+            $CNX->insertResto($_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes);
+            //$CNX->commit();
             header("Location: ./RestoController.php?action=GererRestos");
             return;
             break;

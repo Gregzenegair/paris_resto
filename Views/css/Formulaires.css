@@ -2,10 +2,10 @@
 Gestion des inputs du site
 */
 
-/* === Remove input autofocus webkit === */
+
 *:focus {outline: none;}
 
-/* === Form Elements === */
+
 label {
     margin-top: 1em;
     width:150px;
@@ -26,7 +26,7 @@ input[type=submit] {
     margin-left:3em;
 }
 
-/* form element visual styles */
+
 input, textarea { 
     border:1px solid #aaa;
     box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset;
@@ -37,14 +37,8 @@ input, textarea {
     -o-transition: padding .25s;
     transition: padding .25s;
 }
-input:focus, textarea:focus {
-    background: #fff; 
-    border:1px solid #555; 
-    box-shadow: 0 0 3px #aaa; 
-    padding-right:30px;
-}
 
-/* === HTML5 validation styles === */	
+	
 .inputRequired {
     background: #fff url(../img/red_asterisk.png) no-repeat 98% center;
 }
@@ -62,7 +56,7 @@ input:focus, textarea:focus {
     border-color: #b03535
 }
 
-/* === Button Style === */
+
 .inputGreen {
     background-color: #68b12f;
     background: -webkit-gradient(linear, left top, left bottom, from(#68b12f), to(#50911e));

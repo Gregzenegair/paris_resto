@@ -28,13 +28,10 @@ class RestoModel extends CNX {
                 $resultSelect = $donnees['id'];
             } else {
                 DAO::insert($this->_bdd, "villes", $tNomChampTable, $tValeurs);
-                $this->selectOrInsertVille($nom, $cp);
+                $resultSelect = $this->selectOrInsertVille($nom, $cp);
             }
         }
-        $CNX = new RestoModel("paris_resto", "root", "");
         if ($resultSelect) {
-            $CNX->insertResto($_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $resultSelect);
-
             return $resultSelect;
         } else {
             return false;

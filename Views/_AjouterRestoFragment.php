@@ -26,7 +26,7 @@
     $inputEmail = new Input("email", "Email :", "email", "text", "", null, 1, null);
 
     $selectTypeVoie = new Select("type_voie", "", $tListeElemTypesVoie, "type_voie", null, 1, "required", "select");
-    $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "number", "", "required min='0'", 1, null);
+    $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "number", "", "required min='1'", 1, null);
     $inputNomVoie = new Input("nom_voie", "", "nom_voie", "text", "", "required", 1, null);
 
     $selectCategories1 = new DataList("categorie1", "Categories :", $tListeElemCategories, "categorie1", null, 1, "", "selectCategorie");
