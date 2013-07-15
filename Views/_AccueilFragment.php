@@ -9,9 +9,7 @@
 Accueil<br>
 
 Ceci est l'accueil du site<br>
-blablabla<br>
-blablabla<br>
-blablabla...<br>
+<li>Ajouter la modification des champs de catégorie d'un restaurant</li>
 ...
 
 </div>
