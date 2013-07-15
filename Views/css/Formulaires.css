@@ -40,18 +40,18 @@ input, textarea {
 
 	
 .inputRequired {
-    background: #fff url(../img/red_asterisk.png) no-repeat 98% center;
+    background: #fff url(../img/red_asterisk.png) no-repeat 97% center;
 }
 
 .inputValid {
-    background: #fff url(../img/valid.png) no-repeat 98% center;
+    background: #fff url(../img/valid.png) no-repeat 97% center;
     box-shadow: 0 0 5px #5cd053;
     border-color: #28921f;
     text-shadow: 0 -1px 0 #396715;
 }
 
 .inputInvalid {
-    background: #fff url(../img/invalid.png) no-repeat 98% center;
+    background: #fff url(../img/invalid.png) no-repeat 97% center;
     box-shadow: 0 0 5px #d45252;
     border-color: #b03535
 }

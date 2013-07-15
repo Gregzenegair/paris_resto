@@ -10,16 +10,17 @@
 
     $br = new Br(0);
 
-    $inputpseudo = new Input("pseudo", "Pseudonyme :", "pseudo", "text", "", "", 1, null);
+    //$test = new Input($name, $legend, $id, $type, $value, $options, $position, $class);
+    $inputpseudo = new Input("pseudo", "Pseudonyme :", "pseudo", "text", "", "", 1, "inputRequired");
     $HTMLPseudoMessage = new ElementHTML("<span class='errorMessage' id='pseudoMessage'></span>");
 
-    $inputEmail = new Input("email", "Email :", "email", "text", "", "", 1, null);
+    $inputEmail = new Input("email", "Email :", "email", "text", "", "", 1, "inputRequired");
     $HTMLEmailMessage = new ElementHTML("<span class='errorMessage' id='emailMessage'></span>");
 
-    $inputMdp = new Input("mdp", "Mot de passe :", "mdp", "password", "", "", 1, null);
+    $inputMdp = new Input("mdp", "Mot de passe :", "mdp", "password", "", "", 1, "inputRequired");
     $HTMLMdpMessage = new ElementHTML("<span class='errorMessage' id='mdpMessage'></span>");
 
-    $inputMdp_check = new Input("mdp_check", "Mot de passe :", "mdp_check", "password", "", "", 1, null);
+    $inputMdp_check = new Input("mdp_check", "Mot de passe :", "mdp_check", "password", "", "", 1, "inputRequired");
     $HTMLMdp_checkMessage = new ElementHTML("<span class='errorMessage' id='mdp_checkMessage'></span>");
 
     $inputsubmit = new Input("valider", null, "valider", "submit", "Validez", "onclick='javascript:return formChecker()'", 5, "inputGreen");
