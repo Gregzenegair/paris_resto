@@ -20,10 +20,9 @@ function validateInput(elem) {
 function formChecker() {
     var pseudoTest = pseudoTester();
     makeRequest();
-    var emailTest = emailTester();
     var mdpTest = mdpTester();
     var mdp_checkTest = mdp_checkTester();
-    if (pseudoTest & emailTest & mdpTest & mdp_checkTest) {
+    if (pseudoTest & emailBoolean & mdpTest & mdp_checkTest) {
         return true;
     } else {
         return false;
@@ -31,7 +30,6 @@ function formChecker() {
 }
 
 pseudo.onblur = blured;
-email.onblur = blured;
 mdp.onblur = blured;
 mdp_check.onblur = blured;
 
@@ -42,8 +40,6 @@ email.onchange = function() {
 function blured(elem) {
     if (elem.target.id == "pseudo") {
         pseudoTester();
-    } else if (elem.target.id == "email") {
-        emailTester();
     } else if (elem.target.id == "mdp") {
         mdpTester();
     } else if (elem.target.id == "mdp_check") {
@@ -60,22 +56,6 @@ function pseudoTester() {
         pseudoMessage.innerText = "";
         validateInput(pseudo);
         return true;
-    }
-}
-
-function emailTester() {
-    if (email.value == "") {
-        emailMessage.innerText = "Ce champ ne peut rester vide";
-        invalidateInput(email);
-        return false;
-    } else {
-        if (emailBoolean == true) {
-            validateInput(email);
-            mdpMessage.innerText = "";
-            return true;
-        } else {
-            return false;
-        }
     }
 }
 
@@ -136,6 +116,7 @@ function makeRequest() {
     request(readData);
 }
 
+
 function request(callback) {
     var xhr = getXMLHttpRequest();
 
@@ -150,7 +131,8 @@ function request(callback) {
 }
 
 function readData(oData) {
-    emailMessage = document.getElementById("emailMessage");
+    var reg = new RegExp('^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$', 'i');
+    
     if (oData == "false") {
         emailMessage.innerText = "L'email saisi existe déjà, veuillez en choisir un autre";
         invalidateInput(email);
@@ -159,5 +141,22 @@ function readData(oData) {
         emailMessage.innerText = "";
         validateInput(email);
         emailBoolean = true;
+    }
+    if (email.value == "") {
+        emailMessage.innerText = "Ce champ ne peut rester vide";
+        invalidateInput(email);
+        return false;
+    } else if (!reg.test(email.value)) {
+        emailMessage.innerText = "Merci de saisir une adresse email valide";
+        invalidateInput(email);
+        return false;
+    } else {
+        if (emailBoolean == true) {
+            validateInput(email);
+            mdpMessage.innerText = "";
+            return true;
+        } else {
+            return false;
+        }
     }
 }
