@@ -5,13 +5,23 @@ require_once 'CNX.php';
 
 class UserModel extends CNX {
 
-    // --- Methode de connexion à la base
+    /**
+     * Methode de connexion à la base
+     * @param type $base
+     * @param type $user
+     * @param type $pwd
+     */
     public function __construct($base, $user, $pwd) {
         parent::__construct($base, $user, $pwd);
     }
 
-    // --- Connection d'un utilisateur
-    function connectUser($email, $mdp) {
+    /**
+     * Connection d'un utilisateur, retourne les informations propres à l'utilisateur
+     * @param type $email
+     * @param type $mdp
+     * @return array
+     */
+    public function connectUser($email, $mdp) {
 
         $aResultats = [];
 
@@ -32,7 +42,13 @@ class UserModel extends CNX {
         }
     }
 
-    function selectUserEmail($email) {
+    /**
+     * retourne vrai ou faux en fonction de l'existence ou non de l'email dans
+     * la bse d'users
+     * @param type $email
+     * @return boolean
+     */
+    public function selectUserEmail($email) {
         $req = $this->_bdd->prepare('SELECT count(*) as count FROM users where email = :email');
         $req->bindParam(':email', $email, PDO::PARAM_STR);
         $req->execute();
@@ -46,8 +62,16 @@ class UserModel extends CNX {
         }
     }
 
-    // --- Insertion d'un utilisateur
-    function insertUser($pseudo, $email, $mdp, $statut) {
+    /**
+     * Insertion d'un utilisateur, envoie également un mail à l'utilisateur
+     * si l'insert s'est bien passé
+     * @param type $pseudo
+     * @param type $email
+     * @param type $mdp
+     * @param type $statut
+     * @return boolean
+     */
+    public function insertUser($pseudo, $email, $mdp, $statut) {
 
         $email_check = md5(microtime(TRUE) * 100000);
 
@@ -64,7 +88,12 @@ class UserModel extends CNX {
         }
     }
 
-    // --- envoi d'un email
+    /**
+     * envoi d'un email
+     * @param type $pseudo
+     * @param type $email
+     * @param type $email_check
+     */
     private function sendEmail($pseudo, $email, $email_check) {
         $destinataire = $email;
         $sujet = "Activation de votre compte";
@@ -84,8 +113,13 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
         mail($destinataire, $sujet, $message, $entete); // --- Envoi du mail
     }
 
-    // --- Afficher un ou plusieurs utilisateur
-    function showUsers($id = null) {
+    /**
+     * Afficher un ou plusieurs utilisateur (si id est renseigné ou pas)
+     * Retourne un tableau avec un ou plusieurs utilisateurs
+     * @param type $id
+     * @return array
+     */
+    public function showUsers($id = null) {
 
         if (isset($id)) {
             $req = $this->_bdd->prepare('SELECT u.id, u.pseudo, u.email, s.nom as statut, u.date_inscription, u.actif 
@@ -107,8 +141,11 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
         return $resultAfficherUsers;
     }
 
-    // --- pour le select des statuts
-    function showStatuts() {
+    /**
+     * pour le select des statuts
+     * @return array (1 dimension)
+     */
+    public function showStatuts() {
 
         $req = $this->_bdd->prepare('SELECT s.id, s.nom as statut FROM statuts s');
         $req->execute();
@@ -122,8 +159,16 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
         return $resultat;
     }
 
-    // --- Mettre à jour un utilisateur
-    function updateUser($id, $pseudo, $email, $date_inscription, $statut, $actif) {
+    /**
+     *  Mettre à jour un utilisateur
+     * @param type $id
+     * @param type $pseudo
+     * @param type $email
+     * @param type $date_inscription
+     * @param type $statut
+     * @param type $actif
+     */
+    public function updateUser($id, $pseudo, $email, $date_inscription, $statut, $actif) {
 
         $tNomChampTable = ["pseudo", "email", "date_inscription", "statut", "actif"];
         $tValeurs = [":$pseudo", ":$email", ":$date_inscription", ":$statut", ":$actif"];
@@ -132,8 +177,11 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
         DAO::update($this->_bdd, "users", $tNomChampTable, $tValeurs, $twhere);
     }
 
-// --- Supprimer un utilisateur
-    function deleteUser($id) {
+    /**
+     * Supprimer un utilisateur
+     * @param type $id
+     */
+    public function deleteUser($id) {
         $req = $this->_bdd->prepare('DELETE FROM users WHERE id = :id');
         $req->bindParam(':id', $id, PDO::PARAM_STR);
         $req->execute();

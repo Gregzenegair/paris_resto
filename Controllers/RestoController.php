@@ -28,10 +28,21 @@ if (isset($_GET['action'])) {
             break;
 
         case "Ajout":
-            //$CNX->beginTransaction();
+
+            $CNX->beginTransaction();
+
             $id_villes = $CNX->selectOrInsertVille($_POST['nom_ville'], $_POST['cp']);
-            $CNX->insertResto($_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes);
-            //$CNX->commit();
+            $categorie1 = $CNX->selectOrInsertCategorie($_POST['categorie1']);
+            $categorie2 = $CNX->selectOrInsertCategorie($_POST['categorie2']);
+            $categorie3 = $CNX->selectOrInsertCategorie($_POST['categorie3']);
+
+            $lastInsertId = $CNX->insertResto($_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes);
+
+            $CNX->insertLigcategories($categorie1, $lastInsertId);
+            $CNX->insertLigcategories($categorie2, $lastInsertId);
+            $CNX->insertLigcategories($categorie3, $lastInsertId);
+
+            $CNX->commit();
             header("Location: ./RestoController.php?action=GererRestos");
             return;
             break;
@@ -39,6 +50,14 @@ if (isset($_GET['action'])) {
         case "ModifierResto":
 
             $resultResto = $CNX->showRestos($_GET['id']);
+            $resultCategoriesResto = explode(",", $resultResto[0]['categories']);
+
+            $i = 1;
+            foreach ($resultCategoriesResto as $value) {
+                $resultResto[0]['categorie' . $i] = $value;
+                $i++;
+            }
+
             $_SESSION['afficherResto'] = $resultResto;
             $resultCategories = $CNX->showCategories();
             $_SESSION['afficherCategories'] = $resultCategories;
@@ -52,9 +71,10 @@ if (isset($_GET['action'])) {
         case "Modification" :
 
             if (!empty($_POST['modifier'])) {
-
+                $CNX->beginTransaction();
                 $id_villes = $CNX->selectOrInsertVille($_POST['nom_ville'], $_POST['cp']);
-
+                $lastInsertId = $CNX->updateResto($_POST['id'], $_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes);
+                $CNX->commit();
             } else if (!empty($_POST['supprimer'])) {
                 $CNX->deleteResto($_POST['id']);
             }

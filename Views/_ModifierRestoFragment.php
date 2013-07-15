@@ -24,16 +24,19 @@
         $tListePhotos = array();
         $tListeNotes = array();
 
-
         foreach ($tRestos as $value) {
+            $categorieRestoValue1 = (!empty($value['categorie1'])) ? $value['categorie1'] : "";
+            $categorieRestoValue2 = (!empty($value['categorie2'])) ? $value['categorie2'] : "";
+            $categorieRestoValue3 = (!empty($value['categorie3'])) ? $value['categorie3'] : "";
+
             $inputId = new Input("idv", "Id :", "id", "text", $value['id'], "disabled", 1, null);
             $inputIdh = new Input("id", "", "idh", "hidden", $value['id'], "", 1, null);
 
             $inputNom = new Input("nom", "Nom du restaurant :", "nom", "text", $value['nom'], "", 1, null);
 
-            $selectCategories1 = new DataList("categorie1", "Categories :", $tListeElemCategories, "categorie1", null, 1, "", "selectCategorie");
-            $selectCategories2 = new DataList("categorie2", "", $tListeElemCategories, "categorie2", null, 1, "", "selectCategorie");
-            $selectCategories3 = new DataList("categorie3", "", $tListeElemCategories, "categorie3", null, 1, "", "selectCategorie");
+            $selectCategories1 = new DataList("categorie1", "Categories :", $tListeElemCategories, "categorie1", $categorieRestoValue1, 1, "", "selectCategorie");
+            $selectCategories2 = new DataList("categorie2", "", $tListeElemCategories, "categorie2", $categorieRestoValue2, 1, "", "selectCategorie");
+            $selectCategories3 = new DataList("categorie3", "", $tListeElemCategories, "categorie3", $categorieRestoValue3, 1, "", "selectCategorie");
 
             $inputNumero_tel = new Input("numero_tel", "Numéro de téléphone :", "numero_tel", "text", $value['numero_tel'], "", 1, null);
             $inputEmail = new Input("email", "Email :", "email", "text", $value['email'], null, 1, null);
@@ -43,7 +46,6 @@
 
             $selectVilles = new DataList("nom_ville", "Ville :", $tListeElemVilles, "nom_ville", $value['nom_ville'], 1, "", "select");
             $inputCp = new Input("cp", "Code postal :", "cp", "text", $value['cp'], "", 1, null);
-
         }
 
         $inputSubmit = new Input("modifier", null, "modifier", "submit", "Modifier", "", 5, "inputGreen");

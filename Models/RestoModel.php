@@ -10,9 +10,25 @@ class RestoModel extends CNX {
         parent::__construct($base, $user, $pwd);
     }
 
-    // --- Insertion ou selection d'une ville
+    public function beginTransaction() {
+        $this->_bdd->beginTransaction();
+    }
 
-    function selectOrInsertVille($nom, $cp) {
+    public function commit() {
+        $this->_bdd->commit();
+    }
+
+    public function rollback() {
+        $this->_bdd->rollback();
+    }
+
+    /**
+     * Insertion ou selection d'une ville, si la ville n'existe pas, elle sera ajoutee
+     * @param type $nom
+     * @param type $cp
+     * @return boolean
+     */
+    public function selectOrInsertVille($nom, $cp) {
 
         $tNomChampTable = ["nom", "cp"];
         $tValeurs = [":$nom", ":$cp"];
@@ -38,7 +54,50 @@ class RestoModel extends CNX {
         }
     }
 
-    function insertResto($nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_types_voie, $id_villes) {
+    /**
+     * Insertion ou selection d'une categorie, si la categorie n'existe pas, elle sera ajoutee
+     * @param type $nom
+     * @param type $cp
+     * @return boolean
+     */
+    public function selectOrInsertCategorie($nom) {
+
+        $tNomChampTable = ["nom"];
+        $tValeurs = [":$nom"];
+
+        $sPrepareSelect = "SELECT id, count(*) as result FROM categories WHERE nom = :nom";
+
+        $bdd = $this->_bdd;
+        $req = $bdd->prepare($sPrepareSelect);
+        $req->execute(array(':nom' => $nom));
+
+        while ($donnees = $req->fetch()) {
+            if ($donnees['result'] == "1") {
+                $resultSelect = $donnees['id'];
+            } else {
+                DAO::insert($this->_bdd, "categories", $tNomChampTable, $tValeurs);
+                $resultSelect = $this->selectOrInsertCategorie($nom);
+            }
+        }
+        if ($resultSelect) {
+            return $resultSelect;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Retourne l'id ou faux en fonction du succès de l'insertion d'un nouveau restaurant
+     * @param type $nom
+     * @param type $numero_tel
+     * @param type $email
+     * @param type $numero_voie
+     * @param type $nom_voie
+     * @param type $id_types_voie
+     * @param type $id_villes
+     * @return boolean ou id
+     */
+    public function insertResto($nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_types_voie, $id_villes) {
 
         $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_types_voie", "id_villes"];
         $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_types_voie", ":$id_villes"];
@@ -48,19 +107,28 @@ class RestoModel extends CNX {
         $result = DAO::insert($this->_bdd, "restaurants", $tNomChampTable, $tValeurs);
 
         if ($result) {
-            return true;
+            return $this->_bdd->lastInsertId();
         } else {
             return false;
         }
     }
 
-    function showRestos($id = null) {
+    /**
+     * Retroune un tableau avec tous les restaurants
+     * @param type $id
+     * @return array
+     */
+    public function showRestos($id = null) {
 
         if (isset($id)) {
-            $req = $this->_bdd->prepare('SELECT r.id, r.nom, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.id_types_voie, v.nom as nom_ville, v.cp 
-                                                    FROM restaurants r 
-                                                    JOIN villes v 
-                                                    ON v.id = r.id_villes 
+            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.id_types_voie, v.nom as nom_ville, v.cp
+                                                    FROM restaurants r
+                                                    LEFT JOIN villes v
+                                                    ON v.id = r.id_villes
+                                                    LEFT JOIN ligcategories lig
+                                                    on r.id = lig.id_restaurants
+                                                    LEFT JOIN categories c
+                                                    on c.id = lig.id_categories
                                                     WHERE r.id = :id');
             $req->bindParam(':id', $id, PDO::PARAM_STR);
         } else {
@@ -74,7 +142,11 @@ class RestoModel extends CNX {
         return $resultAfficherUsers;
     }
 
-    function showTypesVoie() {
+    /**
+     * Retourne la liste des voies avec leur id en clef
+     * @return array
+     */
+    public function showTypesVoie() {
 
         $req = $this->_bdd->prepare('SELECT id, nom FROM types_voie ORDER BY nom');
         $req->execute();
@@ -88,7 +160,11 @@ class RestoModel extends CNX {
         return $resultat;
     }
 
-    function showVilles() {
+    /**
+     * Retourne une liste de ville simple
+     * @return array (1 dimension)
+     */
+    public function showVilles() {
 
         $req = $this->_bdd->prepare('SELECT DISTINCT nom FROM villes ORDER BY nom');
         $req->execute();
@@ -102,7 +178,11 @@ class RestoModel extends CNX {
         return $resultat;
     }
 
-    function showCategories() {
+    /**
+     * Retourne la liste des catégories simple
+     * @return array (1 dimension)
+     */
+    public function showCategories() {
 
         $req = $this->_bdd->prepare('SELECT nom FROM categories ORDER BY nom');
         $req->execute();
@@ -116,7 +196,35 @@ class RestoModel extends CNX {
         return $resultat;
     }
 
-    function updateResto($id, $nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_types_voie, $id_villes) {
+    public function insertLigcategories($id_categories, $id_restaurants) {
+        $tNomChampTable = ["id_categories", "id_restaurants"];
+        $tValeurs = [":$id_categories", ":$id_restaurants"];
+
+        // --- Demarage de la transaction
+
+        $result = DAO::insert($this->_bdd, "ligcategories", $tNomChampTable, $tValeurs);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Met à jour le restaurant indiqué par rapport à son id.
+     * Retourne le lastInsertId
+     * @param type $id
+     * @param type $nom
+     * @param type $numero_tel
+     * @param type $email
+     * @param type $numero_voie
+     * @param type $nom_voie
+     * @param type $id_types_voie
+     * @param type $id_villes
+     * @return boolean ou id
+     */
+    public function updateResto($id, $nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_types_voie, $id_villes) {
 
         $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_types_voie", "id_villes"];
         $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_types_voie", ":$id_villes"];
@@ -127,13 +235,17 @@ class RestoModel extends CNX {
         $result = DAO::update($this->_bdd, "restaurants", $tNomChampTable, $tValeurs, $twhere);
 
         if ($result) {
-            return true;
+            return $this->_bdd->lastInsertId();
         } else {
             return false;
         }
     }
 
-    function deleteResto($id) {
+    /**
+     * Supprime le restaurant par rapport à son id
+     * @param type $id
+     */
+    public function deleteResto($id) {
         $req = $this->_bdd->prepare('DELETE FROM restaurants WHERE id = :id');
         $req->bindParam(':id', $id, PDO::PARAM_STR);
         $req->execute();
