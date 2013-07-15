@@ -7,6 +7,7 @@ var mdp = document.getElementById("mdp");
 var mdpMessage = document.getElementById("mdpMessage");
 var mdp_check = document.getElementById("mdp_check");
 var mdp_checkMessage = document.getElementById("mdp_checkMessage");
+var valider = document.getElementById("valider");
 
 function invalidateInput(elem) {
     elem.className = "inputInvalid";
@@ -18,6 +19,7 @@ function validateInput(elem) {
 
 function formChecker() {
     var pseudoTest = pseudoTester();
+    makeRequest();
     var emailTest = emailTester();
     var mdpTest = mdpTester();
     var mdp_checkTest = mdp_checkTester();

@@ -22,7 +22,7 @@ if (isset($_GET['action'])) {
             $result = $CNX->connectUser($_POST['email'], $_POST['mdp']);
 
             if ($result[0] != 0) {
-                if ($result[2] == 1) {
+                if ($result['actif'] == 1) {
                     $_SESSION['user'] = $result;
                 } else {
                     $_SESSION['user'] = "inactif";

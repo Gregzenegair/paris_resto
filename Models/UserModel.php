@@ -22,19 +22,9 @@ class UserModel extends CNX {
         while ($donnees = $req->fetch()) {
             $mdp5 = md5($mdp);
             if ($donnees['mdp'] == $mdp5) {
-                $id = $donnees['id'];
-                $statut_membre = $donnees['statut'];
-                $actif_membre = $donnees['actif'];
-
-                array_push($aResultats, $id);
-                array_push($aResultats, $statut_membre);
-                array_push($aResultats, $actif_membre);
-
                 $req->closeCursor();
-                return $aResultats;
+                return $donnees;
             } else {
-                array_push($aResultats, 0);
-                array_push($aResultats, 0);
                 array_push($aResultats, 0);
                 $req->closeCursor();
                 return $aResultats;
