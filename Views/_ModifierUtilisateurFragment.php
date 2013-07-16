@@ -3,6 +3,22 @@
 <div id="mainFrame">
 
     <?php
+    $user = true;
+    if (!empty($_SESSION['user'])) {
+        if (is_array($_SESSION['user'])) {
+            if ($_SESSION['user'] != "10") {
+                $user = false;
+            }
+        } else {
+            $user = false;
+        }
+    }
+
+    if ($user == false) {
+        header("Location: ./../Controllers/UserController.php?action=accueil");
+        return;
+    }
+
     include_once '../Controllers/Form/Form.php';
     include_once '../Controllers/Form/Br.php';
     include_once '../Controllers/Form/Input.php';
@@ -19,7 +35,7 @@
         $tListeActif = array();
         array_push($tListeActif, "Inactif");
         array_push($tListeActif, "Actif");
-        
+
         foreach ($tUsers as $value) {
             $inputId = new Input("idv", "Id :", "id", "text", $value['id'], "disabled", 1, null);
             $inputIdh = new Input("id", "", "idh", "hidden", $value['id'], "", 1, null);

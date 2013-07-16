@@ -72,17 +72,17 @@ if (isset($_GET['action'])) {
 
             if (!empty($_POST['modifier'])) {
                 $CNX->beginTransaction();
-                
+                $CNX->deleteLigcategories($_POST['id']);
                 $id_villes = $CNX->selectOrInsertVille($_POST['nom_ville'], $_POST['cp']);
                 $categorie1 = $CNX->selectOrInsertCategorie($_POST['categorie1']);
                 $categorie2 = $CNX->selectOrInsertCategorie($_POST['categorie2']);
                 $categorie3 = $CNX->selectOrInsertCategorie($_POST['categorie3']);
                 
-                $lastUpdateId = $CNX->updateResto($_POST['id'], $_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes);
+                $CNX->updateResto($_POST['id'], $_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes);
                 
-                $CNX->insertLigcategories($categorie1, $lastUpdateId);
-                $CNX->insertLigcategories($categorie2, $lastUpdateId);
-                $CNX->insertLigcategories($categorie3, $lastUpdateId);
+                $CNX->insertLigcategories($categorie1, $_POST['id']);
+                $CNX->insertLigcategories($categorie2, $_POST['id']);
+                $CNX->insertLigcategories($categorie3, $_POST['id']);
                 
                 $CNX->commit();
             } else if (!empty($_POST['supprimer'])) {

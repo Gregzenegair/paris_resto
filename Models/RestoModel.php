@@ -5,7 +5,7 @@ require_once 'DAO.php';
 
 class RestoModel extends CNX {
 
-    // --- Methode de connexion à la base
+// --- Methode de connexion à la base
     public function __construct($base, $user, $pwd) {
         parent::__construct($base, $user, $pwd);
     }
@@ -29,6 +29,10 @@ class RestoModel extends CNX {
      * @return boolean
      */
     public function selectOrInsertVille($nom, $cp) {
+
+        if ($nom == "") {
+            return false;
+        }
 
         $tNomChampTable = ["nom", "cp"];
         $tValeurs = [":$nom", ":$cp"];
@@ -61,6 +65,10 @@ class RestoModel extends CNX {
      * @return boolean
      */
     public function selectOrInsertCategorie($nom) {
+
+        if ($nom == "") {
+            return false;
+        }
 
         $tNomChampTable = ["nom"];
         $tValeurs = [":$nom"];
@@ -102,7 +110,7 @@ class RestoModel extends CNX {
         $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_types_voie", "id_villes"];
         $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_types_voie", ":$id_villes"];
 
-        // --- Demarage de la transaction
+// --- Demarage de la transaction
 
         $result = DAO::insert($this->_bdd, "restaurants", $tNomChampTable, $tValeurs);
 
@@ -132,8 +140,15 @@ class RestoModel extends CNX {
                                                     WHERE r.id = :id');
             $req->bindParam(':id', $id, PDO::PARAM_STR);
         } else {
-            $req = $this->_bdd->prepare('SELECT *
-                                            FROM restaurants');
+            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.id_types_voie, v.nom as nom_ville, v.cp
+                                                    FROM restaurants r
+                                                    LEFT JOIN villes v
+                                                    ON v.id = r.id_villes
+                                                    LEFT JOIN ligcategories lig
+                                                    on r.id = lig.id_restaurants
+                                                    JOIN categories c
+                                                    on c.id = lig.id_categories
+                                                    GROUP BY r.nom');
         }
 
         $req->execute();
@@ -200,7 +215,7 @@ class RestoModel extends CNX {
         $tNomChampTable = ["id_categories", "id_restaurants"];
         $tValeurs = [":$id_categories", ":$id_restaurants"];
 
-        // --- Demarage de la transaction
+// --- Demarage de la transaction
 
         $result = DAO::insert($this->_bdd, "ligcategories", $tNomChampTable, $tValeurs);
 
@@ -212,8 +227,19 @@ class RestoModel extends CNX {
     }
 
     /**
+     * Utiliser la suppression des categories afin d'appliquer les modifications
+     * depuis le formulaire
+     * @param type $id
+     */
+    public function deleteLigcategories($id) {
+        $req = $this->_bdd->prepare('DELETE FROM ligcategories WHERE id_restaurants = :id');
+        $req->bindParam(':id', $id, PDO::PARAM_STR);
+        $req->execute();
+        $req->closeCursor();
+    }
+
+    /**
      * Met à jour le restaurant indiqué par rapport à son id.
-     * Retourne le lastInsertId
      * @param type $id
      * @param type $nom
      * @param type $numero_tel
@@ -230,12 +256,12 @@ class RestoModel extends CNX {
         $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_types_voie", ":$id_villes"];
         $twhere['id'] = $id;
 
-        // --- Demarage de la transaction
+// --- Demarage de la transaction
 
         $result = DAO::update($this->_bdd, "restaurants", $tNomChampTable, $tValeurs, $twhere);
 
         if ($result) {
-            return $this->_bdd->lastInsertId();
+            return true;
         } else {
             return false;
         }

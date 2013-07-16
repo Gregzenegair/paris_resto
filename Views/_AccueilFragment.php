@@ -9,8 +9,8 @@
 Accueil<br>
 
 Ceci est l'accueil du site<br>
-<li>Ajouter la modification des champs de catégorie d'un restaurant</li>
-<li>Sécuriser les pages ou les controllers</li>
+<li>Ajouter la modification des champs de catégorie</li>
+<li>Sécuriser les pages, les views</li>
 ...
 
 </div>

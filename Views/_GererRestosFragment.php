@@ -18,7 +18,8 @@
                 <tr>
                     <td style="width: 200px;"></td>
                     <td><?PHP echo $value['nom_voie']; ?></td>
-                    <td><?PHP echo $value['id_villes']; ?></td>
+                    <td><?PHP echo $value['nom_ville']; ?></td>
+                    <td><?PHP echo $value['categories']; ?></td>
                 </tr>
 
                 <?PHP
