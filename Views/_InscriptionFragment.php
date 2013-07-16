@@ -45,4 +45,4 @@
     
 </div>
 
-<script src="js/inscriptionFormCheck.js"></script>
+<script src="js/inscriptionForm.js"></script>

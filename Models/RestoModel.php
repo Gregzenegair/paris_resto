@@ -22,6 +22,7 @@ class RestoModel extends CNX {
             return false;
         }
 
+        $nom = ucfirst($nom);
         $tNomChampTable = ["nom", "cp"];
         $tValeurs = [":$nom", ":$cp"];
 
@@ -58,6 +59,7 @@ class RestoModel extends CNX {
             return false;
         }
 
+        $nom = ucfirst($nom);
         $tNomChampTable = ["nom"];
         $tValeurs = [":$nom"];
 

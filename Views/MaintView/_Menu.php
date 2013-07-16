@@ -10,7 +10,10 @@
                 <li>Partenaires</li>
                 <li><a href="./../Controllers/UserController.php?action=GererUtilisateurs">Gérer les utilisateurs</a></li>
                 <li><a href="./../Controllers/RestoController.php?action=GererRestos">Gérer les restaurants</a></li>
-                <li><a href="./../Controllers/CommentairesController.php?action=GererCommentaires">Gérer les commentaires</a></li>
+                <li><a href="./../Controllers/PhotoController.php?action=GererPhotos">Gérer les photos</a></li>
+                <li><a href="./../Controllers/VilleController.php?action=GererVilles">Gérer les villes</a></li>
+                <li><a href="./../Controllers/CategorieController.php?action=GererCategories">Gérer les categories</a></li>
+                <li><a href="./../Controllers/CommentaireController.php?action=GererCommentaires">Gérer les commentaires</a></li>
                 <?PHP
             } else if ($tUser['statut'] == "0") {
                 ?>

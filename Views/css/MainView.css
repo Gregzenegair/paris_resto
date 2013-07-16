@@ -74,6 +74,32 @@ footer {
     margin-right: 1em;
 }
 
+#AjouterResto {
+    float: left;
+}
+
+#rechercher {
+    float: right;
+    margin: 1em;
+}
+
+#tableauAffichageVilles {
+    width: 100%;
+}
+
+#tableauAffichageVilles td{
+    width: 16%;
+}
+
+#tableauAffichageCategories {
+    width: 100%;
+}
+
+#tableauAffichageCategories td{
+    width: 15%;
+}
+
+
 
 .aGreen {
     text-decoration: none;

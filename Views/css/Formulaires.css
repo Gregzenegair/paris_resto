@@ -150,6 +150,7 @@ option {
 }
 
 .inputRed {
+    text-decoration: none;
     background-color: #E60000;
     background: -webkit-gradient(linear, left top, left bottom, from(#E60000), to(#990000));
     background: -webkit-linear-gradient(top, #E60000, #990000);
@@ -235,11 +236,10 @@ option {
     padding:5px 8px;
 }
 
-#AjouterResto {
-    float: left;
+#rechercher {
+    background: #fff url(../img/loupe.png) no-repeat 97% center;
 }
 
-#rechercher {
-    float: right;
-    margin: 1em;
+.ajaxcCheck {
+    background: #fff url(../img/loading.gif) no-repeat 97% center;
 }

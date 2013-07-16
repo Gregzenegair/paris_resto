@@ -160,7 +160,9 @@ ALTER TABLE `paris_resto`.`users` MODIFY COLUMN `commentaire` VARCHAR(1000) CHAR
 #-- Definition des FOREIGN KEYs
 ALTER TABLE commentaires ADD CONSTRAINT FK_commentaires_id_Avis FOREIGN KEY (id_Avis) REFERENCES Avis(id);
 ALTER TABLE photos ADD CONSTRAINT FK_photos_id_restaurants FOREIGN KEY (id_restaurants) REFERENCES restaurants(id);
-ALTER TABLE restaurants ADD CONSTRAINT FK_restaurants_id_villes FOREIGN KEY (id_villes) REFERENCES villes(id);
+ALTER TABLE restaurants ADD CONSTRAINT FK_restaurants_id_villes FOREIGN KEY (id_villes) REFERENCES villes (id)
+    ON DELETE SET NULL
+    ON UPDATE SET NULL;
 ALTER TABLE restaurants ADD CONSTRAINT FK_restaurants_id_types_voie FOREIGN KEY (id_types_voie) REFERENCES types_voie(id);
 ALTER TABLE users ADD CONSTRAINT FK_users_statut FOREIGN KEY (statut) REFERENCES statuts(id);
 ALTER TABLE Avis ADD CONSTRAINT FK_Avis_id_users FOREIGN KEY (id_users) REFERENCES users(id);

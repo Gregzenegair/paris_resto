@@ -154,7 +154,15 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
 
         $req->execute();
         $resultAfficherUsers = $req->fetchAll();
-        $resultAfficherUsers = $this->arrangeResultUser($resultAfficherUsers);
+        if (!isset($id)) {
+            $resultAfficherUsers = $this->arrangeResultUser($resultAfficherUsers);
+        } else {
+            if ($resultAfficherUsers[0]['actif'] == 0) {
+                $result[0]['actif'] = "Inactif";
+            } else {
+                $result[0]['actif'] = "Actif";
+            }
+        }
         $req->closeCursor();
         return $resultAfficherUsers;
     }

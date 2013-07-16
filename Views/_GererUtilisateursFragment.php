@@ -11,7 +11,7 @@ NavigationController::Controller($_SESSION['user']);
     spl_autoload_register(function ($nomClasse) {
                 require_once "../Controllers/Form/$nomClasse.php";
             });
-    $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='Je recherche...'", 5, "rechercher");
+    $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='laisser vide pour tout afficher'", 5, "rechercher");
     $elements = array($inputRecherche);
     $formulaire = new Form("mainForm", "POST", "./../Controllers/UserController.php?action=Rechercher", $elements);
     echo $formulaire->genererForm();

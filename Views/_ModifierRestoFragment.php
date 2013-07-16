@@ -95,3 +95,4 @@ NavigationController::Controller($_SESSION['user']);
 </div>
 
 <script src="js/btSupprimer.js"></script>
+<script src="js/ajouterRestoForm.js"></script>

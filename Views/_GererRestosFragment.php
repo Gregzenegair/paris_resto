@@ -15,7 +15,7 @@ NavigationController::Controller($_SESSION['user']);
             });
 
 
-    $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='Je recherche...'", 5, "rechercher");
+    $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='laisser vide pour tout afficher'", 5, "rechercher");
     $elements = array($inputRecherche);
     $formulaire = new Form("mainForm", "POST", "./../Controllers/RestoController.php?action=Rechercher", $elements);
     echo $formulaire->genererForm();

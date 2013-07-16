@@ -64,4 +64,4 @@
     echo $formulaire->genererForm();
     ?>
 </div>
-
+<script src="js/ajouterRestoForm.js"></script>

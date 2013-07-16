@@ -91,7 +91,6 @@ var emailBoolean = false;
 
 function getXMLHttpRequest() {
     var xhr = null;
-
     if (window.XMLHttpRequest || window.ActiveXObject) {
         if (window.ActiveXObject) {
             try {
@@ -119,7 +118,7 @@ function makeRequest() {
 
 function request(callback) {
     var xhr = getXMLHttpRequest();
-
+    email.className = "ajaxcCheck";
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
             callback(xhr.responseText);
@@ -132,7 +131,7 @@ function request(callback) {
 
 function readData(oData) {
     var reg = new RegExp('^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$', 'i');
-    
+    email.className = "";
     if (oData == "false") {
         emailMessage.innerText = "L'email saisi existe déjà, veuillez en choisir un autre";
         invalidateInput(email);

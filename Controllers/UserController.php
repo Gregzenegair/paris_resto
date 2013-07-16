@@ -59,11 +59,6 @@ if (isset($_GET['action'])) {
         case "ModifierUtilisateur":
 
             $result = $CNX->showUsers($_GET['id']);
-            if ($result[0]['actif'] == 0) {
-                $result[0]['actif'] = "Inactif";
-            } else {
-                $result[0]['actif'] = "Actif";
-            }
             $result2 = $CNX->showStatuts();
             $_SESSION['afficherStatuts'] = $result2;
             $_SESSION['afficherUser'] = $result;
