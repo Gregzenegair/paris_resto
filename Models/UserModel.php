@@ -74,7 +74,7 @@ class UserModel extends CNX {
     public function insertUser($pseudo, $email, $mdp, $statut) {
 
         $email_check = md5(microtime(TRUE) * 100000);
-
+        $email = strtolower($email);
         $tNomChampTable = ["pseudo", "email", "mdp", "statut", "date_inscription", "email_check"];
         $tValeurs = [":$pseudo", ":$email", ":$mdp", ":$statut", "now()", ":$email_check"];
 
@@ -113,6 +113,23 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
         mail($destinataire, $sujet, $message, $entete); // --- Envoi du mail
     }
 
+    public function seekUsers($recherche) {
+        $recherche = "%" . $recherche . "%";
+        $req = $this->_bdd->prepare('SELECT u.id, u.pseudo, u.email, s.nom as statut, u.date_inscription, u.actif 
+                                            FROM users u
+                                            JOIN statuts s
+                                            ON u.statut = s.id
+                                            WHERE u.pseudo like :recherche
+                                            OR u.email like :recherche
+                                            OR s.nom like :recherche');
+        $req->bindParam(':recherche', $recherche, PDO::PARAM_STR);
+        $req->execute();
+        $resultAfficherUsers = $req->fetchAll();
+        $resultAfficherUsers = $this->arrangeResultUser($resultAfficherUsers);
+        $req->closeCursor();
+        return $resultAfficherUsers;
+    }
+
     /**
      * Afficher un ou plusieurs utilisateur (si id est renseigné ou pas)
      * Retourne un tableau avec un ou plusieurs utilisateurs
@@ -137,6 +154,7 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
 
         $req->execute();
         $resultAfficherUsers = $req->fetchAll();
+        $resultAfficherUsers = $this->arrangeResultUser($resultAfficherUsers);
         $req->closeCursor();
         return $resultAfficherUsers;
     }
@@ -186,6 +204,21 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
         $req->bindParam(':id', $id, PDO::PARAM_STR);
         $req->execute();
         $req->closeCursor();
+    }
+
+    private function arrangeResultUser($result) {
+        foreach ($result as $key => $value) {
+            $split = explode("-", $value['date_inscription']);
+            $date = $split[2] . "/" . $split[1] . "/" . $split[0];
+            $result[$key]['date_inscription'] = $date;
+
+            if ($result[$key]['actif'] == 0) {
+                $result[$key]['actif'] = "Inactif";
+            } else {
+                $result[$key]['actif'] = "Actif";
+            }
+        }
+        return $result;
     }
 
 }

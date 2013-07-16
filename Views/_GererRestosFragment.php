@@ -6,10 +6,21 @@ NavigationController::Controller($_SESSION['user']);
 ?>
 
 <div id="mainFrame">
-    <a href="./../Controllers/RestoController.php?action=AjouterResto" class="aGreen">Ajouter restaurant</a>
+    <a href="./../Controllers/RestoController.php?action=AjouterResto" id="AjouterResto" class="aGreen">Ajouter restaurant</a>
 
 
     <?php
+    spl_autoload_register(function ($nomClasse) {
+                require_once "../Controllers/Form/$nomClasse.php";
+            });
+
+
+    $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='Je recherche...'", 5, "rechercher");
+    $elements = array($inputRecherche);
+    $formulaire = new Form("mainForm", "POST", "./../Controllers/RestoController.php?action=Rechercher", $elements);
+    echo $formulaire->genererForm();
+
+
     if (!empty($_SESSION['afficherRestos'])) {
         $tRestos = $_SESSION['afficherRestos'];
         ?>
@@ -32,7 +43,7 @@ NavigationController::Controller($_SESSION['user']);
                     <td><?PHP echo $value['numero_voie'] . " " . $value['type_voie'] . " " . $value['nom_voie']; ?></td>
                     <td><?PHP echo $value['nom_ville']; ?></td>
                     <td><?PHP echo $value['cp']; ?></td>
-                    
+
                 </tr>
 
                 <?PHP

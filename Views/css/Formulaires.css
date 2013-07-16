@@ -234,3 +234,12 @@ option {
 #numero_voie:focus {
     padding:5px 8px;
 }
+
+#AjouterResto {
+    float: left;
+}
+
+#rechercher {
+    float: right;
+    margin: 1em;
+}

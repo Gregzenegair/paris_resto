@@ -45,19 +45,14 @@ if (isset($_GET['action'])) {
         case "GererUtilisateurs":
 
             $result = $CNX->showUsers();
-            foreach ($result as $key => $value) {
-                $split = explode("-", $value['date_inscription']);
-                $date = $split[2] . "/" . $split[1] . "/" . $split[0];
-                $result[$key]['date_inscription'] = $date;
-
-                if ($result[$key]['actif'] == 0) {
-                    $result[$key]['actif'] = "Inactif";
-                } else {
-                    $result[$key]['actif'] = "Actif";
-                }
-            }
             $_SESSION['afficherUsers'] = $result;
 
+            break;
+
+        case "Rechercher":
+            $result = $CNX->seekUsers($_POST['rechercher']);
+            $_SESSION['afficherUsers'] = $result;
+            $action = "GererUtilisateurs";
             break;
 
         // --- Lorsque l'on clique sur le bouton pour aller modifier 1 utilisateur

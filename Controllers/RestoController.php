@@ -18,6 +18,12 @@ if (isset($_GET['action'])) {
             $_SESSION['afficherRestos'] = $resultRestos;
             break;
 
+        case "Rechercher":
+            $resultRestos = $CNX->seekRestos($_POST['rechercher']);
+            $_SESSION['afficherRestos'] = $resultRestos;
+            $action = "GererRestos";
+            break;
+
         case "AjouterResto":
             $resultCategories = $CNX->showCategories();
             $_SESSION['afficherCategories'] = $resultCategories;
@@ -54,7 +60,7 @@ if (isset($_GET['action'])) {
 
             $i = 1;
             foreach ($resultCategoriesResto as $value) {
-                $resultResto[0]['categorie' . $i] =   $value;
+                $resultResto[0]['categorie' . $i] = $value;
                 $i++;
             }
 

@@ -10,18 +10,6 @@ class RestoModel extends CNX {
         parent::__construct($base, $user, $pwd);
     }
 
-    public function beginTransaction() {
-        $this->_bdd->beginTransaction();
-    }
-
-    public function commit() {
-        $this->_bdd->commit();
-    }
-
-    public function rollback() {
-        $this->_bdd->rollback();
-    }
-
     /**
      * Insertion ou selection d'une ville, si la ville n'existe pas, elle sera ajoutee
      * @param type $nom
@@ -107,6 +95,7 @@ class RestoModel extends CNX {
      */
     public function insertResto($nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_types_voie, $id_villes) {
 
+        $email = strtolower($email);
         $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_types_voie", "id_villes"];
         $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_types_voie", ":$id_villes"];
 
@@ -119,6 +108,36 @@ class RestoModel extends CNX {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Retourne en resultat le tableau de recherche
+     * @param type $recherche
+     * @return type
+     */
+    public function seekRestos($recherche) {
+        $recherche = "%" . $recherche . "%";
+        $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, t.nom as type_voie, v.nom as nom_ville, v.cp
+                                                    FROM restaurants r
+                                                    LEFT JOIN villes v
+                                                    ON v.id = r.id_villes
+                                                    LEFT JOIN ligcategories lig
+                                                    ON r.id = lig.id_restaurants
+                                                    LEFT JOIN categories c
+                                                    ON c.id = lig.id_categories
+                                                    LEFT JOIN types_voie t
+                                                    ON t.id = r.id_types_voie
+                                                    WHERE r.nom like :recherche
+                                                    OR c.nom like :recherche
+                                                    OR v.nom like :recherche
+                                                    OR v.cp like :recherche
+                                                    GROUP BY r.id');
+        $req->bindParam(':recherche', $recherche, PDO::PARAM_STR);
+
+        $req->execute();
+        $resultAfficherUsers = $req->fetchAll();
+        $req->closeCursor();
+        return $resultAfficherUsers;
     }
 
     /**
