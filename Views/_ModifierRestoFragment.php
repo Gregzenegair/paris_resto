@@ -1,3 +1,10 @@
+<?PHP
+    // --- Controlle de l'utilisateur avant accès à la page
+    include_once '../Controllers/NavigationController.php';
+    NavigationController::Controller($_SESSION['user']);
+    // --- Fin de controle
+?>
+
 <link rel="stylesheet" type="text/css" href="css/btSupprimer.css">
 <div id="masqueGris"></div>
 <div id="mainFrame">

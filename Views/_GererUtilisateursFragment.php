@@ -1,5 +1,11 @@
-<div id="mainFrame">
+<?PHP
+    // --- Controlle de l'utilisateur avant accès à la page
+    include_once '../Controllers/NavigationController.php';
+    NavigationController::Controller($_SESSION['user']);
+    // --- Fin de controle
+?>
 
+<div id="mainFrame">
 
     <?php
     if (!empty($_SESSION['afficherUsers'])) {
@@ -22,11 +28,11 @@
                     <td><?PHP echo $value['date_inscription']; ?></td>
                     <td><?PHP echo $value['actif']; ?></td>
                 </tr>
-            <?PHP
+                <?PHP
             }
             ?>
         </table>
-    <?PHP
+        <?PHP
     }
     ?>
 </div>

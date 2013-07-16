@@ -1,3 +1,9 @@
+<?PHP
+    // --- Controlle de l'utilisateur avant accès à la page
+    include_once '../Controllers/NavigationController.php';
+    NavigationController::Controller($_SESSION['user']);
+    // --- Fin de controle
+?>
 
 <div id="mainFrame">
     <a href="./../Controllers/RestoController.php?action=AjouterResto" class="aGreen">Ajouter restaurant</a>
