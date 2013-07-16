@@ -10,12 +10,9 @@
 <div id="mainFrame">
 
     <?php
-    include_once '../Controllers/Form/Form.php';
-    include_once '../Controllers/Form/Br.php';
-    include_once '../Controllers/Form/Input.php';
-    include_once '../Controllers/Form/Select.php';
-    include_once '../Controllers/Form/DataList.php';
-    include_once '../Controllers/Form/ElementHTML.php';
+    spl_autoload_register(function ($nomClasse) {
+                require_once "../Controllers/Form/$nomClasse.php";
+            });
 
     $elements = array();
 

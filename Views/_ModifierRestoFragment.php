@@ -1,8 +1,8 @@
 <?PHP
-    // --- Controlle de l'utilisateur avant accès à la page
-    include_once '../Controllers/NavigationController.php';
-    NavigationController::Controller($_SESSION['user']);
-    // --- Fin de controle
+// --- Controlle de l'utilisateur avant accès à la page
+include_once '../Controllers/NavigationController.php';
+NavigationController::Controller($_SESSION['user']);
+// --- Fin de controle
 ?>
 
 <link rel="stylesheet" type="text/css" href="css/btSupprimer.css">
@@ -10,12 +10,9 @@
 <div id="mainFrame">
 
     <?php
-    include_once '../Controllers/Form/Form.php';
-    include_once '../Controllers/Form/Br.php';
-    include_once '../Controllers/Form/Input.php';
-    include_once '../Controllers/Form/Select.php';
-    include_once '../Controllers/Form/DataList.php';
-    include_once '../Controllers/Form/ElementHTML.php';
+    spl_autoload_register(function ($nomClasse) {
+                require_once "../Controllers/Form/$nomClasse.php";
+            });
 
     $elements = array();
 

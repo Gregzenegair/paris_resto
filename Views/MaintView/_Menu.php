@@ -5,7 +5,7 @@
             $tUser = $_SESSION['user'];
             if ($tUser['statut'] == "10") {
                 ?>
-                <li><a href="./../Controllers/NavigationController.php?action=Accueil">Accueil</a></li>
+                <li><a href="./../Controllers/ViewsController.php?action=Accueil">Accueil</a></li>
                 <li>Liste des restaurants</li>
                 <li>Partenaires</li>
                 <li><a href="./../Controllers/UserController.php?action=GererUtilisateurs">Gérer les utilisateurs</a></li>
@@ -14,7 +14,7 @@
                 <?PHP
             } else if ($tUser['statut'] == "0") {
                 ?>
-                <li><a href="./../Controllers/NavigationController.php?action=Accueil">Accueil</a></li>
+                <li><a href="./../Controllers/ViewsController.php?action=Accueil">Accueil</a></li>
                 <li>Liste des restaurants</li>
                 <li>Partenaires</li>
 
@@ -22,10 +22,10 @@
             }
         } else {
             ?>
-            <li><a href="./../Controllers/NavigationController.php?action=Accueil">Accueil</a></li>
+            <li><a href="./../Controllers/ViewsController.php?action=Accueil">Accueil</a></li>
             <li>Liste des restaurants</li>
             <li>Partenaires</li>
-            <li><a href="./../Controllers/NavigationController.php?action=Inscription">Inscription</a></li>
+            <li><a href="./../Controllers/ViewsController.php?action=Inscription">Inscription</a></li>
             <?PHP
         }
         ?>
