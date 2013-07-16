@@ -148,7 +148,7 @@ class RestoModel extends CNX {
                                                     on r.id = lig.id_restaurants
                                                     JOIN categories c
                                                     on c.id = lig.id_categories
-                                                    GROUP BY r.nom');
+                                                    GROUP BY r.id');
         }
 
         $req->execute();
