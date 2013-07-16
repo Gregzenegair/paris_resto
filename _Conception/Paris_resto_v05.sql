@@ -45,7 +45,7 @@ CREATE TABLE restaurants(
         email         Varchar (50) NOT NULL ,
         nom_voie      Varchar (50) ,
         numero_voie   Numeric ,
-        id_villes     Int ,
+        id_villes     Int (11) unsigned,
         id_types_voie Int NOT NULL ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
@@ -73,7 +73,7 @@ CREATE TABLE types_voie(
 
 
 CREATE TABLE users(
-        id               Int NOT NULL ,
+        id               Int(11) unsigned NOT NULL ,
         pseudo           Varchar (100) NOT NULL ,
         email            Varchar (100) NOT NULL ,
         mdp              Varchar (100) NOT NULL ,
@@ -124,7 +124,16 @@ CREATE TABLE lignotes(
         PRIMARY KEY (id_Avis ,id_notes )
 )ENGINE=InnoDB;
 
-
+CREATE TABLE `villes_france` (
+   id  int (11) unsigned Auto_increment  NOT NULL ,
+  `nom` varchar(255) NOT NULL default '',
+  `cp` varchar(255) NOT NULL default '',
+  `latitude` float(7,6) NOT NULL default '0.000000',
+  `longitude` float(7,6) NOT NULL default '0.000000',
+  `eloignement` varchar(255) NOT NULL default '',
+  `url` varchar(255) NOT NULL default '',
+  PRIMARY KEY (id)
+) ENGINE=InnoDB;
 
 
 #-- Definition des AUTO_INCREMENT
@@ -160,7 +169,7 @@ ALTER TABLE `paris_resto`.`users` MODIFY COLUMN `commentaire` VARCHAR(1000) CHAR
 #-- Definition des FOREIGN KEYs
 ALTER TABLE commentaires ADD CONSTRAINT FK_commentaires_id_Avis FOREIGN KEY (id_Avis) REFERENCES Avis(id);
 ALTER TABLE photos ADD CONSTRAINT FK_photos_id_restaurants FOREIGN KEY (id_restaurants) REFERENCES restaurants(id);
-ALTER TABLE restaurants ADD CONSTRAINT FK_restaurants_id_villes FOREIGN KEY (id_villes) REFERENCES villes (id)
+ALTER TABLE restaurants ADD CONSTRAINT `FK_restaurants_id_villes` FOREIGN KEY `FK_restaurants_id_villes` (`id_villes`) REFERENCES `villes_france` (`id`)
     ON DELETE SET NULL
     ON UPDATE SET NULL;
 ALTER TABLE restaurants ADD CONSTRAINT FK_restaurants_id_types_voie FOREIGN KEY (id_types_voie) REFERENCES types_voie(id);
