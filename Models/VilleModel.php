@@ -21,7 +21,7 @@ class VilleModel extends CNX {
      */
     public function showVilles() {
 
-        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes v');
+        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes_france v LIMIT 100');
         $req->execute();
         $resultAfficherStatuts = $req->fetchAll();
         $req->closeCursor();
@@ -31,9 +31,10 @@ class VilleModel extends CNX {
 
     public function seekVilles($recherche) {
         $recherche = "%" . $recherche . "%";
-        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes v
+        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes_france v
                                                     WHERE v.nom like :recherche
-                                                    OR v.cp like :recherche');
+                                                    OR v.cp like :recherche
+                                                    LIMIT 100');
         $req->bindParam(':recherche', $recherche, PDO::PARAM_STR);
 
         $req->execute();
@@ -43,7 +44,7 @@ class VilleModel extends CNX {
     }
 
     public function deleteVille($id) {
-        $req = $this->_bdd->prepare('DELETE FROM villes WHERE id = :id');
+        $req = $this->_bdd->prepare('DELETE FROM villes_france WHERE id = :id');
         $req->bindParam(':id', $id, PDO::PARAM_STR);
         $req->execute();
         $req->closeCursor();

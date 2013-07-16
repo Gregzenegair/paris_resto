@@ -27,7 +27,7 @@ switch ($action) {
 
         $bdd = $cnx->get_bdd();
 
-        $req = $bdd->prepare('SELECT cp FROM villes WHERE nom = :nom LIMIT 1');
+        $req = $bdd->prepare('SELECT cp FROM villes_france WHERE nom = :nom LIMIT 1');
         $req->bindParam(':nom', $_GET['nom'], PDO::PARAM_STR);
         $req->execute();
 

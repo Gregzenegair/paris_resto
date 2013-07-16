@@ -26,7 +26,7 @@ class RestoModel extends CNX {
         $tNomChampTable = ["nom", "cp"];
         $tValeurs = [":$nom", ":$cp"];
 
-        $sPrepareSelect = "SELECT id, count(*) as result FROM villes WHERE nom = :nom AND cp = :cp";
+        $sPrepareSelect = "SELECT id, count(*) as result FROM villes_france WHERE nom = :nom AND cp = :cp";
 
         $bdd = $this->_bdd;
         $req = $bdd->prepare($sPrepareSelect);
@@ -36,7 +36,7 @@ class RestoModel extends CNX {
             if ($donnees['result'] == "1") {
                 $resultSelect = $donnees['id'];
             } else {
-                DAO::insert($this->_bdd, "villes", $tNomChampTable, $tValeurs);
+                DAO::insert($this->_bdd, "villes_france", $tNomChampTable, $tValeurs);
                 $resultSelect = $this->selectOrInsertVille($nom, $cp);
             }
         }
@@ -121,7 +121,7 @@ class RestoModel extends CNX {
         $recherche = "%" . $recherche . "%";
         $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, t.nom as type_voie, v.nom as nom_ville, v.cp
                                                     FROM restaurants r
-                                                    LEFT JOIN villes v
+                                                    LEFT JOIN villes_france v
                                                     ON v.id = r.id_villes
                                                     LEFT JOIN ligcategories lig
                                                     ON r.id = lig.id_restaurants
@@ -152,7 +152,7 @@ class RestoModel extends CNX {
         if (isset($id)) {
             $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.id_types_voie, v.nom as nom_ville, v.cp
                                                     FROM restaurants r
-                                                    LEFT JOIN villes v
+                                                    LEFT JOIN villes_france v
                                                     ON v.id = r.id_villes
                                                     LEFT JOIN ligcategories lig
                                                     on r.id = lig.id_restaurants
@@ -163,7 +163,7 @@ class RestoModel extends CNX {
         } else {
             $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, t.nom as type_voie, v.nom as nom_ville, v.cp
                                                     FROM restaurants r
-                                                    LEFT JOIN villes v
+                                                    LEFT JOIN villes_france v
                                                     ON v.id = r.id_villes
                                                     LEFT JOIN ligcategories lig
                                                     ON r.id = lig.id_restaurants
@@ -204,7 +204,7 @@ class RestoModel extends CNX {
      */
     public function showVilles() {
 
-        $req = $this->_bdd->prepare('SELECT DISTINCT nom FROM villes ORDER BY nom');
+        $req = $this->_bdd->prepare('SELECT DISTINCT nom FROM villes_france ORDER BY nom');
         $req->execute();
         $resultAfficherVilless = $req->fetchAll();
         $req->closeCursor();
