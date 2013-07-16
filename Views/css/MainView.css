@@ -24,17 +24,23 @@ body {
 }
 
 #mainFrame {
-    margin-left: 30%;
+    float: left;
     min-height: 400px;
-    width: 70%;
+    width: 77%;
+    margin: 1em 0;
+    margin-left: 2%;
 }
 #menu {
-    position: absolute;
-    width: 15%;
+    float: left;
     border: 4px solid black;
     border-radius: 4px;
+    width: 20%;
+    margin: 1em 0;
 }
 
+.clear {
+    clear: both;
+}
 header {
     border: 4px solid black;
     min-height: 100px;
@@ -59,9 +65,13 @@ footer {
 
 }
 
-#membres td {
-    padding-right: 1em;
-    padding-right: 1em;
+#tableauAffichage {
+    width: 100%;
+}
+
+#tableauAffichage td {
+    margin-right: 1em;
+    margin-right: 1em;
 }
 
 

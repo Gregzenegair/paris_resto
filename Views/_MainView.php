@@ -18,14 +18,17 @@ session_start();
             $fragment = "_AccueilFragment.php";
         ?>
         <header>Header
-                <?PHP
-                include_once './MaintView/_HeaderFragment.php';
-                include_once './../Views/_ConnexionFragment.php';
-                ?>
+            <?PHP
+            include_once './MaintView/_HeaderFragment.php';
+            include_once './../Views/_ConnexionFragment.php';
+            ?>
         </header>
         <?PHP
         include_once './MaintView/_Menu.php';
         include_once $fragment;
+                ?>
+        <div class="clear"></div>
+        <?PHP
         include_once './MaintView/_FooterFragment.php';
         ?>
     </body>

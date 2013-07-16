@@ -54,7 +54,7 @@ if (isset($_GET['action'])) {
 
             $i = 1;
             foreach ($resultCategoriesResto as $value) {
-                $resultResto[0]['categorie' . $i] = $value;
+                $resultResto[0]['categorie' . $i] =   $value;
                 $i++;
             }
 
@@ -77,13 +77,13 @@ if (isset($_GET['action'])) {
                 $categorie1 = $CNX->selectOrInsertCategorie($_POST['categorie1']);
                 $categorie2 = $CNX->selectOrInsertCategorie($_POST['categorie2']);
                 $categorie3 = $CNX->selectOrInsertCategorie($_POST['categorie3']);
-                
+
                 $CNX->updateResto($_POST['id'], $_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes);
-                
+
                 $CNX->insertLigcategories($categorie1, $_POST['id']);
                 $CNX->insertLigcategories($categorie2, $_POST['id']);
                 $CNX->insertLigcategories($categorie3, $_POST['id']);
-                
+
                 $CNX->commit();
             } else if (!empty($_POST['supprimer'])) {
                 $CNX->deleteResto($_POST['id']);

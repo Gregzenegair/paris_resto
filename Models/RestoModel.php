@@ -140,14 +140,16 @@ class RestoModel extends CNX {
                                                     WHERE r.id = :id');
             $req->bindParam(':id', $id, PDO::PARAM_STR);
         } else {
-            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.id_types_voie, v.nom as nom_ville, v.cp
+            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, t.nom as type_voie, v.nom as nom_ville, v.cp
                                                     FROM restaurants r
                                                     LEFT JOIN villes v
                                                     ON v.id = r.id_villes
                                                     LEFT JOIN ligcategories lig
-                                                    on r.id = lig.id_restaurants
+                                                    ON r.id = lig.id_restaurants
                                                     JOIN categories c
-                                                    on c.id = lig.id_categories
+                                                    ON c.id = lig.id_categories
+                                                    LEFT JOIN types_voie t
+                                                    ON t.id = r.id_types_voie
                                                     GROUP BY r.id');
         }
 

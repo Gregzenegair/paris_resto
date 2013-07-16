@@ -11,7 +11,7 @@
     if (!empty($_SESSION['afficherUsers'])) {
         $tUsers = $_SESSION['afficherUsers'];
         ?>
-        <table id="membres">
+        <table id="tableauAffichage">
             <?PHP
             foreach ($tUsers as $value) {
                 ?>
