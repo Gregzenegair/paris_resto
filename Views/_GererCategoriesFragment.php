@@ -29,7 +29,7 @@ NavigationController::Controller($_SESSION['user']);
                 foreach ($tRestos as $value) {
                     ?>
                     <td><?PHP echo $value['nom']; ?></td>
-                    <td><strong><a class="inputRed" href="../Controllers/CategorieController.php?action=SupprimerCategorie&id=<?PHP echo $value['id']; ?>">X</a></strong></td>
+                    <td><strong><a class="aRed" href="../Controllers/CategorieController.php?action=SupprimerCategorie&id=<?PHP echo $value['id']; ?>">X</a></strong></td>
                     <?PHP
                     if ($i > 1) {
                         ?>

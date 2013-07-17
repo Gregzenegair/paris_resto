@@ -23,27 +23,25 @@ NavigationController::Controller($_SESSION['user']);
         $tRestos = $_SESSION['afficherVilles'];
         $count = $_SESSION['count'];
         ?>
-        <div class="clear"></div>
+    <div class="clear"></div>
         <table id="tableauAffichageVilles">
             <tr>
                 <?PHP
+                $pagination = 400;
                 echo "Nombre total de villes : " . $count . "<br>";
+                $part = floor($count / $pagination) + 2;
+
 
                 $i = 1;
-                while ($i <= 95) {
-                    if (strlen($i) == 1) {
-                        $echoA = "&departement=0$i";
+                while ($i < $part) {
+                    $tranche = $i * $pagination;
+                    if ($i == 1) {
+                        $echoA = "|" . 0 . " " . $tranche . " ";
                     } else {
-                        $echoA = "&departement=$i";
+                        $echoA = "&limiteBasse=" . (($tranche - $pagination) + 1);
                     }
                     ?>
-                <a class="aGreenVille" href="../Controllers/VilleController.php?action=GererVilles<?PHP echo $echoA; ?>"><?PHP
-                    if (strlen($i) == 1) {
-                        echo "0$i";
-                    } else {
-                        echo $i;
-                    }
-                    ?></a>
+                <a class="aGreenVille" href="../Controllers/VilleController.php?action=GererVilles<?PHP echo $echoA; ?>"><?PHP echo $i; ?></a>
                 <?PHP
                 $i++;
             }
@@ -52,9 +50,9 @@ NavigationController::Controller($_SESSION['user']);
             $i = 0;
             foreach ($tRestos as $value) {
                 ?>
-                <td class="tdVille"><?PHP echo $value['nom']; ?></td>
+                <td><?PHP echo $value['nom']; ?></td>
                 <td><?PHP echo $value['cp']; ?></td>
-                <td><strong><a class="aRed" href="../Controllers/VilleController.php?action=SupprimerVille&id=<?PHP echo $value['id']; ?>">X</a></strong></td>
+                <td><strong><a class="inputRed" href="../Controllers/VilleController.php?action=SupprimerVille&id=<?PHP echo $value['id']; ?>">X</a></strong></td>
                 <?PHP
                 if ($i > 0) {
                     ?>

@@ -15,7 +15,7 @@ if (isset($_GET['action'])) {
 
         case "GererVilles":
             if (!isset($_GET['departement'])) {
-                $departement = "01";
+                $departement = "95";
             } else {
                 $departement = $_GET['departement'];
             }

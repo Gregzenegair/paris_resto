@@ -20,7 +20,6 @@ body {
     margin: 0;
     margin-left: auto;
     margin-right: auto;
-
 }
 
 #mainFrame {
@@ -151,6 +150,7 @@ footer {
 }
 
 .aGreenVille {
+    font-family: 'Oswald', sans-serif;
     text-decoration: none;
     background-color: #68b12f;
     background: -webkit-gradient(linear, left top, left bottom, from(#68b12f), to(#50911e));
@@ -186,7 +186,7 @@ footer {
     cursor: pointer; 
 }
 
-.aGreenVille:active {
+.aGreenVille:active {    
     border: 1px solid #20911e;
     box-shadow: 0 0 10px 5px #356b0b inset; 
     -webkit-box-shadow:0 0 10px 5px #356b0b inset ;
