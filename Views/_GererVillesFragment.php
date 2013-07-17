@@ -23,28 +23,44 @@ NavigationController::Controller($_SESSION['user']);
         $tRestos = $_SESSION['afficherVilles'];
         $count = $_SESSION['count'];
         ?>
+        <div class="clear"></div>
         <table id="tableauAffichageVilles">
             <tr>
                 <?PHP
-                echo floor($count / 100);
-                $i = 0;
-                foreach ($tRestos as $value) {
-                    ?>
-                    <td><?PHP echo $value['nom']; ?></td>
-                    <td><?PHP echo $value['cp']; ?></td>
-                    <td><strong><a class="inputRed" href="../Controllers/VilleController.php?action=SupprimerVille&id=<?PHP echo $value['id']; ?>">X</a></strong></td>
-        <?PHP
-        if ($i > 0) {
-            ?>
-                    </tr><tr><td><br></td></tr><tr>
-                        <?PHP
-                        $i = -1;
+                echo "Nombre total de villes : " . $count . "<br>";
+
+                $i = 1;
+                while ($i <= 95) {
+                    if (strlen($i) == 1) {
+                        $echoA = "&departement=0" . $i;
+                    } else {
+                        $echoA = "&departement=" . $i;
                     }
-                    $i++;
-                }
+                    ?>
+                <a class="aGreenVille" href="../Controllers/VilleController.php?action=GererVilles<?PHP echo $echoA; ?>"><?PHP echo $i; ?></a>
+                <?PHP
+                $i++;
+            }
+
+
+            $i = 0;
+            foreach ($tRestos as $value) {
                 ?>
-            </tr>
-        </table>
+                <td class="tdVille"><?PHP echo $value['nom']; ?></td>
+                <td><?PHP echo $value['cp']; ?></td>
+                <td><strong><a class="inputRed" href="../Controllers/VilleController.php?action=SupprimerVille&id=<?PHP echo $value['id']; ?>">X</a></strong></td>
+                <?PHP
+                if ($i > 0) {
+                    ?>
+                </tr><tr><td><br></td></tr><tr>
+                <?PHP
+                $i = -1;
+            }
+            $i++;
+        }
+        ?>
+    </tr>
+    </table>
     <?PHP
 }
 ?>

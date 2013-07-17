@@ -32,14 +32,13 @@ class VilleModel extends CNX {
      * pour le select des villes
      * @return array
      */
-    public function showVilles($limiteBasse, $limiteHaute) {
+    public function showVilles($departement) {
 
-        $limiteBasse = (int) $limiteBasse;
-        $limiteHaute = (int) $limiteHaute;
+        
+        $departementRecherche = $departement . "%";
 
-        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes_france v LIMIT :limiteBasse, :limiteHaute');
-        $req->bindParam(':limiteBasse', $limiteBasse, PDO::PARAM_INT);
-        $req->bindParam(':limiteHaute', $limiteHaute, PDO::PARAM_INT);
+        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes_france v WHERE cp LIKE :departement ORDER BY v.cp LIMIT 2000');
+        $req->bindParam(':departement', $departementRecherche, PDO::PARAM_INT);
         $req->execute();
         $resultAfficherStatuts = $req->fetchAll();
         $req->closeCursor();

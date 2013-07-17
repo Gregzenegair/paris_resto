@@ -14,10 +14,18 @@ if (isset($_GET['action'])) {
     switch ($action) {
 
         case "GererVilles":
+            if (!isset($_GET['departement'])) {
+                $departement = "01";
+            } else {
+                $departement = $_GET['departement'];
+            }
+
             $resultVillesCount = $CNX->countVilles();
             $_SESSION['count'] = $resultVillesCount;
-            $resultVilles = $CNX->showVilles($_GET['limiteBasse'], $_GET['limiteHaute']);
+            $resultVilles = $CNX->showVilles($departement);
             $_SESSION['afficherVilles'] = $resultVilles;
+
+            $action = "GererVilles";
             break;
 
         case "Rechercher":
