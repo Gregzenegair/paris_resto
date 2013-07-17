@@ -17,7 +17,7 @@ class VilleModel extends CNX {
 
     public function countVilles() {
 
-        $req = $this->_bdd->prepare('SELECT count(*) as count FROM villes_france');
+        $req = $this->_bdd->prepare('SELECT count(*) as count FROM villes');
         $req->execute();
         $resultAfficherStatuts = $req->fetchAll();
         $req->closeCursor();
@@ -37,7 +37,7 @@ class VilleModel extends CNX {
         
         $departementRecherche = $departement . "%";
 
-        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes_france v WHERE cp LIKE :departement ORDER BY v.cp LIMIT 2000');
+        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes v WHERE cp LIKE :departement ORDER BY v.cp LIMIT 2000');
         $req->bindParam(':departement', $departementRecherche, PDO::PARAM_INT);
         $req->execute();
         $resultAfficherStatuts = $req->fetchAll();
@@ -48,10 +48,10 @@ class VilleModel extends CNX {
 
     public function seekVilles($recherche) {
         $recherche = "%" . $recherche . "%";
-        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes_france v
+        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes v
                                                     WHERE v.nom like :recherche
                                                     OR v.cp like :recherche
-                                                    LIMIT 10000');
+                                                    LIMIT 5000');
         $req->bindParam(':recherche', $recherche, PDO::PARAM_STR);
 
         $req->execute();
@@ -61,7 +61,7 @@ class VilleModel extends CNX {
     }
 
     public function deleteVille($id) {
-        $req = $this->_bdd->prepare('DELETE FROM villes_france WHERE id = :id');
+        $req = $this->_bdd->prepare('DELETE FROM villes WHERE id = :id');
         $req->bindParam(':id', $id, PDO::PARAM_STR);
         $req->execute();
         $req->closeCursor();

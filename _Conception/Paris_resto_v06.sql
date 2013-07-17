@@ -17,7 +17,7 @@ CREATE TABLE commentaires(
         titre          Varchar (50) NOT NULL ,
         description    Varchar (1024) NOT NULL ,
         date_insertion Date NOT NULL ,
-        id_Avis        Int ,
+        id_avis        Int ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -33,7 +33,7 @@ CREATE TABLE photos(
         id             Int NOT NULL ,
         nom_fichier    Varchar (50) NOT NULL ,
         date_insertion Date NOT NULL ,
-        id_restaurants Int NOT NULL ,
+        id_restaurant Int NOT NULL ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -45,8 +45,9 @@ CREATE TABLE restaurants(
         email         Varchar (50) NOT NULL ,
         nom_voie      Varchar (50) ,
         numero_voie   Numeric ,
-        id_villes     Int (11) unsigned DEFAULT NULL,
-        id_types_voie Int NOT NULL ,
+        id_ville     Int (11) unsigned DEFAULT NULL,
+        id_type_voie Int NOT NULL ,
+        date_insertion Date NOT NULL ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -89,33 +90,33 @@ CREATE TABLE users(
 
 CREATE TABLE Avis(
         id             Int NOT NULL ,
-        id_users       Int NOT NULL ,
-        id_restaurants Int NOT NULL ,
+        id_user       Int NOT NULL ,
+        id_restaurant Int NOT NULL ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
 
 CREATE TABLE ligcategorie_note(
         id_categorie_note Int NOT NULL ,
-        id_notes          Int NOT NULL ,
-        PRIMARY KEY (id_categorie_note ,id_notes )
+        id_note          Int NOT NULL ,
+        PRIMARY KEY (id_categorie_note ,id_note )
 )ENGINE=InnoDB;
 
 
 CREATE TABLE ligcategories(
-        id_restaurants Int NOT NULL ,
-        id_categories  Int NOT NULL ,
-        PRIMARY KEY (id_restaurants ,id_categories )
+        id_restaurant Int NOT NULL ,
+        id_categorie  Int NOT NULL ,
+        PRIMARY KEY (id_restaurant ,id_categorie )
 )ENGINE=InnoDB;
 
 
 CREATE TABLE lignotes(
-        id_Avis  Int NOT NULL ,
-        id_notes Int NOT NULL ,
-        PRIMARY KEY (id_Avis ,id_notes )
+        id_avis  Int NOT NULL ,
+        id_note Int NOT NULL ,
+        PRIMARY KEY (id_avis ,id_note )
 )ENGINE=InnoDB;
 
-CREATE TABLE `villes_france` (
+CREATE TABLE `villes` (
    id  int (11) unsigned Auto_increment  NOT NULL ,
   `nom` varchar(255) NOT NULL default '',
   `cp` varchar(255) NOT NULL default '',
@@ -157,27 +158,27 @@ ALTER TABLE `paris_resto`.`users` MODIFY COLUMN `commentaire` VARCHAR(1000) CHAR
 
 
 #-- Definition des FOREIGN KEYs
-ALTER TABLE commentaires ADD CONSTRAINT FK_commentaires_id_Avis FOREIGN KEY (id_Avis) REFERENCES Avis(id);
-ALTER TABLE photos ADD CONSTRAINT FK_photos_id_restaurants FOREIGN KEY (id_restaurants) REFERENCES restaurants(id);
-ALTER TABLE restaurants ADD CONSTRAINT `FK_restaurants_id_villes` FOREIGN KEY `FK_restaurants_id_villes` (`id_villes`) REFERENCES `villes_france` (`id`)
+ALTER TABLE commentaires ADD CONSTRAINT FK_commentaires_id_avis FOREIGN KEY (id_avis) REFERENCES Avis(id);
+ALTER TABLE photos ADD CONSTRAINT FK_photos_id_restaurant FOREIGN KEY (id_restaurant) REFERENCES restaurants(id);
+ALTER TABLE restaurants ADD CONSTRAINT `FK_restaurants_id_ville` FOREIGN KEY `FK_restaurants_id_ville` (`id_ville`) REFERENCES `villes` (`id`)
     ON DELETE SET NULL;
-ALTER TABLE restaurants ADD CONSTRAINT FK_restaurants_id_types_voie FOREIGN KEY (id_types_voie) REFERENCES types_voie(id);
+ALTER TABLE restaurants ADD CONSTRAINT FK_restaurants_id_type_voie FOREIGN KEY (id_type_voie) REFERENCES types_voie(id);
 ALTER TABLE users ADD CONSTRAINT FK_users_statut FOREIGN KEY (statut) REFERENCES statuts(id);
-ALTER TABLE Avis ADD CONSTRAINT FK_Avis_id_users FOREIGN KEY (id_users) REFERENCES users(id);
-ALTER TABLE Avis ADD CONSTRAINT FK_Avis_id_restaurants FOREIGN KEY (id_restaurants) REFERENCES restaurants(id);
+ALTER TABLE Avis ADD CONSTRAINT FK_Avis_id_user FOREIGN KEY (id_user) REFERENCES users(id);
+ALTER TABLE Avis ADD CONSTRAINT FK_Avis_id_restaurant FOREIGN KEY (id_restaurant) REFERENCES restaurants(id);
 ALTER TABLE ligcategorie_note ADD CONSTRAINT FK_ligcategorie_note_id_categorie_note FOREIGN KEY (id_categorie_note) REFERENCES categorie_note(id);
-ALTER TABLE ligcategorie_note ADD CONSTRAINT FK_ligcategorie_note_id_notes FOREIGN KEY (id_notes) REFERENCES notes(id);
-ALTER TABLE lignotes ADD CONSTRAINT FK_lignotes_id_Avis FOREIGN KEY (id_Avis) REFERENCES Avis(id);
-ALTER TABLE lignotes ADD CONSTRAINT FK_lignotes_id_notes FOREIGN KEY (id_notes) REFERENCES notes(id);
+ALTER TABLE ligcategorie_note ADD CONSTRAINT FK_ligcategorie_note_id_note FOREIGN KEY (id_note) REFERENCES notes(id);
+ALTER TABLE lignotes ADD CONSTRAINT FK_lignotes_id_avis FOREIGN KEY (id_avis) REFERENCES Avis(id);
+ALTER TABLE lignotes ADD CONSTRAINT FK_lignotes_id_note FOREIGN KEY (id_note) REFERENCES notes(id);
 
 
 ALTER TABLE ligcategories
- ADD CONSTRAINT `FK_ligcategories_id_categories` FOREIGN KEY `FK_ligcategories_id_categories` (`id_categories`)
+ ADD CONSTRAINT `FK_ligcategories_id_categorie` FOREIGN KEY `FK_ligcategories_id_categorie` (`id_categorie`)
     REFERENCES `categories` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 ALTER TABLE ligcategories
- ADD CONSTRAINT `FK_ligcategories_id_restaurants` FOREIGN KEY `FK_ligcategories_id_restaurants` (`id_restaurants`)
+ ADD CONSTRAINT `FK_ligcategories_id_restaurant` FOREIGN KEY `FK_ligcategories_id_restaurant` (`id_restaurant`)
     REFERENCES `restaurants` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
@@ -264,7 +265,7 @@ INSERT INTO `users` (`id`, `pseudo`, `email`, `mdp`, `date_inscription`, `email_
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Amareins', '01090', 46.083328, 4.800000, '1.85', 'amareins'),
  (null,'Amberieu en Bugey', '01500', 45.950001, 5.350000, '0.8', 'amberieu en bugey'),
  (null,'Amberieux en Dombes', '01330', 46.000000, 4.900000, '1.72', 'amberieux en dombes'),
@@ -1905,7 +1906,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Sausses', '04320', 44.016670, 6.783330, '2.45', 'sausses'),
  (null,'Selonnet', '04460', 44.366669, 6.300000, '1.79', 'selonnet'),
  (null,'Senez', '04330', 43.916672, 6.400000, '1', 'senez');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Seyne', '04140', 44.349998, 6.350000, '1.69', 'seyne'),
  (null,'Sigonce', '04300', 44.000000, 5.833330, '1.44', 'sigonce'),
  (null,'Sigoyer', '05130', 44.316669, 5.950000, '1.48', 'sigoyer'),
@@ -4557,7 +4558,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Bazenville', '14480', 49.299999,  0.583330, '1.46', 'bazenville'),
  (null,'Beaufour', '14340', 49.216671, 0.016670, '1.39', 'beaufour'),
  (null,'Beaumais', '14620', 48.900002,  0.083330, '1.71', 'beaumais');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Beaumesnil', '14380', 48.900002,  0.983330, '1.89', 'beaumesnil'),
  (null,'Beaumont en Auge', '14950', 49.283329, 0.116670, '1.37', 'beaumont en auge'),
  (null,'Bauquay', '14260', 49.033329,  0.616670, '0.8', 'bauquay'),
@@ -7856,7 +7857,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Lezardrieux', '22740', 48.766670,  3.100000, '1.86', 'lezardrieux'),
  (null,'Locarn', '22340', 48.316669,  3.416670, '1.46', 'locarn'),
  (null,'Loc Envel', '22810', 48.516670,  3.400000, '1.42', 'loc envel');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Loguivy Plougras', '22780', 48.816669,  3.066670, '2.18', 'loguivy plougras'),
  (null,'Lohuec', '22160', 48.466671,  3.516670, '1.71', 'lohuec'),
  (null,'Loscouet sur Meu', '22230', 48.183331,  2.233330, '1.94', 'loscouet sur meu'),
@@ -10800,7 +10801,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Le Juch', '29100', 48.066669,  4.250000, '1.47', 'le juch'),
  (null,'Kergloff', '29270', 48.266670,  3.633330, '1.87', 'kergloff'),
  (null,'Kerlaz', '29100', 48.083328,  4.266670, '1.13', 'kerlaz');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Kerlouan', '29890', 48.650002,  4.366670, '1.69', 'kerlouan'),
  (null,'Kernilis', '29260', 48.566669,  4.416670, '1.58', 'kernilis'),
  (null,'Kernoues', '29260', 48.583328,  4.350000, '1.27', 'kernoues'),
@@ -13475,7 +13476,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Lurais', '36220', 46.700001, 0.950000, '2.47', 'lurais'),
  (null,'Lureuil', '36220', 46.750000, 1.033330, '2.16', 'lureuil'),
  (null,'Luzeret', '36800', 46.549999, 1.400000, '1.31', 'luzeret');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Lye', '36600', 47.216671, 1.483330, '2.18', 'lue'),
  (null,'Le Magny', '36400', 46.549999, 1.966670, '1.4', 'le magny'),
  (null,'Maillet', '03190', 46.566669, 1.683330, '1', 'maillet'),
@@ -15918,7 +15919,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Saint etienne Lardeyrol', '43260', 45.066669, 4.000000, '1.33', 'saint etienne lardeyrol'),
  (null,'Saint etienne sur Blesle', '43450', 45.316669, 3.133330, '2.42', 'saint etienne sur blesle'),
  (null,'Sainte Eugenie de Villeneuve', '43230', 45.133331, 3.616670, '1.83', 'sainte eugenie de villeneuve');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Sainte Florine', '43250', 45.400002, 3.333330, '1.99', 'sainte florine'),
  (null,'Saint Front', '43550', 44.983330, 4.133330, '1.46', 'saint front'),
  (null,'Saint Geneys pres Saint Paulien', '43350', 45.150002, 3.816670, '0.3', 'saint geneys pres saint paulien'),
@@ -18989,7 +18990,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Sundhoffen', '68280', 48.033329, 7.416670, '1.27', 'sundhoffen'),
  (null,'Tagolsheim', '68720', 47.650002, 7.266670, '0.83', 'tagolsheim'),
  (null,'Tagsdorf', '68130', 47.633331, 7.300000, '0.92', 'tagsdorf');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Thann', '68800', 47.816669, 7.083330, '1.51', 'thann'),
  (null,'Thannenkirch', '68590', 48.233330, 7.300000, '2.37', 'thannenkirch'),
  (null,'Traubach le Bas', '68210', 47.666672, 7.100000, '1.38', 'traubach le bas'),
@@ -22653,7 +22654,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Tessancourt sur Aubette', '78250', 49.016670, 1.916670, '1.55', 'tessancourt sur aubette'),
  (null,'Thiverval Grignon', '78850', 48.849998, 1.916670, '0.47', 'thiverval grignon'),
  (null,'Thoiry', '78770', 48.866669, 1.800000, '0.29', 'thoiry');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Tilly', '78790', 48.883331, 1.575000, '1.96', 'tilly'),
  (null,'Toussus le Noble', '78117', 48.750000, 2.116670, '1.78', 'toussus le noble'),
  (null,'Trappes', '78190', 48.783329, 2.000000, '1.02', 'trappes'),
@@ -25954,7 +25955,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Ormoy', '89400', 47.950001, 3.566670, '1.51', 'ormoy'),
  (null,'Ouanne', '89560', 47.666672, 3.416670, '0.93', 'ouanne'),
  (null,'Pacy sur Armaneon', '89160', 47.766670, 4.083330, '1.76', 'pacy sur armaneon');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Pailly', '89140', 48.349998, 3.333330, '2.45', 'pailly'),
  (null,'Parly', '89240', 47.766670, 3.350000, '1.23', 'parly'),
  (null,'Paron', '89100', 48.183331, 3.250000, '1.62', 'paron'),
@@ -28893,7 +28894,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Biesles', '52340', 48.083328, 5.300000, '0.9', 'biesles'),
  (null,'Bize', '52500', 47.833328, 5.633330, '1.73', 'bize'),
  (null,'Blaise', '08400', 48.283329, 4.966670, '1.29', 'blaise');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Blaisy', '52330', 48.183331, 5.000000, '1.14', 'blaisy'),
  (null,'Blancheville', '52700', 48.216671, 5.266670, '1.03', 'blancheville'),
  (null,'Blecourt', '52300', 48.383331, 5.083330, '1.24', 'blecourt'),
@@ -31468,7 +31469,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Rechicourt le Cheteau', '57810', 48.666672, 6.850000, '2.22', 'rechicourt le chateau'),
  (null,'Redange', '57390', 49.483330, 5.916670, '2.51', 'redange'),
  (null,'Reding', '57444', 48.750000, 7.100000, '1.73', 'reding');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Remelfang', '57320', 49.266670, 6.516670, '1.26', 'remelfang'),
  (null,'Remelfing', '57200', 49.099998, 7.083330, '1.47', 'remelfing'),
  (null,'Remeling', '57480', 49.400002, 6.483330, '2.03', 'remeling'),
@@ -33813,7 +33814,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
  (null,'Boulogne sur Mer', '62200', 50.716671, 1.616670, '2.04', 'boulogne sur mer'),
  (null,'Bouquehault', '62340', 50.816669, 1.900000, '2.06', 'bouquehault'),
  (null,'Bourecq', '62190', 50.566669, 2.433330, '0.61', 'bourecq');
- INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
+ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
  (null,'Bourlon', '62860', 50.166672, 3.100000, '2.19', 'bourlon'),
  (null,'Bournonville', '62240', 50.700001, 1.850000, '1.38', 'bournonville'),
  (null,'Bours', '62550', 50.450001, 2.416670, '1.3', 'bours'),
@@ -34770,7 +34771,7 @@ INSERT INTO `villes_france` (id, nom, cp, latitude, longitude, eloignement, url)
 -- Contenu de la table `restaurants`
 --
 
-INSERT INTO `restaurants` (`id`, `nom`, `numero_tel`, `email`, `nom_voie`, `numero_voie`, `id_villes`, `id_types_voie`) VALUES
+INSERT INTO `restaurants` (`id`, `nom`, `numero_tel`, `email`, `nom_voie`, `numero_voie`, `id_ville`, `id_type_voie`) VALUES
 (1, 'Mac Donald''s', '01 34 64 24 84', 'M@cdo.fr', 'des Canards', 9, 1, 5),
 (2, 'Campanile', '01 12 27 32 64', 'Camp@nile.fr', 'Magenta', 11, 1, 3),
 (3, 'Quick', '01 30 37 32 52', 'quick@gmail.com', 'Saint Martin', 7, 2, 3),
@@ -34783,7 +34784,7 @@ INSERT INTO `restaurants` (`id`, `nom`, `numero_tel`, `email`, `nom_voie`, `nume
 -- Contenu de la table `ligcategories`
 --
 
-INSERT INTO `ligcategories` (`id_restaurants`, `id_categories`) VALUES
+INSERT INTO `ligcategories` (`id_restaurant`, `id_categorie`) VALUES
 (1, 1),
 (3, 1),
 (4, 1),
@@ -34795,7 +34796,7 @@ INSERT INTO `ligcategories` (`id_restaurants`, `id_categories`) VALUES
 (7, 7),
 (6, 8);
 
-ALTER TABLE `paris_resto`.`villes_france` DROP COLUMN `latitude`;
-ALTER TABLE `paris_resto`.`villes_france` DROP COLUMN `longitude`;
-ALTER TABLE `paris_resto`.`villes_france` DROP COLUMN `eloignement`;
-ALTER TABLE `paris_resto`.`villes_france` DROP COLUMN `url`;
+ALTER TABLE `paris_resto`.`villes` DROP COLUMN `latitude`;
+ALTER TABLE `paris_resto`.`villes` DROP COLUMN `longitude`;
+ALTER TABLE `paris_resto`.`villes` DROP COLUMN `eloignement`;
+ALTER TABLE `paris_resto`.`villes` DROP COLUMN `url`;

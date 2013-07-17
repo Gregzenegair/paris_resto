@@ -27,17 +27,19 @@ switch ($action) {
 
         $bdd = $cnx->get_bdd();
 
-        $req = $bdd->prepare('SELECT cp FROM villes_france WHERE nom = :nom LIMIT 1');
+        $req = $bdd->prepare('SELECT cp FROM villes WHERE nom = :nom LIMIT 1');
         $req->bindParam(':nom', $_GET['nom'], PDO::PARAM_STR);
         $req->execute();
+        $result = $req->fetchAll();
 
-        while ($donnees = $req->fetch()) {
-            if ($donnees['cp']) {
-                echo $donnees['cp'];
-            } else {
-                echo "";
+        if (empty($result[0])) {
+            echo "false";
+        } else {
+            foreach ($result as $value) {
+                echo $value['cp'];
             }
         }
+
         break;
     default:
         break;

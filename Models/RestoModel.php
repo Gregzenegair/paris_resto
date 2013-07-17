@@ -26,7 +26,7 @@ class RestoModel extends CNX {
         $tNomChampTable = ["nom", "cp"];
         $tValeurs = [":$nom", ":$cp"];
 
-        $sPrepareSelect = "SELECT id, count(*) as result FROM villes_france WHERE nom = :nom AND cp = :cp";
+        $sPrepareSelect = "SELECT id, count(*) as result FROM villes WHERE nom = :nom AND cp = :cp";
 
         $bdd = $this->_bdd;
         $req = $bdd->prepare($sPrepareSelect);
@@ -36,7 +36,7 @@ class RestoModel extends CNX {
             if ($donnees['result'] == "1") {
                 $resultSelect = $donnees['id'];
             } else {
-                DAO::insert($this->_bdd, "villes_france", $tNomChampTable, $tValeurs);
+                DAO::insert($this->_bdd, "villes", $tNomChampTable, $tValeurs);
                 $resultSelect = $this->selectOrInsertVille($nom, $cp);
             }
         }
@@ -91,15 +91,15 @@ class RestoModel extends CNX {
      * @param type $email
      * @param type $numero_voie
      * @param type $nom_voie
-     * @param type $id_types_voie
+     * @param type $id_type_voie
      * @param type $id_villes
      * @return boolean ou id
      */
-    public function insertResto($nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_types_voie, $id_villes) {
+    public function insertResto($nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_type_voie, $id_ville) {
 
         $email = strtolower($email);
-        $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_types_voie", "id_villes"];
-        $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_types_voie", ":$id_villes"];
+        $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_type_voie", "id_ville"];
+        $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_type_voie", ":$id_ville"];
 
 // --- Demarage de la transaction
 
@@ -121,14 +121,14 @@ class RestoModel extends CNX {
         $recherche = "%" . $recherche . "%";
         $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, t.nom as type_voie, v.nom as nom_ville, v.cp
                                                     FROM restaurants r
-                                                    LEFT JOIN villes_france v
-                                                    ON v.id = r.id_villes
+                                                    LEFT JOIN villes v
+                                                    ON v.id = r.id_ville
                                                     LEFT JOIN ligcategories lig
-                                                    ON r.id = lig.id_restaurants
+                                                    ON r.id = lig.id_restaurant
                                                     LEFT JOIN categories c
-                                                    ON c.id = lig.id_categories
+                                                    ON c.id = lig.id_categorie
                                                     LEFT JOIN types_voie t
-                                                    ON t.id = r.id_types_voie
+                                                    ON t.id = r.id_type_voie
                                                     WHERE r.nom like :recherche
                                                     OR c.nom like :recherche
                                                     OR v.nom like :recherche
@@ -150,27 +150,27 @@ class RestoModel extends CNX {
     public function showRestos($id = null) {
 
         if (isset($id)) {
-            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.id_types_voie, v.nom as nom_ville, v.cp
+            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.id_type_voie, v.nom as nom_ville, v.cp
                                                     FROM restaurants r
-                                                    LEFT JOIN villes_france v
-                                                    ON v.id = r.id_villes
+                                                    LEFT JOIN villes v
+                                                    ON v.id = r.id_ville
                                                     LEFT JOIN ligcategories lig
-                                                    on r.id = lig.id_restaurants
+                                                    on r.id = lig.id_restaurant
                                                     LEFT JOIN categories c
-                                                    on c.id = lig.id_categories
+                                                    on c.id = lig.id_categorie
                                                     WHERE r.id = :id');
             $req->bindParam(':id', $id, PDO::PARAM_STR);
         } else {
             $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, t.nom as type_voie, v.nom as nom_ville, v.cp
                                                     FROM restaurants r
-                                                    LEFT JOIN villes_france v
-                                                    ON v.id = r.id_villes
+                                                    LEFT JOIN villes v
+                                                    ON v.id = r.id_ville
                                                     LEFT JOIN ligcategories lig
-                                                    ON r.id = lig.id_restaurants
+                                                    ON r.id = lig.id_restaurant
                                                     JOIN categories c
-                                                    ON c.id = lig.id_categories
+                                                    ON c.id = lig.id_categorie
                                                     LEFT JOIN types_voie t
-                                                    ON t.id = r.id_types_voie
+                                                    ON t.id = r.id_type_voie
                                                     GROUP BY r.id');
         }
 
@@ -204,7 +204,7 @@ class RestoModel extends CNX {
      */
     public function showVilles() {
 
-        $req = $this->_bdd->prepare('SELECT DISTINCT nom FROM villes_france ORDER BY nom');
+        $req = $this->_bdd->prepare('SELECT DISTINCT nom FROM villes ORDER BY nom');
         $req->execute();
         $resultAfficherVilless = $req->fetchAll();
         $req->closeCursor();
@@ -234,9 +234,9 @@ class RestoModel extends CNX {
         return $resultat;
     }
 
-    public function insertLigcategories($id_categories, $id_restaurants) {
-        $tNomChampTable = ["id_categories", "id_restaurants"];
-        $tValeurs = [":$id_categories", ":$id_restaurants"];
+    public function insertLigcategories($id_categorie, $id_restaurant) {
+        $tNomChampTable = ["id_categorie", "id_restaurant"];
+        $tValeurs = [":$id_categorie", ":$id_restaurant"];
 
 // --- Demarage de la transaction
 
@@ -255,7 +255,7 @@ class RestoModel extends CNX {
      * @param type $id
      */
     public function deleteLigcategories($id) {
-        $req = $this->_bdd->prepare('DELETE FROM ligcategories WHERE id_restaurants = :id');
+        $req = $this->_bdd->prepare('DELETE FROM ligcategories WHERE id_restaurant = :id');
         $req->bindParam(':id', $id, PDO::PARAM_STR);
         $req->execute();
         $req->closeCursor();
@@ -269,14 +269,14 @@ class RestoModel extends CNX {
      * @param type $email
      * @param type $numero_voie
      * @param type $nom_voie
-     * @param type $id_types_voie
+     * @param type $id_type_voie
      * @param type $id_villes
      * @return boolean ou id
      */
-    public function updateResto($id, $nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_types_voie, $id_villes) {
+    public function updateResto($id, $nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_type_voie, $id_ville) {
 
-        $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_types_voie", "id_villes"];
-        $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_types_voie", ":$id_villes"];
+        $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_type_voie", "id_ville"];
+        $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_type_voie", ":$id_ville"];
         $twhere['id'] = $id;
 
 // --- Demarage de la transaction

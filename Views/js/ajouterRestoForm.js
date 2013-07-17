@@ -1,6 +1,5 @@
 var nom_ville = document.getElementById("nom_villeinput");
 var cp = document.getElementById("cp");
-
 nom_ville.onblur = makeRequest;
 
 // -- Partie Ajax
@@ -48,7 +47,11 @@ function request(callback) {
 }
 
 function readData(oData) {
-    if (oData != "") {
+    if (oData == "false") {
+        cp.className = "";
+        cp.value = "";
+        cp.placeholder = "Merci de renseigner le CP";
+    } else {
         cp.className = "";
         cp.value = oData;
     }
