@@ -21,19 +21,21 @@ NavigationController::Controller($_SESSION['user']);
 
     if (!empty($_SESSION['afficherVilles'])) {
         $tRestos = $_SESSION['afficherVilles'];
+        $count = $_SESSION['count'];
         ?>
         <table id="tableauAffichageVilles">
             <tr>
                 <?PHP
+                echo floor($count / 100);
                 $i = 0;
                 foreach ($tRestos as $value) {
                     ?>
                     <td><?PHP echo $value['nom']; ?></td>
                     <td><?PHP echo $value['cp']; ?></td>
                     <td><strong><a class="inputRed" href="../Controllers/VilleController.php?action=SupprimerVille&id=<?PHP echo $value['id']; ?>">X</a></strong></td>
-                    <?PHP
-                    if ($i > 0) {
-                        ?>
+        <?PHP
+        if ($i > 0) {
+            ?>
                     </tr><tr><td><br></td></tr><tr>
                         <?PHP
                         $i = -1;
@@ -43,7 +45,7 @@ NavigationController::Controller($_SESSION['user']);
                 ?>
             </tr>
         </table>
-        <?PHP
-    }
-    ?>
+    <?PHP
+}
+?>
 </div>

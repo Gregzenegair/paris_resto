@@ -15,13 +15,31 @@ class VilleModel extends CNX {
         parent::__construct($base, $user, $pwd);
     }
 
+    public function countVilles() {
+
+        $req = $this->_bdd->prepare('SELECT count(*) as count FROM villes_france');
+        $req->execute();
+        $resultAfficherStatuts = $req->fetchAll();
+        $req->closeCursor();
+        foreach ($resultAfficherStatuts as $value) {
+            $result = $value['count'];
+        }
+
+        return $result;
+    }
+
     /**
      * pour le select des villes
      * @return array
      */
-    public function showVilles() {
+    public function showVilles($limiteBasse, $limiteHaute) {
 
-        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes_france v LIMIT 100');
+        $limiteBasse = (int) $limiteBasse;
+        $limiteHaute = (int) $limiteHaute;
+
+        $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes_france v LIMIT :limiteBasse, :limiteHaute');
+        $req->bindParam(':limiteBasse', $limiteBasse, PDO::PARAM_INT);
+        $req->bindParam(':limiteHaute', $limiteHaute, PDO::PARAM_INT);
         $req->execute();
         $resultAfficherStatuts = $req->fetchAll();
         $req->closeCursor();

@@ -14,7 +14,9 @@ if (isset($_GET['action'])) {
     switch ($action) {
 
         case "GererVilles":
-            $resultVilles = $CNX->showVilles();
+            $resultVillesCount = $CNX->countVilles();
+            $_SESSION['count'] = $resultVillesCount;
+            $resultVilles = $CNX->showVilles($_GET['limiteBasse'], $_GET['limiteHaute']);
             $_SESSION['afficherVilles'] = $resultVilles;
             break;
 
@@ -23,7 +25,7 @@ if (isset($_GET['action'])) {
             $_SESSION['afficherVilles'] = $resultVilles;
             $action = "GererVilles";
             break;
-        
+
         case "SupprimerVille":
             $resultVilles = $CNX->deleteVille($_GET['id']);
             header("Location: ./VilleController.php?action=GererVilles");
