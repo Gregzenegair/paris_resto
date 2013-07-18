@@ -44,8 +44,9 @@ NavigationController::Controller($_SESSION['user']);
 
             $inputNumero_tel = new Input("numero_tel", "Numéro de téléphone :", "numero_tel", "text", $value['numero_tel'], "", 1, null);
             $inputEmail = new Input("email", "Email :", "email", "text", $value['email'], null, 1, null);
-            $selectTypeVoie = new Select("type_voie", "", $tListeElemTypesVoie, "type_voie", $value['id_type_voie'], 1, "required", "select");
-            $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "number", $value['numero_voie'], "required min='0'", 1, null);
+            //$selectTypeVoie = new Select("type_voie", "", $tListeElemTypesVoie, "type_voie", $value['id_type_voie'], 1, "required", "select");
+            $DatalistTypeVoie = new DataList("type_voie", "", $tListeElemTypesVoie, "type_voie", $value['type_voie'], 1, "required", "select");
+            $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "input", $value['numero_voie'], "", 1, null);
             $inputNomVoie = new Input("nom_voie", "", "nom_voie", "text", $value['nom_voie'], "required", 1, null);
 
             $textareaDescription = new ElementHTML("<legend for='description'>Description du restaurant : </legend><textarea name='description' id='description' placeholder='Description du restaurant, menu, informations relatives'>$value[description]</textarea>");
@@ -77,7 +78,7 @@ NavigationController::Controller($_SESSION['user']);
         array_push($elements, $inputNumero_tel);
         array_push($elements, $inputEmail);
         array_push($elements, $inputNumeroVoie);
-        array_push($elements, $selectTypeVoie);
+        array_push($elements, $DatalistTypeVoie);
         array_push($elements, $inputNomVoie);
         array_push($elements, $textareaDescription);
         array_push($elements, $inputHorraires);

@@ -265,12 +265,20 @@ option {
 }
 
 #numero_voie {
-    width: 3em;
-    padding:5px 8px;
+    width: 2em;
+    padding: 7px 20px;
 }
 
 #numero_voie:focus {
-    padding:5px 8px;
+    padding: 7px 20px;
+}
+
+#type_voieInput {
+    width: 6em;
+}
+
+#nom_voie {
+    width: 18em;
 }
 
 #rechercher {
