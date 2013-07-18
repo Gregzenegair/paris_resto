@@ -47,7 +47,7 @@ class DataList {
         }
 
         if ($this->id != null)
-            $resultatHTML .= " id=\"$this->id" . "input\">";
+            $resultatHTML .= " id=\"$this->id" . "Input\">";
         else
             $resultatHTML .= " >";
 

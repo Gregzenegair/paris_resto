@@ -119,7 +119,7 @@ input[type=date], select{
     -o-border-radius: 3px;
     padding: 6px 20px;
     text-shadow: 0 -1px 0 #396715;
-    width: 7em !important;
+    width: 124px !important;
 }
 
 option {
@@ -176,6 +176,44 @@ option {
     text-shadow: 0 -1px 0 #E60000;
 }
 
+.aRed {
+    font-family: 'Oswald', sans-serif;
+    text-decoration: none;
+    background-color: #E60000;
+    background: -webkit-gradient(linear, left top, left bottom, from(#E60000), to(#990000));
+    background: -webkit-linear-gradient(top, #E60000, #990000);
+    background: -moz-linear-gradient(top, #E60000, #990000);
+    background: -ms-linear-gradient(top, #E60000, #990000);
+    background: -o-linear-gradient(top, #E60000, #990000);
+    background: linear-gradient(top, #E60000, #990000);
+    border: 1px solid #FF1919;
+    border-bottom: 1px solid #CC1414;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    box-shadow: inset 0 1px 0 0 #E60000;
+    -webkit-box-shadow: 0 1px 0 0 #E60000 inset ;
+    -moz-box-shadow: 0 1px 0 0 #E60000 inset;
+    -ms-box-shadow: 0 1px 0 0 #E60000 inset;
+    -o-box-shadow: 0 1px 0 0 #E60000 inset;
+    color: white;
+    font-weight: bold;
+    padding: 0px 14px;
+    text-align: center;
+    text-shadow: 0 -1px 0 #E60000;
+}
+
+.aRed:active {
+    border: 1px solid #E60000;
+    box-shadow: 0 0 10px 5px #E60000 inset; 
+    -webkit-box-shadow:0 0 10px 5px #E60000 inset ;
+    -moz-box-shadow: 0 0 10px 5px #E60000 inset;
+    -ms-box-shadow: 0 0 10px 5px #E60000 inset;
+    -o-box-shadow: 0 0 10px 5px #E60000 inset;
+}
+
 .buttonSubmit {
     margin: 1em;
     text-decoration: none;
@@ -227,10 +265,30 @@ option {
 }
 
 #numero_voie {
-    width: 3em;
-    padding:5px 8px;
+    width: 2em;
+    padding: 7px 20px;
 }
 
 #numero_voie:focus {
-    padding:5px 8px;
+    padding: 7px 20px;
+}
+
+#type_voieInput {
+    width: 6em;
+}
+
+#nom_voie {
+    width: 18em;
+}
+
+#rechercher {
+    background: #fff url(../img/loupe.png) no-repeat 97% center;
+}
+
+.ajaxcCheck {
+    background: #fff url(../img/loading.gif) no-repeat 97% center;
+}
+
+#description {
+    width: 382px;
 }

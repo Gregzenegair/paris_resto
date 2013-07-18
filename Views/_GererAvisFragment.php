@@ -6,9 +6,6 @@ NavigationController::Controller($_SESSION['user']);
 ?>
 
 <div id="mainFrame">
-    <a href="./../Controllers/RestoController.php?action=AjouterResto" id="AjouterResto" class="aGreen">Ajouter restaurant</a>
-
-
     <?php
     spl_autoload_register(function ($nomClasse) {
                 require_once "../Controllers/Form/$nomClasse.php";
@@ -17,22 +14,22 @@ NavigationController::Controller($_SESSION['user']);
 
     $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='laisser vide pour tout afficher'", 5, "rechercher");
     $elements = array($inputRecherche);
-    $formulaire = new Form("mainForm", "POST", "./../Controllers/RestoController.php?action=Rechercher", $elements);
+    $formulaire = new Form("mainForm", "POST", "./../Controllers/AvisController.php?action=Rechercher", $elements);
     echo $formulaire->genererForm();
 
 
-    if (!empty($_SESSION['afficherRestos'])) {
-        $tRestos = $_SESSION['afficherRestos'];
+    if (!empty($_SESSION['afficherAvis'])) {
+        $tAvis = $_SESSION['afficherAvis'];
         ?>
         <table id="tableauAffichage">
             <?PHP
-            foreach ($tRestos as $value) {
+            foreach ($tAvis as $value) {
                 $categories = $value['categories'];
                 $categories = str_replace(",", " | ", $categories);
                 ?>
                 <tr><td><br></td></tr>
                 <tr>
-                    <td rowspan="2"><a class="buttonSubmit" href="./../Controllers/RestoController.php?action=ModifierResto&id=<?PHP echo $value['id']; ?>">Modifier</a></td>
+                    <td rowspan="2"><a class="buttonSubmit" href="./../Controllers/AvisController.php?action=ModifierAvis&id=<?PHP echo $value['id']; ?>">Modifier</a></td>
                     <td><?PHP echo $value['nom']; ?></td>
                     <td><?PHP echo $value['numero_tel']; ?></td>
                     <td><?PHP echo $value['email']; ?></td>

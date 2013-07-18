@@ -1,8 +1,8 @@
 <?php
 if (empty($_SESSION['user'])) {
-    include_once '../Controllers/Form/Form.php';
-    include_once '../Controllers/Form/Br.php';
-    include_once '../Controllers/Form/Input.php';
+    spl_autoload_register(function ($nomClasse) {
+                require_once "../Controllers/Form/$nomClasse.php";
+            });
 
     $elements = array();
     //($name, $legend, $id, $type, $value, $options, $position, $class);

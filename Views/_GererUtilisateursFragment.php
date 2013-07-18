@@ -1,11 +1,34 @@
+<?PHP
+// --- Controlle de l'utilisateur avant accès à la page
+include_once '../Controllers/NavigationController.php';
+NavigationController::Controller($_SESSION['user']);
+// --- Fin de controle
+?>
+
 <div id="mainFrame">
 
-
     <?php
+    spl_autoload_register(function ($nomClasse) {
+                require_once "../Controllers/Form/$nomClasse.php";
+            });
+    $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='laisser vide pour tout afficher'", 5, "rechercher");
+    $elements = array($inputRecherche);
+    $formulaire = new Form("mainForm", "POST", "./../Controllers/UserController.php?action=Rechercher", $elements);
+    echo $formulaire->genererForm();
+
+
     if (!empty($_SESSION['afficherUsers'])) {
         $tUsers = $_SESSION['afficherUsers'];
         ?>
-        <table id="membres">
+        <table id="tableauAffichage">
+            <tr>
+                <td></td>
+                <td>Pseudonyme</td>
+                <td>Email</td>
+                <td>Statut</td>
+                <td>Date inscription</td>
+                <td>Actif/Inactif</td>
+            </tr>
             <?PHP
             foreach ($tUsers as $value) {
                 ?>
@@ -22,11 +45,11 @@
                     <td><?PHP echo $value['date_inscription']; ?></td>
                     <td><?PHP echo $value['actif']; ?></td>
                 </tr>
-            <?PHP
+                <?PHP
             }
             ?>
         </table>
-    <?PHP
+        <?PHP
     }
     ?>
 </div>

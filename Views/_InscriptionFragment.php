@@ -1,10 +1,9 @@
 <div id="mainFrame">
 
     <?php
-    include_once '../Controllers/Form/Form.php';
-    include_once '../Controllers/Form/Br.php';
-    include_once '../Controllers/Form/Input.php';
-    include_once '../Controllers/Form/ElementHTML.php';
+    spl_autoload_register(function ($nomClasse) {
+                require_once "../Controllers/Form/$nomClasse.php";
+            });
 
     $elements = array();
 
@@ -46,4 +45,4 @@
     
 </div>
 
-<script src="js/inscriptionFormCheck.js"></script>
+<script src="js/inscriptionForm.js"></script>

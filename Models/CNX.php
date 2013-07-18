@@ -25,6 +25,18 @@ class CNX {
         $this->_bdd = $_bdd;
     }
 
+    public function beginTransaction() {
+        $this->_bdd->beginTransaction();
+    }
+
+    public function commit() {
+        $this->_bdd->commit();
+    }
+
+    public function rollback() {
+        $this->_bdd->rollback();
+    }
+
 }
 
 ?>

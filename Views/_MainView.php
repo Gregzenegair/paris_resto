@@ -6,6 +6,7 @@ session_start();
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
         <link href="css/MainView.css" rel="stylesheet" type="text/css" >
         <link href="css/Formulaires.css" rel="stylesheet" type="text/css" >
         <title></title>
@@ -18,14 +19,17 @@ session_start();
             $fragment = "_AccueilFragment.php";
         ?>
         <header>Header
-                <?PHP
-                include_once './MaintView/_HeaderFragment.php';
-                include_once './../Views/_ConnexionFragment.php';
-                ?>
+            <?PHP
+            include_once './MaintView/_HeaderFragment.php';
+            include_once './../Views/_ConnexionFragment.php';
+            ?>
         </header>
         <?PHP
         include_once './MaintView/_Menu.php';
         include_once $fragment;
+                ?>
+        <div class="clear"></div>
+        <?PHP
         include_once './MaintView/_FooterFragment.php';
         ?>
     </body>

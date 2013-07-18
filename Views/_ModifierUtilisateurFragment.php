@@ -3,11 +3,9 @@
 <div id="mainFrame">
 
     <?php
-    include_once '../Controllers/Form/Form.php';
-    include_once '../Controllers/Form/Br.php';
-    include_once '../Controllers/Form/Input.php';
-    include_once '../Controllers/Form/Select.php';
-    include_once '../Controllers/Form/ElementHTML.php';
+    spl_autoload_register(function ($nomClasse) {
+                require_once "../Controllers/Form/$nomClasse.php";
+            });
 
     $elements = array();
 
@@ -19,7 +17,7 @@
         $tListeActif = array();
         array_push($tListeActif, "Inactif");
         array_push($tListeActif, "Actif");
-        
+
         foreach ($tUsers as $value) {
             $inputId = new Input("idv", "Id :", "id", "text", $value['id'], "disabled", 1, null);
             $inputIdh = new Input("id", "", "idh", "hidden", $value['id'], "", 1, null);

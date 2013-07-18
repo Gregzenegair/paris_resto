@@ -1,14 +1,18 @@
+<?PHP
+// --- Controlle de l'utilisateur avant accès à la page
+include_once '../Controllers/NavigationController.php';
+NavigationController::Controller($_SESSION['user']);
+// --- Fin de controle
+?>
+
 <link rel="stylesheet" type="text/css" href="css/btSupprimer.css">
 <div id="masqueGris"></div>
 <div id="mainFrame">
 
     <?php
-    include_once '../Controllers/Form/Form.php';
-    include_once '../Controllers/Form/Br.php';
-    include_once '../Controllers/Form/Input.php';
-    include_once '../Controllers/Form/Select.php';
-    include_once '../Controllers/Form/DataList.php';
-    include_once '../Controllers/Form/ElementHTML.php';
+    spl_autoload_register(function ($nomClasse) {
+                require_once "../Controllers/Form/$nomClasse.php";
+            });
 
     $elements = array();
 
@@ -40,9 +44,14 @@
 
             $inputNumero_tel = new Input("numero_tel", "Numéro de téléphone :", "numero_tel", "text", $value['numero_tel'], "", 1, null);
             $inputEmail = new Input("email", "Email :", "email", "text", $value['email'], null, 1, null);
-            $selectTypeVoie = new Select("type_voie", "", $tListeElemTypesVoie, "type_voie", $value['id_types_voie'], 1, "required", "select");
-            $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "number", $value['numero_voie'], "required min='0'", 1, null);
+            //$selectTypeVoie = new Select("type_voie", "", $tListeElemTypesVoie, "type_voie", $value['id_type_voie'], 1, "required", "select");
+            $DatalistTypeVoie = new DataList("type_voie", "", $tListeElemTypesVoie, "type_voie", $value['type_voie'], 1, "required", "select");
+            $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "input", $value['numero_voie'], "", 1, null);
             $inputNomVoie = new Input("nom_voie", "", "nom_voie", "text", $value['nom_voie'], "required", 1, null);
+
+            $textareaDescription = new ElementHTML("<legend for='description'>Description du restaurant : </legend><textarea name='description' id='description' placeholder='Description du restaurant, menu, informations relatives'>$value[description]</textarea>");
+            $inputHorraires = new Input("horraires", "Horraires :", "horraires", "text", $value['horraires'], "placeholder='Ouvert du lundi au samedi'", 1, null);
+            $inputPrix = new Input("prix", "Prix :", "prix", "text", $value['prix'], "placeholder='15€-25€'", 1, null);
 
             $selectVilles = new DataList("nom_ville", "Ville :", $tListeElemVilles, "nom_ville", $value['nom_ville'], 1, "", "select");
             $inputCp = new Input("cp", "Code postal :", "cp", "text", $value['cp'], "", 1, null);
@@ -69,8 +78,11 @@
         array_push($elements, $inputNumero_tel);
         array_push($elements, $inputEmail);
         array_push($elements, $inputNumeroVoie);
-        array_push($elements, $selectTypeVoie);
+        array_push($elements, $DatalistTypeVoie);
         array_push($elements, $inputNomVoie);
+        array_push($elements, $textareaDescription);
+        array_push($elements, $inputHorraires);
+        array_push($elements, $inputPrix);
         array_push($elements, $selectVilles);
         array_push($elements, $inputCp);
 
@@ -91,3 +103,4 @@
 </div>
 
 <script src="js/btSupprimer.js"></script>
+<script src="js/ajouterRestoForm.js"></script>
