@@ -17,7 +17,7 @@ class DataList {
     private $position;
     private $class;
 
-    function __construct($name, $legend, $tListeElem, $id, $selected, $position, $options, $class) {
+    function __construct($name, $legend, $tListeElem, $id, $selected, $options, $position, $class) {
         $this->name = $name;
         $this->legend = $legend;
         $this->tListeElem = $tListeElem;
@@ -44,6 +44,10 @@ class DataList {
 
         if ($this->selected != "") {
             $resultatHTML .= " value=\"" . $this->selected . "\"";
+        }
+
+        if ($this->options != "") {
+            $resultatHTML .= " " . $this->options . " ";
         }
 
         if ($this->id != null)

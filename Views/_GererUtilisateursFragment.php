@@ -19,6 +19,7 @@ NavigationController::Controller($_SESSION['user']);
 
     if (!empty($_SESSION['afficherUsers'])) {
         $tUsers = $_SESSION['afficherUsers'];
+        $count = $_SESSION['count'];
         ?>
         <table id="tableauAffichage">
             <tr>
@@ -30,6 +31,30 @@ NavigationController::Controller($_SESSION['user']);
                 <td>Actif/Inactif</td>
             </tr>
             <?PHP
+            
+                        $pagination = $_SESSION['pagination'];
+            echo "Nombre total d'utilsateurs enregistrés : " . $count . "<br>";
+            $part = floor($count / $pagination) + 2;
+            if ($pagination == 1) {
+                $part = $part - 1;
+            }
+
+
+            $i = 1;
+            while ($i < $part) {
+                $tranche = $i * $pagination;
+                if ($i == 1) {
+                    $echoA = 0;
+                } else {
+                    $echoA = ($tranche - $pagination);
+                }
+                ?>
+                <a class="aGreenVille" href="../Controllers/RestoController.php?action=GererRestos&limiteBasse=<?PHP echo $echoA; ?>"><?PHP echo $i; ?></a>
+                <?PHP
+                $i++;
+            }
+            
+            
             foreach ($tUsers as $value) {
                 ?>
                 <tr>

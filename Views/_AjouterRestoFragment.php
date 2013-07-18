@@ -24,25 +24,24 @@ NavigationController::Controller($_SESSION['user']);
     $tListeElemTypesVoie = $_SESSION['afficherTypesVoie'];
     $tListeElemVilles = $_SESSION['afficherVilles'];
 
-
     $inputNom = new Input("nom", "Nom du restaurant :", "nom", "text", "", "required", 1, null);
+
+    $selectCategories1 = new DataList("categorie1", "Categories :", $tListeElemCategories, "categorie1", null, "", 1, "selectCategorie");
+    $selectCategories2 = new DataList("categorie2", "", $tListeElemCategories, "categorie2", null, "", 1, "selectCategorie");
+    $selectCategories3 = new DataList("categorie3", "", $tListeElemCategories, "categorie3", null, "", 1, "selectCategorie");
+
     $inputNumero_tel = new Input("numero_tel", "Numéro de téléphone :", "numero_tel", "text", "", "", 1, null);
     $inputEmail = new Input("email", "Email :", "email", "text", "", null, 1, null);
-
-    $selectTypeVoie = new Select("type_voie", "", $tListeElemTypesVoie, "type_voie", null, 1, "required", "select");
-    $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "number", "", "required min='1'", 1, null);
+    $DatalistTypeVoie = new DataList("type_voie", "", $tListeElemTypesVoie, "type_voie", "", "required", 1, "");
+    $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "input", "", "required", 1, "");
     $inputNomVoie = new Input("nom_voie", "", "nom_voie", "text", "", "required", 1, null);
-
-    $selectCategories1 = new DataList("categorie1", "Categories :", $tListeElemCategories, "categorie1", null, 1, "", "selectCategorie");
-    $selectCategories2 = new DataList("categorie2", "", $tListeElemCategories, "categorie2", null, 1, "", "selectCategorie");
-    $selectCategories3 = new DataList("categorie3", "", $tListeElemCategories, "categorie3", null, 1, "", "selectCategorie");
-
-    $selectVilles = new DataList("nom_ville", "Ville :", $tListeElemVilles, "nom_ville", null, 1, "", "select");
-    $inputCp = new Input("cp", "Code postal :", "cp", "text", "", "", 1, null);
 
     $textareaDescription = new ElementHTML("<legend for='description'>Description du restaurant : </legend><textarea name='description' id='description' placeholder='Description du restaurant, menu, informations relatives'></textarea>");
     $inputHorraires = new Input("horraires", "Horraires :", "horraires", "text", "", "placeholder='Ouvert du lundi au samedi'", 1, null);
     $inputPrix = new Input("prix", "Prix :", "prix", "text", "", "placeholder='15€-25€'", 1, null);
+
+    $selectVilles = new DataList("nom_ville", "Ville :", $tListeElemVilles, "nom_ville", "", "required", 1, "select");
+    $inputCp = new Input("cp", "Code postal :", "cp", "text", "", "required", 1, null);
 
     $inputSubmit = new Input("ajouter", null, "ajouter", "submit", "Ajouter", "", 5, "inputGreen");
 
@@ -55,7 +54,7 @@ NavigationController::Controller($_SESSION['user']);
     array_push($elements, $inputNumero_tel);
     array_push($elements, $inputEmail);
     array_push($elements, $inputNumeroVoie);
-    array_push($elements, $selectTypeVoie);
+    array_push($elements, $DatalistTypeVoie);
     array_push($elements, $inputNomVoie);
     array_push($elements, $textareaDescription);
     array_push($elements, $inputHorraires);

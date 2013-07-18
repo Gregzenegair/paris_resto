@@ -1,8 +1,34 @@
-var nom_ville = document.getElementById("nom_villeinput");
+// -- Inputs adresse
+
+var numero_voie = document.getElementById("numero_voie");
+var type_voieInput = document.getElementById("type_voieInput");
+var nom_voie = document.getElementById("nom_voie");
+
+numero_voie.onkeypress = numVoie;
+type_voieInput.onkeypress = typeVoie;
+
+function numVoie(event) {
+    if(event.keyCode==32){
+        type_voieInput.focus();
+    }
+}
+
+function typeVoie(event) {
+    if(event.keyCode==32){
+        nom_voie.focus();
+    }
+}
+
+
+
+
+
+// -- Partie Ajax pour ville et cp
+
+var nom_ville = document.getElementById("nom_villeInput");
 var cp = document.getElementById("cp");
 nom_ville.onblur = makeRequest;
 
-// -- Partie Ajax
 
 function getXMLHttpRequest() {
     var xhr = null;

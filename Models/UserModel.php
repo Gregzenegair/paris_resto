@@ -136,7 +136,10 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
      * @param type $id
      * @return array
      */
-    public function showUsers($id = null) {
+    public function showUsers($id = null, $limiteBasse = null, $pagination = null) {
+
+        $limiteBasse = (int) $limiteBasse;
+        $pagination = (int) $pagination;
 
         if (isset($id)) {
             $req = $this->_bdd->prepare('SELECT u.id, u.pseudo, u.email, s.nom as statut, u.date_inscription, u.actif 
@@ -149,7 +152,12 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
             $req = $this->_bdd->prepare('SELECT u.id, u.pseudo, u.email, s.nom as statut, u.date_inscription, u.actif 
                                             FROM users u
                                             JOIN statuts s
-                                            ON u.statut = s.id');
+                                            ON u.statut = s.id
+                                            ORDER BY u.date_inscription DESC
+                                            LIMIT :limiteBasse, :pagination');
+
+            $req->bindParam(':limiteBasse', $limiteBasse, PDO::PARAM_INT);
+            $req->bindParam(':pagination', $pagination, PDO::PARAM_INT);
         }
 
         $req->execute();
@@ -165,6 +173,18 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
         }
         $req->closeCursor();
         return $resultAfficherUsers;
+    }
+
+    public function countUsers() {
+
+        $req = $this->_bdd->prepare('SELECT count(*) as count FROM users');
+        $req->execute();
+        $resultAfficher = $req->fetchAll();
+        $req->closeCursor();
+        foreach ($resultAfficher as $value) {
+            $result = $value['count'];
+        }
+        return $result;
     }
 
     /**

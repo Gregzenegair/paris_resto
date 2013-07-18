@@ -44,8 +44,19 @@ if (isset($_GET['action'])) {
         // --- Lorsque l'on clique sur le bouton pour voir la liste des utilisateurs
         case "GererUtilisateurs":
 
-            $result = $CNX->showUsers();
-            $_SESSION['afficherUsers'] = $result;
+            if (isset($_GET['limiteBasse'])) {
+                $limiteBasse = $_GET['limiteBasse'];
+            } else {
+                $limiteBasse = $_GET['limiteBasse'] = 0;
+            }
+            // -- Determine la pagination de l'affichage des restaurants
+            $_SESSION['pagination'] = 50;
+
+            $resultRestosCount = $CNX->countUsers();
+            $_SESSION['count'] = $resultRestosCount;
+
+            $resultUsers = $CNX->showUsers(null, $limiteBasse, $_SESSION['pagination']);
+            $_SESSION['afficherUsers'] = $resultUsers;
 
             break;
 

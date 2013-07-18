@@ -42,12 +42,12 @@ CREATE TABLE photos(
 CREATE TABLE restaurants(
         id            Int NOT NULL ,
         nom           Varchar (50) NOT NULL ,
-        numero_tel    Varchar (20) NOT NULL ,
-        email         Varchar (50) NOT NULL ,
+        numero_tel    Varchar (20) ,
+        email         Varchar (50) ,
         nom_voie      Varchar (50) ,
         numero_voie   Numeric ,
         id_ville     Int (11) unsigned DEFAULT NULL,
-        id_type_voie Int NOT NULL ,
+        type_voie Varchar(20) ,
         date_insertion Date NOT NULL ,
         description    Varchar (1000) ,
         prix           Varchar (50) ,
@@ -159,7 +159,6 @@ ALTER TABLE commentaires ADD CONSTRAINT FK_commentaires_id_avis FOREIGN KEY (id_
 ALTER TABLE photos ADD CONSTRAINT FK_photos_id_restaurant FOREIGN KEY (id_restaurant) REFERENCES restaurants(id);
 ALTER TABLE restaurants ADD CONSTRAINT `FK_restaurants_id_ville` FOREIGN KEY `FK_restaurants_id_ville` (`id_ville`) REFERENCES `villes` (`id`)
     ON DELETE SET NULL;
-ALTER TABLE restaurants ADD CONSTRAINT FK_restaurants_id_type_voie FOREIGN KEY (id_type_voie) REFERENCES types_voie(id);
 ALTER TABLE users ADD CONSTRAINT FK_users_statut FOREIGN KEY (statut) REFERENCES statuts(id);
 ALTER TABLE avis ADD CONSTRAINT FK_avis_id_user FOREIGN KEY (id_user) REFERENCES users(id)
     ON DELETE CASCADE;
@@ -34745,14 +34744,14 @@ INSERT INTO `villes` (id, nom, cp, latitude, longitude, eloignement, url)VALUES
 -- Contenu de la table `restaurants`
 --
 
-INSERT INTO `restaurants` (`id`, `nom`, `numero_tel`, `email`, `nom_voie`, `numero_voie`, `id_ville`, `id_type_voie`) VALUES
-(1, 'Mac Donald''s', '01 34 64 24 84', 'M@cdo.fr', 'des Canards', 9, 1, 5),
-(2, 'Campanile', '01 12 27 32 64', 'Camp@nile.fr', 'Magenta', 11, 1, 3),
-(3, 'Quick', '01 30 37 32 52', 'quick@gmail.com', 'Saint Martin', 7, 2, 3),
-(4, 'Burger King', '887 888 760', 'burger@king.com', 'des gros', 3, 2, 3),
-(5, 'Flunch', '01 20 20 40 30', 'Fluch@er.fr', 'des Vaches', 558, 3, 7),
-(6, 'Campanile', '01 24 52 45 65', 'camp@nile.fr', 'des Nouilles', 120, 4, 4),
-(7, 'Buffalo Grill', '01 34 64 24 12', '', 'de Bonds', 5, 5, 2);
+INSERT INTO `restaurants` (`id`, `nom`, `numero_tel`, `email`, `nom_voie`, `numero_voie`, `id_ville`, `type_voie`) VALUES
+(1, 'Mac Donald''s', '01 34 64 24 84', 'M@cdo.fr', 'des Canards', 9, 1, 'rue'),
+(2, 'Campanile', '01 12 27 32 64', 'Camp@nile.fr', 'Magenta', 11, 1, 'rue'),
+(3, 'Quick', '01 30 37 32 52', 'quick@gmail.com', 'Saint Martin', 7, 2, 'rue'),
+(4, 'Burger King', '887 888 760', 'burger@king.com', 'des gros', 3, 2, 'rue'),
+(5, 'Flunch', '01 20 20 40 30', 'Fluch@er.fr', 'des Vaches', 558, 3, 'rue'),
+(6, 'Campanile', '01 24 52 45 65', 'camp@nile.fr', 'des Nouilles', 120, 4, 'rue'),
+(7, 'Buffalo Grill', '01 34 64 24 12', '', 'de Bonds', 5, 5, 'rue');
 
 --
 -- Contenu de la table `ligcategories`

@@ -50,8 +50,7 @@ class VilleModel extends CNX {
         $recherche = "%" . $recherche . "%";
         $req = $this->_bdd->prepare('SELECT v.id, v.nom, v.cp FROM villes v
                                                     WHERE v.nom like :recherche
-                                                    OR v.cp like :recherche
-                                                    LIMIT 5000');
+                                                    OR v.cp like :recherche');
         $req->bindParam(':recherche', $recherche, PDO::PARAM_STR);
 
         $req->execute();

@@ -267,6 +267,8 @@ option {
 #numero_voie {
     width: 2em;
     padding: 7px 20px;
+    border-right: none;
+    box-shadow: none;
 }
 
 #numero_voie:focus {
@@ -275,10 +277,15 @@ option {
 
 #type_voieInput {
     width: 6em;
+    border-right: none;
+    border-left: none;
+    box-shadow: none;
 }
 
 #nom_voie {
     width: 18em;
+    border-left: none;
+    box-shadow: none;
 }
 
 #rechercher {

@@ -14,7 +14,16 @@ if (isset($_GET['action'])) {
     switch ($action) {
 
         case "GererRestos":
-            $resultRestos = $CNX->showRestos();
+            if (isset($_GET['limiteBasse'])) {
+                $limiteBasse = $_GET['limiteBasse'];
+            } else {
+                $limiteBasse = $_GET['limiteBasse'] = 0;
+            }
+            // -- Determine la pagination de l'affichage des restaurants
+            $_SESSION['pagination'] = 50;
+            $resultRestosCount = $CNX->countRestos();
+            $_SESSION['count'] = $resultRestosCount;
+            $resultRestos = $CNX->showRestos(null, $limiteBasse, $_SESSION['pagination']);
             $_SESSION['afficherRestos'] = $resultRestos;
             break;
 
