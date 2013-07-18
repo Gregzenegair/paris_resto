@@ -25,6 +25,7 @@ CREATE TABLE commentaires(
 CREATE TABLE notes(
         id     Int NOT NULL ,
         valeur Int NOT NULL ,
+		    id_categorie_note Int NOT NULL ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -48,6 +49,9 @@ CREATE TABLE restaurants(
         id_ville     Int (11) unsigned DEFAULT NULL,
         id_type_voie Int NOT NULL ,
         date_insertion Date NOT NULL ,
+        description    Varchar (1000) ,
+        prix           Varchar (50) ,
+        Horraires      Varchar (50) ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -59,7 +63,7 @@ CREATE TABLE statuts(
 )ENGINE=InnoDB;
 
 
-CREATE TABLE categorie_note(
+CREATE TABLE types_note(
         id  Int NOT NULL ,
         nom Varchar (20) NOT NULL ,
         PRIMARY KEY (id )
@@ -88,18 +92,11 @@ CREATE TABLE users(
 )ENGINE=InnoDB;
 
 
-CREATE TABLE Avis(
+CREATE TABLE avis(
         id             Int NOT NULL ,
         id_user       Int NOT NULL ,
         id_restaurant Int NOT NULL ,
         PRIMARY KEY (id )
-)ENGINE=InnoDB;
-
-
-CREATE TABLE ligcategorie_note(
-        id_categorie_note Int NOT NULL ,
-        id_note          Int NOT NULL ,
-        PRIMARY KEY (id_categorie_note ,id_note )
 )ENGINE=InnoDB;
 
 
@@ -130,7 +127,7 @@ CREATE TABLE `villes` (
 
 #-- Definition des AUTO_INCREMENT
 ALTER TABLE `paris_resto`.`avis` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
-ALTER TABLE `paris_resto`.`categorie_note` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `paris_resto`.`types_note` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `paris_resto`.`categories` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `paris_resto`.`commentaires` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `paris_resto`.`notes` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
@@ -158,17 +155,18 @@ ALTER TABLE `paris_resto`.`users` MODIFY COLUMN `commentaire` VARCHAR(1000) CHAR
 
 
 #-- Definition des FOREIGN KEYs
-ALTER TABLE commentaires ADD CONSTRAINT FK_commentaires_id_avis FOREIGN KEY (id_avis) REFERENCES Avis(id);
+ALTER TABLE commentaires ADD CONSTRAINT FK_commentaires_id_avis FOREIGN KEY (id_avis) REFERENCES avis(id);
 ALTER TABLE photos ADD CONSTRAINT FK_photos_id_restaurant FOREIGN KEY (id_restaurant) REFERENCES restaurants(id);
 ALTER TABLE restaurants ADD CONSTRAINT `FK_restaurants_id_ville` FOREIGN KEY `FK_restaurants_id_ville` (`id_ville`) REFERENCES `villes` (`id`)
     ON DELETE SET NULL;
 ALTER TABLE restaurants ADD CONSTRAINT FK_restaurants_id_type_voie FOREIGN KEY (id_type_voie) REFERENCES types_voie(id);
 ALTER TABLE users ADD CONSTRAINT FK_users_statut FOREIGN KEY (statut) REFERENCES statuts(id);
-ALTER TABLE Avis ADD CONSTRAINT FK_Avis_id_user FOREIGN KEY (id_user) REFERENCES users(id);
-ALTER TABLE Avis ADD CONSTRAINT FK_Avis_id_restaurant FOREIGN KEY (id_restaurant) REFERENCES restaurants(id);
-ALTER TABLE ligcategorie_note ADD CONSTRAINT FK_ligcategorie_note_id_categorie_note FOREIGN KEY (id_categorie_note) REFERENCES categorie_note(id);
-ALTER TABLE ligcategorie_note ADD CONSTRAINT FK_ligcategorie_note_id_note FOREIGN KEY (id_note) REFERENCES notes(id);
-ALTER TABLE lignotes ADD CONSTRAINT FK_lignotes_id_avis FOREIGN KEY (id_avis) REFERENCES Avis(id);
+ALTER TABLE avis ADD CONSTRAINT FK_avis_id_user FOREIGN KEY (id_user) REFERENCES users(id)
+    ON DELETE CASCADE;
+ALTER TABLE avis ADD CONSTRAINT FK_avis_id_restaurant FOREIGN KEY (id_restaurant) REFERENCES restaurants(id)
+    ON DELETE CASCADE;
+ALTER TABLE notes ADD CONSTRAINT FK_notes_id_categorie_note FOREIGN KEY (id_categorie_note) REFERENCES types_note(id);
+ALTER TABLE lignotes ADD CONSTRAINT FK_lignotes_id_avis FOREIGN KEY (id_avis) REFERENCES avis(id);
 ALTER TABLE lignotes ADD CONSTRAINT FK_lignotes_id_note FOREIGN KEY (id_note) REFERENCES notes(id);
 
 
@@ -188,7 +186,7 @@ ALTER TABLE ligcategories
 
 #-- Insertions des paramètres fixes
 INSERT INTO statuts (id, nom) VALUES (0,'Utilisateur'),(8,'Modérateur'),(10,'Administrateur');
-INSERT INTO types_voie (nom) VALUES ('allée'), ('avenue'), ('boulevard'), ('chemin'), ('impasse'), ('lieu dit'), ('rue');
+INSERT INTO types_voie (nom) VALUES ('allée'), ('avenue'), ('boulevard'), ('chemin'), ('impasse'), ('lieu dit'), ('rue'), ('place');
 
 
 -- phpMyAdmin SQL Dump
@@ -225,30 +223,6 @@ INSERT INTO `categories` (`id`, `nom`) VALUES
 (6, 'Française'),
 (7, 'Américain'),
 (8, 'Traditionnel');
-
-
-
---
--- Contenu de la table `statuts`
---
-
-INSERT INTO `statuts` (`id`, `nom`) VALUES
-(0, 'Utilisateur'),
-(8, 'Modérateur'),
-(10, 'Administrateur');
-
---
--- Contenu de la table `types_voie`
---
-
-INSERT INTO `types_voie` (`id`, `nom`) VALUES
-(1, 'allée'),
-(2, 'avenue'),
-(3, 'boulevard'),
-(4, 'chemin'),
-(5, 'impasse'),
-(6, 'lieu dit'),
-(7, 'rue');
 
 --
 -- Contenu de la table `users`

@@ -95,11 +95,11 @@ class RestoModel extends CNX {
      * @param type $id_villes
      * @return boolean ou id
      */
-    public function insertResto($nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_type_voie, $id_ville) {
+    public function insertResto($nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_type_voie, $id_ville, $description, $horraires, $prix) {
 
         $email = strtolower($email);
-        $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_type_voie", "id_ville"];
-        $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_type_voie", ":$id_ville"];
+        $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_type_voie", "id_ville", "date_insertion", "description", "horraires", "prix"];
+        $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_type_voie", ":$id_ville", "now()", ":$description", ":$horraires", ":$prix"];
 
 // --- Demarage de la transaction
 
@@ -112,6 +112,35 @@ class RestoModel extends CNX {
         }
     }
 
+        /**
+     * Met à jour le restaurant indiqué par rapport à son id.
+     * @param type $id
+     * @param type $nom
+     * @param type $numero_tel
+     * @param type $email
+     * @param type $numero_voie
+     * @param type $nom_voie
+     * @param type $id_type_voie
+     * @param type $id_villes
+     * @return boolean ou id
+     */
+    public function updateResto($id, $nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_type_voie, $id_ville, $description, $horraires, $prix) {
+
+        $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_type_voie", "id_ville", "date_insertion", "description", "horraires", "prix"];
+        $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_type_voie", ":$id_ville", "now()", ":$description", ":$horraires", ":$prix"];
+        $twhere['id'] = $id;
+
+// --- Demarage de la transaction
+
+        $result = DAO::update($this->_bdd, "restaurants", $tNomChampTable, $tValeurs, $twhere);
+
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     /**
      * Retourne en resultat le tableau de recherche
      * @param type $recherche
@@ -150,7 +179,7 @@ class RestoModel extends CNX {
     public function showRestos($id = null) {
 
         if (isset($id)) {
-            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.id_type_voie, v.nom as nom_ville, v.cp
+            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.id_type_voie, v.nom as nom_ville, v.cp, r.description, r.horraires, r.prix
                                                     FROM restaurants r
                                                     LEFT JOIN villes v
                                                     ON v.id = r.id_ville
@@ -161,7 +190,7 @@ class RestoModel extends CNX {
                                                     WHERE r.id = :id');
             $req->bindParam(':id', $id, PDO::PARAM_STR);
         } else {
-            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, t.nom as type_voie, v.nom as nom_ville, v.cp
+            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, r.numero_tel, r.email, r.numero_voie, r.nom_voie, t.nom as type_voie, v.nom as nom_ville, v.cp, r.description, r.horraires, r.prix
                                                     FROM restaurants r
                                                     LEFT JOIN villes v
                                                     ON v.id = r.id_ville
@@ -259,35 +288,6 @@ class RestoModel extends CNX {
         $req->bindParam(':id', $id, PDO::PARAM_STR);
         $req->execute();
         $req->closeCursor();
-    }
-
-    /**
-     * Met à jour le restaurant indiqué par rapport à son id.
-     * @param type $id
-     * @param type $nom
-     * @param type $numero_tel
-     * @param type $email
-     * @param type $numero_voie
-     * @param type $nom_voie
-     * @param type $id_type_voie
-     * @param type $id_villes
-     * @return boolean ou id
-     */
-    public function updateResto($id, $nom, $numero_tel, $email, $numero_voie, $nom_voie, $id_type_voie, $id_ville) {
-
-        $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "id_type_voie", "id_ville"];
-        $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$id_type_voie", ":$id_ville"];
-        $twhere['id'] = $id;
-
-// --- Demarage de la transaction
-
-        $result = DAO::update($this->_bdd, "restaurants", $tNomChampTable, $tValeurs, $twhere);
-
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     /**

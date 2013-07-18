@@ -42,7 +42,7 @@ if (isset($_GET['action'])) {
             $categorie2 = $CNX->selectOrInsertCategorie($_POST['categorie2']);
             $categorie3 = $CNX->selectOrInsertCategorie($_POST['categorie3']);
 
-            $lastInsertId = $CNX->insertResto($_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes);
+            $lastInsertId = $CNX->insertResto($_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes, $_POST['description'], $_POST['horraires'], $_POST['prix']);
 
             $CNX->insertLigcategories($categorie1, $lastInsertId);
             $CNX->insertLigcategories($categorie2, $lastInsertId);
@@ -84,7 +84,7 @@ if (isset($_GET['action'])) {
                 $categorie2 = $CNX->selectOrInsertCategorie($_POST['categorie2']);
                 $categorie3 = $CNX->selectOrInsertCategorie($_POST['categorie3']);
 
-                $CNX->updateResto($_POST['id'], $_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes);
+                $CNX->updateResto($_POST['id'], $_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes, $_POST['description'], $_POST['horraires'], $_POST['prix']);
 
                 $CNX->insertLigcategories($categorie1, $_POST['id']);
                 $CNX->insertLigcategories($categorie2, $_POST['id']);

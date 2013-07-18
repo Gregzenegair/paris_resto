@@ -1,8 +1,8 @@
 <?PHP
-    // --- Controlle de l'utilisateur avant accès à la page
-    include_once '../Controllers/NavigationController.php';
-    NavigationController::Controller($_SESSION['user']);
-    // --- Fin de controle
+// --- Controlle de l'utilisateur avant accès à la page
+include_once '../Controllers/NavigationController.php';
+NavigationController::Controller($_SESSION['user']);
+// --- Fin de controle
 ?>
 
 <link rel="stylesheet" type="text/css" href="css/btSupprimer.css">
@@ -38,8 +38,11 @@
     $selectCategories3 = new DataList("categorie3", "", $tListeElemCategories, "categorie3", null, 1, "", "selectCategorie");
 
     $selectVilles = new DataList("nom_ville", "Ville :", $tListeElemVilles, "nom_ville", null, 1, "", "select");
-
     $inputCp = new Input("cp", "Code postal :", "cp", "text", "", "", 1, null);
+
+    $textareaDescription = new ElementHTML("<legend for='description'>Description du restaurant : </legend><textarea name='description' id='description' placeholder='Description du restaurant, menu, informations relatives'></textarea>");
+    $inputHorraires = new Input("horraires", "Horraires :", "horraires", "text", "", "placeholder='Ouvert du lundi au samedi'", 1, null);
+    $inputPrix = new Input("prix", "Prix :", "prix", "text", "", "placeholder='15€-25€'", 1, null);
 
     $inputSubmit = new Input("ajouter", null, "ajouter", "submit", "Ajouter", "", 5, "inputGreen");
 
@@ -54,6 +57,9 @@
     array_push($elements, $inputNumeroVoie);
     array_push($elements, $selectTypeVoie);
     array_push($elements, $inputNomVoie);
+    array_push($elements, $textareaDescription);
+    array_push($elements, $inputHorraires);
+    array_push($elements, $inputPrix);
     array_push($elements, $selectVilles);
     array_push($elements, $inputCp);
     array_push($elements, $br);

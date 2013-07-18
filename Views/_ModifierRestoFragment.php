@@ -48,6 +48,10 @@ NavigationController::Controller($_SESSION['user']);
             $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "number", $value['numero_voie'], "required min='0'", 1, null);
             $inputNomVoie = new Input("nom_voie", "", "nom_voie", "text", $value['nom_voie'], "required", 1, null);
 
+            $textareaDescription = new ElementHTML("<legend for='description'>Description du restaurant : </legend><textarea name='description' id='description' placeholder='Description du restaurant, menu, informations relatives'>$value[description]</textarea>");
+            $inputHorraires = new Input("horraires", "Horraires :", "horraires", "text", $value['horraires'], "placeholder='Ouvert du lundi au samedi'", 1, null);
+            $inputPrix = new Input("prix", "Prix :", "prix", "text", $value['prix'], "placeholder='15€-25€'", 1, null);
+
             $selectVilles = new DataList("nom_ville", "Ville :", $tListeElemVilles, "nom_ville", $value['nom_ville'], 1, "", "select");
             $inputCp = new Input("cp", "Code postal :", "cp", "text", $value['cp'], "", 1, null);
         }
@@ -75,6 +79,9 @@ NavigationController::Controller($_SESSION['user']);
         array_push($elements, $inputNumeroVoie);
         array_push($elements, $selectTypeVoie);
         array_push($elements, $inputNomVoie);
+        array_push($elements, $textareaDescription);
+        array_push($elements, $inputHorraires);
+        array_push($elements, $inputPrix);
         array_push($elements, $selectVilles);
         array_push($elements, $inputCp);
 
