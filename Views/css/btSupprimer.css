@@ -45,7 +45,6 @@ root {
     width: 100%;
     background-repeat:no-repeat;
     background-position:center;
-    position:absolute;
-    top: 0px;
-    left: 0px;
+    position: fixed;
+    top:0; right:0; bottom:0; left:0;
 }
