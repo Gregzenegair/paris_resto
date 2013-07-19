@@ -18,6 +18,9 @@ class RestoModel extends CNX {
      */
     public function selectOrInsertVille($nom, $cp) {
 
+        $nom = strip_tags($nom);
+        $cp = strip_tags($cp);
+
         if ($nom == "") {
             return false;
         }
@@ -54,6 +57,8 @@ class RestoModel extends CNX {
      * @return boolean
      */
     public function selectOrInsertCategorie($nom) {
+
+        $nom = strip_tags($nom);
 
         if ($nom == "") {
             return false;
@@ -97,6 +102,16 @@ class RestoModel extends CNX {
      */
     public function insertResto($nom, $numero_tel, $email, $numero_voie, $nom_voie, $type_voie, $id_ville, $description, $horraires, $prix) {
 
+        $nom = strip_tags($nom);
+        $numero_tel = strip_tags($numero_tel);
+        $email = strip_tags($email);
+        $numero_voie = strip_tags($numero_voie);
+        $nom_voie = strip_tags($nom_voie);
+        $type_voie = strip_tags($type_voie);
+        $description = strip_tags($description);
+        $horraires = strip_tags($horraires);
+        $prix = strip_tags($prix);
+
         $numero_voie = trim($numero_voie);
         $nom_voie = trim($nom_voie);
         $type_voie = trim($type_voie);
@@ -129,6 +144,17 @@ class RestoModel extends CNX {
      * @return boolean ou id
      */
     public function updateResto($id, $nom, $numero_tel, $email, $numero_voie, $nom_voie, $type_voie, $id_ville, $description, $horraires, $prix) {
+
+        $id = strip_tags($id);
+        $nom = strip_tags($nom);
+        $numero_tel = strip_tags($numero_tel);
+        $email = strip_tags($email);
+        $numero_voie = strip_tags($numero_voie);
+        $nom_voie = strip_tags($nom_voie);
+        $type_voie = strip_tags($type_voie);
+        $description = strip_tags($description);
+        $horraires = strip_tags($horraires);
+        $prix = strip_tags($prix);
 
         $numero_voie = trim($numero_voie);
         $nom_voie = trim($nom_voie);

@@ -26,7 +26,7 @@ class UserModel extends CNX {
         $aResultats = [];
 
         $req = $this->_bdd->prepare('SELECT id, mdp, statut, actif FROM users where email = :email');
-        $req->bindParam(':email', $email, PDO::PARAM_STR);
+        $req->bindParam(':email', strip_tags($email), PDO::PARAM_STR);
         $req->execute();
 
         while ($donnees = $req->fetch()) {
@@ -50,7 +50,7 @@ class UserModel extends CNX {
      */
     public function selectUserEmail($email) {
         $req = $this->_bdd->prepare('SELECT count(*) as count FROM users where email = :email');
-        $req->bindParam(':email', $email, PDO::PARAM_STR);
+        $req->bindParam(':email', strip_tags($email), PDO::PARAM_STR);
         $req->execute();
 
         while ($donnees = $req->fetch()) {
@@ -72,6 +72,12 @@ class UserModel extends CNX {
      * @return boolean
      */
     public function insertUser($pseudo, $email, $mdp, $statut) {
+
+
+        $pseudo = strip_tags($pseudo);
+        $email = strip_tags($email);
+        $mdp = strip_tags($mdp);
+        $statut = strip_tags($statut);
 
         $email_check = md5(microtime(TRUE) * 100000);
         $email = strtolower($email);
@@ -95,6 +101,11 @@ class UserModel extends CNX {
      * @param type $email_check
      */
     private function sendEmail($pseudo, $email, $email_check) {
+
+        $pseudo = strip_tags($pseudo);
+        $email = strip_tags($email);
+        $email_check = strip_tags($email_check);
+
         $destinataire = $email;
         $sujet = "Activation de votre compte";
         $entete = "From: paris_resto@restos.com";
@@ -114,6 +125,8 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
     }
 
     public function seekUsers($recherche) {
+
+        $recherche = strip_tags($recherche);
         $recherche = "%" . $recherche . "%";
         $req = $this->_bdd->prepare('SELECT u.id, u.pseudo, u.email, s.nom as statut, u.date_inscription, u.actif 
                                             FROM users u
@@ -215,6 +228,11 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
      * @param type $actif
      */
     public function updateUser($id, $pseudo, $email, $date_inscription, $statut, $actif) {
+
+        $pseudo = strip_tags($pseudo);
+        $email = strip_tags($email);
+        $mdp = strip_tags($mdp);
+        $statut = strip_tags($statut);
 
         $tNomChampTable = ["pseudo", "email", "date_inscription", "statut", "actif"];
         $tValeurs = [":$pseudo", ":$email", ":$date_inscription", ":$statut", ":$actif"];
