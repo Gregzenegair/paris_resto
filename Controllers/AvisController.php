@@ -14,7 +14,7 @@ if (isset($_GET['action'])) {
     switch ($action) {
 
         case "GererAvis":
-            $resultAvis = $CNX->showAvis();
+            $resultAvis = $CNX->showAvis($_GET['id']);
             $_SESSION['afficherAvis'] = $resultAvis;
             break;
 
@@ -24,9 +24,9 @@ if (isset($_GET['action'])) {
             $action = "GererAvis";
             break;
         
-        case "SupprimerAvis":
-            $resultAvis = $CNX->deleteAvis($_GET['id']);
-            header("Location: ./AvisController.php?action=GererAvis");
+        case "ModifierAvis":
+            $resultAvis = $CNX->modifierAvis($_GET['id'], $_GET['actif']);
+            header("Location: ./AvisController.php?action=GererAvis&id=$_GET[id_restaurant]");
             return;
             break;
 

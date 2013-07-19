@@ -24,25 +24,24 @@ NavigationController::Controller($_SESSION['user']);
         <table id="tableauAffichage">
             <?PHP
             foreach ($tAvis as $value) {
-                $categories = $value['categories'];
-                $categories = str_replace(",", " | ", $categories);
                 ?>
                 <tr><td><br></td></tr>
                 <tr>
-                    <td rowspan="2"><a class="buttonSubmit" href="./../Controllers/AvisController.php?action=ModifierAvis&id=<?PHP echo $value['id']; ?>">Modifier</a></td>
-                    <td><?PHP echo $value['nom']; ?></td>
-                    <td><?PHP echo $value['numero_tel']; ?></td>
-                    <td><?PHP echo $value['email']; ?></td>
-                    <td><strong><?PHP echo $categories; ?></strong></td>
+                    <?PHP
+                    if ($value['actif']==1) {
+                        ?>
+                    <td><a class="aRed" href="./../Controllers/AvisController.php?action=ModifierAvis&id=<?PHP echo $value['id']; ?>&actif=0&id_restaurant=<?PHP echo $value['id_restaurant']; ?>">Désactiver</a></td>
+                    <?PHP
+                    }else {
+                        ?>
+                    <td><a class="buttonSubmit" href="./../Controllers/AvisController.php?action=ModifierAvis&id=<?PHP echo $value['id']; ?>&actif=1&id_restaurant=<?PHP echo $value['id_restaurant']; ?>">Activer</a></td>
+                    <?PHP    
+                    }
+                    ?>
+                    <td><?PHP echo $value['titre']; ?></td>
+                    <td><?PHP echo $value['description']; ?></td>
+                    <td>écrit par : <?PHP echo $value['pseudo']; ?></td>
                 </tr>
-                <tr>
-                    
-                    <td colspan="2"><?PHP echo $value['numero_voie'] . " " . $value['type_voie'] . " " . $value['nom_voie']; ?></td>
-                    <td><?PHP echo $value['nom_ville']; ?></td>
-                    <td><?PHP echo $value['cp']; ?></td>
-
-                </tr>
-
                 <?PHP
             }
             ?>

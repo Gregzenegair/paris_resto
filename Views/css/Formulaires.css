@@ -241,6 +241,7 @@ option {
     padding: 6px 20px;
     text-align: center;
     text-shadow: 0 -1px 0 #396715;
+    z-index: 10;
 }
 
 .buttonSubmit:hover {
@@ -256,6 +257,37 @@ option {
     -ms-box-shadow: 0 0 10px 5px #0000FF inset;
     -o-box-shadow: 0 0 10px 5px #0000FF inset;
 
+}
+
+
+.buttonSubmitSmall {
+    margin: 1em;
+    text-decoration: none;
+    background-color: #16389E;
+    background: -webkit-gradient(linear, left top, left bottom, from(#16389E), to(#16389E));
+    background: -webkit-linear-gradient(bottom, #0000FF, #16389E);
+    background: -moz-linear-gradient(bottom, #0000FF, #16389E);
+    background: -ms-linear-gradient(bottom, #0000FF, #16389E);
+    background: -o-linear-gradient(bottom, #0000FF, #16389E);
+    background: linear-gradient(bottom, #0000FF, #16389E);
+    border: 1px solid #0052CC;
+    border-top: none;
+    border-bottom: 1px solid #1919A3;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    color: white;
+    font-weight: bold;
+    padding: 2px 8px;
+    text-align: center;
+    text-shadow: 0 -1px 0 #396715;
+}
+
+.buttonSubmitSmall:hover {
+    opacity:.85;
+    cursor: pointer; 
 }
 
 .errorMessage {

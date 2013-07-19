@@ -97,6 +97,10 @@ class RestoModel extends CNX {
      */
     public function insertResto($nom, $numero_tel, $email, $numero_voie, $nom_voie, $type_voie, $id_ville, $description, $horraires, $prix) {
 
+        $numero_voie = trim($numero_voie);
+        $nom_voie = trim($nom_voie);
+        $type_voie = trim($type_voie);
+
         $email = strtolower($email);
         $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "type_voie", "id_ville", "date_insertion", "description", "horraires", "prix"];
         $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$type_voie", ":$id_ville", "now()", ":$description", ":$horraires", ":$prix"];
@@ -125,6 +129,10 @@ class RestoModel extends CNX {
      * @return boolean ou id
      */
     public function updateResto($id, $nom, $numero_tel, $email, $numero_voie, $nom_voie, $type_voie, $id_ville, $description, $horraires, $prix) {
+
+        $numero_voie = trim($numero_voie);
+        $nom_voie = trim($nom_voie);
+        $type_voie = trim($type_voie);
 
         $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "type_voie", "id_ville", "date_insertion", "description", "horraires", "prix"];
         $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$type_voie", ":$id_ville", "now()", ":$description", ":$horraires", ":$prix"];

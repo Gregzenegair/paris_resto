@@ -17,16 +17,32 @@ CREATE TABLE commentaires(
         titre          Varchar (50) ,
         description    Varchar (1024) ,
         date_insertion Date NOT NULL ,
-        id_avis        Int ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
 
-CREATE TABLE notes(
-        id     Int NOT NULL ,
-        valeur Int NOT NULL ,
-		    id_categorie_note Int NOT NULL ,
+CREATE TABLE listenotes(
+        id Int NOT NULL ,
         PRIMARY KEY (id )
+)ENGINE=InnoDB;
+
+
+CREATE TABLE avis(
+        actif           Bool ,
+        id_restaurant  Int NOT NULL ,
+        id_user        Int NOT NULL ,
+        id_commentaire Int NOT NULL ,
+        id_listenote   Int NOT NULL ,
+        PRIMARY KEY (id_restaurant ,id_user ,id_commentaire ,id_listenote )
+)ENGINE=InnoDB;
+
+
+CREATE TABLE notes(
+        id                Int NOT NULL ,
+        valeur            Int NOT NULL ,
+        id_listenotes     Int NOT NULL ,
+        id_categorie_note Int NOT NULL ,
+        PRIMARY KEY (id ,id_listenotes )
 )ENGINE=InnoDB;
 
 
@@ -44,14 +60,15 @@ CREATE TABLE restaurants(
         nom           Varchar (50) NOT NULL ,
         numero_tel    Varchar (20) ,
         email         Varchar (50) ,
-        nom_voie      Varchar (50) ,
         numero_voie   Numeric ,
-        id_ville     Int (11) unsigned DEFAULT NULL,
-        type_voie Varchar(20) ,
+		    type_voie Varchar(20) ,
+		    nom_voie      Varchar (50) ,
         date_insertion Date NOT NULL ,
         description    Varchar (1000) ,
         prix           Varchar (50) ,
-        Horraires      Varchar (50) ,
+        horraires      Varchar (50) ,
+    		id_ville     Int (11) unsigned DEFAULT NULL,
+        id_user       Int ,
         PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
@@ -63,7 +80,7 @@ CREATE TABLE statuts(
 )ENGINE=InnoDB;
 
 
-CREATE TABLE types_note(
+CREATE TABLE categories_note(
         id  Int NOT NULL ,
         nom Varchar (20) NOT NULL ,
         PRIMARY KEY (id )
@@ -86,18 +103,9 @@ CREATE TABLE users(
         email_check      Varchar (100) NOT NULL ,
         actif            Bool NOT NULL ,
         commentaire      Varchar (1000) NOT NULL ,
-        statut       Int NOT NULL ,
+        statut           Varchar (20) ,
         PRIMARY KEY (id ) ,
         INDEX (email )
-)ENGINE=InnoDB;
-
-
-CREATE TABLE avis(
-        id             Int NOT NULL ,
-        id_user       Int NOT NULL ,
-        id_restaurant Int NOT NULL ,
-        actif    Tinyint (1) DEFAULT 1,
-        PRIMARY KEY (id )
 )ENGINE=InnoDB;
 
 
@@ -107,12 +115,6 @@ CREATE TABLE ligcategories(
         PRIMARY KEY (id_restaurant ,id_categorie )
 )ENGINE=InnoDB;
 
-
-CREATE TABLE lignotes(
-        id_avis  Int NOT NULL ,
-        id_note Int NOT NULL ,
-        PRIMARY KEY (id_avis ,id_note )
-)ENGINE=InnoDB;
 
 CREATE TABLE `villes` (
    id  int (11) unsigned Auto_increment  NOT NULL ,
@@ -127,8 +129,7 @@ CREATE TABLE `villes` (
 
 
 #-- Definition des AUTO_INCREMENT
-ALTER TABLE `paris_resto`.`avis` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
-ALTER TABLE `paris_resto`.`types_note` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `paris_resto`.`categories_note` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `paris_resto`.`categories` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `paris_resto`.`commentaires` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `paris_resto`.`notes` MODIFY COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT;
@@ -156,16 +157,26 @@ ALTER TABLE `paris_resto`.`users` MODIFY COLUMN `commentaire` VARCHAR(1000) CHAR
 
 
 #-- Definition des FOREIGN KEYs
-ALTER TABLE commentaires ADD CONSTRAINT FK_commentaires_id_avis FOREIGN KEY (id_avis) REFERENCES avis(id);
+
+ALTER TABLE notes ADD CONSTRAINT FK_notes_id_listenotes FOREIGN KEY (id_listenotes) REFERENCES listenotes(id);
+ALTER TABLE notes ADD CONSTRAINT FK_notes_id_categorie_note FOREIGN KEY (id_categorie_note) REFERENCES categories_note(id);
 ALTER TABLE photos ADD CONSTRAINT FK_photos_id_restaurant FOREIGN KEY (id_restaurant) REFERENCES restaurants(id);
 ALTER TABLE restaurants ADD CONSTRAINT `FK_restaurants_id_ville` FOREIGN KEY `FK_restaurants_id_ville` (`id_ville`) REFERENCES `villes` (`id`)
     ON DELETE SET NULL;
+ALTER TABLE restaurants ADD CONSTRAINT FK_restaurants_id_user FOREIGN KEY (id_user) REFERENCES users(id);
+ALTER TABLE avis ADD CONSTRAINT FK_avis_id_restaurant FOREIGN KEY (id_restaurant) REFERENCES restaurants(id);
+ALTER TABLE avis ADD CONSTRAINT FK_avis_id_user FOREIGN KEY (id_user) REFERENCES users(id);
+ALTER TABLE avis ADD CONSTRAINT FK_avis_id_commentaire FOREIGN KEY (id_commentaire) REFERENCES commentaires(id);
+ALTER TABLE avis ADD CONSTRAINT FK_avis_id_listenote FOREIGN KEY (id_listenote) REFERENCES listenotes(id);
+
+
+
 ALTER TABLE users ADD CONSTRAINT FK_users_statut FOREIGN KEY (statut) REFERENCES statuts(id);
 ALTER TABLE avis ADD CONSTRAINT FK_avis_id_user FOREIGN KEY (id_user) REFERENCES users(id)
     ON DELETE CASCADE;
 ALTER TABLE avis ADD CONSTRAINT FK_avis_id_restaurant FOREIGN KEY (id_restaurant) REFERENCES restaurants(id)
     ON DELETE CASCADE;
-ALTER TABLE notes ADD CONSTRAINT FK_notes_id_categorie_note FOREIGN KEY (id_categorie_note) REFERENCES types_note(id);
+ALTER TABLE notes ADD CONSTRAINT FK_notes_id_categorie_note FOREIGN KEY (id_categorie_note) REFERENCES categories_note(id);
 ALTER TABLE lignotes ADD CONSTRAINT FK_lignotes_id_avis FOREIGN KEY (id_avis) REFERENCES avis(id);
 ALTER TABLE lignotes ADD CONSTRAINT FK_lignotes_id_note FOREIGN KEY (id_note) REFERENCES notes(id);
 

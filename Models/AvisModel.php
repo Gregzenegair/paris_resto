@@ -19,14 +19,20 @@ class AvisModel extends CNX {
      * pour le select des aviss
      * @return array
      */
-    public function showAvis() {
+    public function showAvis($id) {
 
-        $req = $this->_bdd->prepare('SELECT a.id, a.nom FROM avis a');
+        $req = $this->_bdd->prepare('SELECT c.id, c.titre, c.description, u.pseudo, a.actif, a.id_restaurant FROM avis a
+                                        JOIN commentaires c 
+                                        ON c.id_avis = a.id 
+                                        JOIN users u 
+                                        ON u.id = a.id_user
+                                        WHERE a.id_restaurant = :id');
+        $req->bindParam(':id', $id, PDO::PARAM_INT);
         $req->execute();
-        $resultAfficherStatuts = $req->fetchAll();
+        $resultAfficher = $req->fetchAll();
         $req->closeCursor();
 
-        return $resultAfficherStatuts;
+        return $resultAfficher;
     }
 
     public function seekAvis($recherche) {
@@ -41,9 +47,10 @@ class AvisModel extends CNX {
         return $resultAfficherUsers;
     }
 
-    public function deleteAvis($id) {
-        $req = $this->_bdd->prepare('DELETE FROM avis WHERE id = :id');
-        $req->bindParam(':id', $id, PDO::PARAM_STR);
+    public function modifierAvis($id, $actif) {
+        $req = $this->_bdd->prepare('UPDATE avis SET actif = :actif WHERE id = :id');
+        $req->bindParam(':id', $id, PDO::PARAM_INT);
+        $req->bindParam(':actif', $actif, PDO::PARAM_INT);
         $req->execute();
         $req->closeCursor();
     }
