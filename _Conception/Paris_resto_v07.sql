@@ -168,18 +168,7 @@ ALTER TABLE avis ADD CONSTRAINT FK_avis_id_restaurant FOREIGN KEY (id_restaurant
 ALTER TABLE avis ADD CONSTRAINT FK_avis_id_user FOREIGN KEY (id_user) REFERENCES users(id);
 ALTER TABLE avis ADD CONSTRAINT FK_avis_id_commentaire FOREIGN KEY (id_commentaire) REFERENCES commentaires(id);
 ALTER TABLE avis ADD CONSTRAINT FK_avis_id_listenote FOREIGN KEY (id_listenote) REFERENCES listenotes(id);
-
-
-
 ALTER TABLE users ADD CONSTRAINT FK_users_statut FOREIGN KEY (statut) REFERENCES statuts(id);
-ALTER TABLE avis ADD CONSTRAINT FK_avis_id_user FOREIGN KEY (id_user) REFERENCES users(id)
-    ON DELETE CASCADE;
-ALTER TABLE avis ADD CONSTRAINT FK_avis_id_restaurant FOREIGN KEY (id_restaurant) REFERENCES restaurants(id)
-    ON DELETE CASCADE;
-ALTER TABLE notes ADD CONSTRAINT FK_notes_id_categorie_note FOREIGN KEY (id_categorie_note) REFERENCES categories_note(id);
-ALTER TABLE lignotes ADD CONSTRAINT FK_lignotes_id_avis FOREIGN KEY (id_avis) REFERENCES avis(id);
-ALTER TABLE lignotes ADD CONSTRAINT FK_lignotes_id_note FOREIGN KEY (id_note) REFERENCES notes(id);
-
 
 ALTER TABLE ligcategories
  ADD CONSTRAINT `FK_ligcategories_id_categorie` FOREIGN KEY `FK_ligcategories_id_categorie` (`id_categorie`)
@@ -191,7 +180,6 @@ ALTER TABLE ligcategories
     REFERENCES `restaurants` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
-
 
 
 

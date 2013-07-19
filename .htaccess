@@ -1,5 +1,6 @@
 RewriteEngine on #On active le rewrite engine
 RewriteRule ^Views/Accueil$ Views/_MainView.php [L]
-RewriteRule ^Views/_Accueil$ Controllers/ViewsController.php?action=Accueil [L]
+RewriteRule ^Views/(GererUtilisateurs)$ Views/_MainView.php?fragment=_$1.php [L]
+RewriteRule ^Views/(ModifierUtilisateur)$ Views/_MainView.php?fragment_=$1Fragment.php [L]
 
 #RewriteRule ^(.*)$ $1

@@ -49,7 +49,7 @@ NavigationController::Controller($_SESSION['user']);
                     $echoA = ($tranche - $pagination);
                 }
                 ?>
-                <a class="aGreenVille" href="../Controllers/RestoController.php?action=GererRestos&limiteBasse=<?PHP echo $echoA; ?>"><?PHP echo $i; ?></a>
+                <a class="aGreenVille" href="../Controllers/UserController.php?action=GererUtilisateurs&limiteBasse=<?PHP echo $echoA; ?>"><?PHP echo $i; ?></a>
                 <?PHP
                 $i++;
             }
