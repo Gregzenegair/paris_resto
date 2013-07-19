@@ -5,7 +5,7 @@
             $tUser = $_SESSION['user'];
             if ($tUser['statut'] == "10") {
                 ?>
-                <li><a href="./../Controllers/ViewsController.php?action=Accueil">Accueil</a></li>
+                <li><a href="_Accueil">Accueil</a></li>
                 <li>Liste des restaurants</li>
                 <li>Partenaires</li>
                 <li><a href="./../Controllers/UserController.php?action=GererUtilisateurs">Gérer les utilisateurs</a></li>

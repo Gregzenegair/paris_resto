@@ -152,7 +152,7 @@ function readData(oData) {
     } else {
         if (emailBoolean == true) {
             validateInput(email);
-            mdpMessage.innerText = "";
+            emailMessage.innerText = "";
             return true;
         } else {
             return false;

@@ -6,7 +6,7 @@
     </head>
     <body>INDEX
         <?php
-        header("Location: ./Views/_MainView.php");
+        header("Location: Views/Accueil");
         ?>
     </body>
 </html>

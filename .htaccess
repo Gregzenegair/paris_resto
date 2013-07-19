@@ -1,3 +1,5 @@
 RewriteEngine on #On active le rewrite engine
-RewriteRule ^/Paris_Resto/index$ /Paris_Resto/index.php [L]
+RewriteRule ^Views/Accueil$ Views/_MainView.php [L]
+RewriteRule ^Views/_Accueil$ Controllers/ViewsController.php?action=Accueil [L]
 
+#RewriteRule ^(.*)$ $1
