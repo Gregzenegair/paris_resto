@@ -13,7 +13,6 @@
                 <li><a href="./../Controllers/PhotoController.php?action=GererPhotos">Gérer les photos</a></li>
                 <li><a href="./../Controllers/VilleController.php?action=GererVilles">Gérer les villes</a></li>
                 <li><a href="./../Controllers/CategorieController.php?action=GererCategories">Gérer les categories</a></li>
-                <li><a href="./../Controllers/AvisController.php?action=GererAvis">Gérer les avis</a></li>
                 <?PHP
             } else if ($tUser['statut'] == "0") {
                 ?>
