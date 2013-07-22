@@ -1,0 +1,50 @@
+/* 
+    Document   : btSupprimer
+    Created on : 6 juil. 2013, 14:00:10
+    Author     : Administrateur
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+#modale {
+    visibility: hidden;
+    position: absolute;
+    background-color: white;
+    left: 50%;
+    top: 50%;
+    width: 328px;
+    height: 120px;
+    margin-top: -60px;
+    margin-left: -164px;
+    padding: 2em;
+    box-shadow: 1px 1px 8px black;
+    border-radius: 4px;
+    text-align: center;
+    z-index: 99;
+}
+
+#supprimer {
+    margin-right: 2em;
+    margin-left: auto;
+}
+#btSupprimerNon {
+    margin-right: auto;
+    margin-left: 2em;
+}
+
+
+#masqueGris {
+    visibility: hidden;
+    background-color: rgba(60,60,60,0.9);
+    z-index: 80;
+    height: 100%;
+    width: 100%;
+    background-repeat:no-repeat;
+    background-position:center;
+    position: fixed;
+    top:0; right:0; bottom:0; left:0;
+}
