@@ -18,10 +18,10 @@ session_start();
         else
             $fragment = "_AccueilFragment.php";
         ?>
-        <header>Header
+        <header>
             <?PHP
             include_once './MaintView/_HeaderFragment.php';
-            include_once './../Views/_ConnexionFragment.php';
+            include_once './../Views/MaintView/_ConnexionFragment.php';
             ?>
         </header>
         <?PHP

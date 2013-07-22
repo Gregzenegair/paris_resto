@@ -1,1 +1,1 @@
-
+<p class="titrePrincipal">Paris Resto</p>

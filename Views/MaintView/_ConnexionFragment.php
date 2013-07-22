@@ -32,7 +32,6 @@ if (empty($_SESSION['user'])) {
     <?PHP
 } else {
     ?>
-    <br>
     <a href="./../Controllers/UserController.php?action=Deconnexion" class="aGreen">Déconnexion</a>
 
     <?PHP
