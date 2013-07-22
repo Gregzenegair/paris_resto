@@ -125,7 +125,7 @@ function request(callback) {
         }
     };
     var emailAjax = email.value;
-    xhr.open("GET", "../Models/AjaxModel.php?action=checkEmail&email=" + emailAjax, true);
+    xhr.open("GET", "../Models/Utils/AjaxModel.php?action=checkEmail&email=" + emailAjax, true);
     xhr.send(null);
 }
 

@@ -4,6 +4,7 @@ class CNX {
 
 // --- Connexion active à la base
     protected $_bdd;
+    private static $instances = array();
 
 // --- Methode de connexion à la base
     public function __construct($base, $user, $pwd, $tAttributes = null) {

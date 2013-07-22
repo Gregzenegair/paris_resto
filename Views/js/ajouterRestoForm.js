@@ -68,7 +68,7 @@ function request(callback) {
         }
     };
     var nom_villeAjax = nom_ville.value;
-    xhr.open("GET", "../Models/AjaxModel.php?action=ajouterRestoVilleCp&nom=" + nom_villeAjax, true);
+    xhr.open("GET", "../Models/Utils/AjaxModel.php?action=ajouterRestoVilleCp&nom=" + nom_villeAjax, true);
     xhr.send(null);
 }
 

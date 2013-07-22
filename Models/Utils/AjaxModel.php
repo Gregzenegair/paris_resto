@@ -1,6 +1,6 @@
 <?PHP
 
-include_once '../Models/CNX.php';
+include_once 'CNX.php';
 
 $action = $_GET['action'];
 
