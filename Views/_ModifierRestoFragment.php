@@ -74,11 +74,12 @@ NavigationController::Controller($_SESSION['user']);
         array_push($elements, $inputNumeroVoie);
         array_push($elements, $DatalistTypeVoie);
         array_push($elements, $inputNomVoie);
+        array_push($elements, $selectVilles);
+        array_push($elements, $inputCp);
         array_push($elements, $textareaDescription);
         array_push($elements, $inputHorraires);
         array_push($elements, $inputPrix);
-        array_push($elements, $selectVilles);
-        array_push($elements, $inputCp);
+
 
         array_push($elements, $br);
         array_push($elements, $inputSubmit);

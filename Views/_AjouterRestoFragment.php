@@ -33,6 +33,10 @@ NavigationController::Controller($_SESSION['user']);
     $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "input", "", "required", 1, "");
     $inputNomVoie = new Input("nom_voie", "", "nom_voie", "text", "", "required", 1, null);
 
+    $photoFormulaire = new ElementHTML('<br><br>
+     <span>Photo (JPEG, PNG, GIF | Max: 500Ko) :</span><br>
+     <input type="file" name="imageFile" id="imageFile" /><br><br>');
+
     $textareaDescription = new ElementHTML("<legend for='description'>Description du restaurant : </legend><textarea name='description' id='description' placeholder='Description du restaurant, menu, informations relatives'></textarea>");
     $inputHorraires = new Input("horraires", "Horraires :", "horraires", "text", "", "placeholder='Ouvert du lundi au samedi'", 1, null);
     $inputPrix = new Input("prix", "Prix :", "prix", "text", "", "placeholder='15€-25€'", 1, null);
@@ -53,15 +57,16 @@ NavigationController::Controller($_SESSION['user']);
     array_push($elements, $inputNumeroVoie);
     array_push($elements, $DatalistTypeVoie);
     array_push($elements, $inputNomVoie);
+    array_push($elements, $selectVilles);
+    array_push($elements, $inputCp);
     array_push($elements, $textareaDescription);
     array_push($elements, $inputHorraires);
     array_push($elements, $inputPrix);
-    array_push($elements, $selectVilles);
-    array_push($elements, $inputCp);
+    array_push($elements, $photoFormulaire);
     array_push($elements, $br);
     array_push($elements, $inputSubmit);
 
-    $formulaire = new Form("mainForm", "POST", "/AjoutResto", $elements);
+    $formulaire = new Form("mainForm", "POST", "/AjoutResto", $elements, "enctype='multipart/form-data'");
 
     echo $formulaire->genererForm();
     ?>

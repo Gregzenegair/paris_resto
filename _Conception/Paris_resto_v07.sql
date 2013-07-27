@@ -170,6 +170,12 @@ ALTER TABLE avis ADD CONSTRAINT FK_avis_id_commentaire FOREIGN KEY (id_commentai
 ALTER TABLE avis ADD CONSTRAINT FK_avis_id_listenote FOREIGN KEY (id_listenote) REFERENCES listenotes(id);
 ALTER TABLE users ADD CONSTRAINT FK_users_statut FOREIGN KEY (statut) REFERENCES statuts(id);
 
+ALTER TABLE photos
+ ADD CONSTRAINT `FK_photos_id_restaurant` FOREIGN KEY `FK_photos_id_restaurant` (`id_restaurant`)
+    REFERENCES `restaurants` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
 ALTER TABLE ligcategories
  ADD CONSTRAINT `FK_ligcategories_id_categorie` FOREIGN KEY `FK_ligcategories_id_categorie` (`id_categorie`)
     REFERENCES `categories` (`id`)

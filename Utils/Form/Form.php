@@ -6,12 +6,14 @@ class Form {
     private $method;
     private $action;
     private $elementsForm = array();
+    private $options;
 
-    function __construct($id, $method, $action, $elementsForm) {
+    function __construct($id, $method, $action, $elementsForm, $options = "") {
         $this->id = $id;
         $this->method = $method;
         $this->action = $action;
         $this->elementsForm = $elementsForm;
+        $this->options = $options;
     }
 
     function genererForm() {
@@ -25,6 +27,9 @@ class Form {
         }
         if ($this->method != "" || $this->method != null) {
             $resultat .= " method='" . $this->method . "'";
+        }
+        if ($this->options != "" || $this->options != null) {
+            $resultat .= " " . $this->options . " ";
         }
         $resultat .= ">";
 

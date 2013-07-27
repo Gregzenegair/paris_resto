@@ -14,6 +14,11 @@ NavigationController::Controller($_SESSION['user']);
                 require_once "../Utils/Form/$nomClasse.php";
             });
 
+    if (isset($erreurMsg)) {
+        ?>
+        <span class="errorMessage"><?PHP echo $erreurMsg; ?></span>
+        <?PHP
+    }
 
     $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='laisser vide pour tout afficher'", 5, "rechercher");
     $elements = array($inputRecherche);

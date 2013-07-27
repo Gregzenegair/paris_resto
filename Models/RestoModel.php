@@ -1,6 +1,7 @@
 <?php
 
-require_once 'Utils/DAO.php';require_once 'Utils/CNX.php';
+require_once 'Utils/DAO.php';
+require_once 'Utils/CNX.php';
 
 class RestoModel extends CNX {
 
@@ -119,7 +120,7 @@ class RestoModel extends CNX {
         $tNomChampTable = ["nom", "numero_tel", "email", "numero_voie", "nom_voie", "type_voie", "id_ville", "date_insertion", "description", "horraires", "prix"];
         $tValeurs = [":$nom", ":$numero_tel", ":$email", ":$numero_voie", ":$nom_voie", ":$type_voie", ":$id_ville", "now()", ":$description", ":$horraires", ":$prix"];
 
-// --- Demarage de la transaction
+        // --- Demarage de la transaction
 
         $result = DAO::insert($this->_bdd, "restaurants", $tNomChampTable, $tValeurs);
 
@@ -355,6 +356,21 @@ class RestoModel extends CNX {
         $req->bindParam(':id', $id, PDO::PARAM_STR);
         $req->execute();
         $req->closeCursor();
+    }
+
+    public function insertPhoto($nom_fichier, $id_restaurant) {
+        // -- test de l'extension, si ok alors ...
+        $extensions_valides = array('jpg', 'jpeg', 'gif', 'png');
+        $extension_upload = strtolower(substr(strrchr($_FILES['imageFile']['name'], '.'), 1));
+        if (in_array($extension_upload, $extensions_valides)) {
+            $tNomChampTable = ["nom_fichier", "id_restaurant", "date_insertion"];
+            $tValeurs = [":$nom_fichier", ":$id_restaurant", "now()"];
+
+            // --- Demarage de la transaction
+
+            $result = DAO::insert($this->_bdd, "photos", $tNomChampTable, $tValeurs);
+            return $result;
+        }
     }
 
 }

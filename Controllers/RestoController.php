@@ -10,9 +10,21 @@ class RestoController {
 
     function __construct($action) {
         include_once '../Models/RestoModel.php';
+        include_once '../Utils/GDManager.php';
 
         $this->action = $action;
         $this->CNX = new RestoModel("paris_resto", "root", "");
+    }
+
+    private function rmdirAndSubs($dir) {
+        foreach (glob($dir . '/*') as $file) {
+            if (is_dir($file))
+                $this->rmdirAndSubs($file);
+            else
+                unlink($file);
+        }
+        if (is_dir($dir))
+            rmdir($dir);
     }
 
     private function GererRestos() {
@@ -60,18 +72,43 @@ class RestoController {
 
                     $this->CNX->beginTransaction();
 
+                    // -- Insertion ou selection de la ville en fonction de si elle existe ou non
                     $id_villes = $this->CNX->selectOrInsertVille($_POST['nom_ville'], $_POST['cp']);
+
+                    // -- Insertion ou selection des 3 categories en fonction de si elles existent ou non
                     $categorie1 = $this->CNX->selectOrInsertCategorie($_POST['categorie1']);
                     $categorie2 = $this->CNX->selectOrInsertCategorie($_POST['categorie2']);
                     $categorie3 = $this->CNX->selectOrInsertCategorie($_POST['categorie3']);
 
+                    // -- Insertion du restaurant, en retour on réccupère le dernier id inserre
                     $lastInsertId = $this->CNX->insertResto($_POST['nom'], $_POST['numero_tel'], $_POST['email'], $_POST['numero_voie'], $_POST['nom_voie'], $_POST['type_voie'], $id_villes, $_POST['description'], $_POST['horraires'], $_POST['prix']);
 
+                    // -- Insertion des categories dans la table de liaison
                     $this->CNX->insertLigcategories($categorie1, $lastInsertId);
                     $this->CNX->insertLigcategories($categorie2, $lastInsertId);
                     $this->CNX->insertLigcategories($categorie3, $lastInsertId);
 
-                    $this->CNX->commit();
+                    // -- Insertion de la photo
+                    if ($_FILES['imageFile']['error'] == 0 && $_FILES['imageFile']['size'] <= 649526) {
+                        $ulPhoto = $this->CNX->insertPhoto($_FILES['imageFile']['name'], $lastInsertId);
+                        if ($ulPhoto) {
+                            $path = $_SERVER["DOCUMENT_ROOT"] . '/Views/img/restos/' . $lastInsertId . '/';
+                            $pathFile = $path . "photo" . strtolower(strrchr($_FILES['imageFile']['name'], '.'));
+                            mkdir($path, 0777, true);
+                            $resultat = move_uploaded_file($_FILES['imageFile']['tmp_name'], $pathFile);
+                            $image = new SimpleImage();
+                            $image->load($pathFile);
+                            $image->resizeToWidth(128);
+                            $image->save($path . "photo_small" . strtolower(strrchr($_FILES['imageFile']['name'], '.')));
+                        }
+                    }
+
+                    if (isset($resultat)) {
+                        $this->CNX->commit();
+                    } else {
+                        $erreurMsg = "Un problème lors de la copie de l'image est survenu, le restaurant n'a pas été ajouté.<br>";
+                        $this->CNX->rollback();
+                    }
 
                     $this->GererRestos();
                     $pagination = $this->pagination;
@@ -116,6 +153,8 @@ class RestoController {
                         $this->CNX->commit();
                     } else if (!empty($_POST['supprimer'])) {
                         $this->CNX->deleteResto($_POST['id']);
+                        $path = $_SERVER["DOCUMENT_ROOT"] . '/Views/img/restos/' . $_POST['id'];
+                        $this->rmdirAndSubs($path);
                     }
 
                     $this->GererRestos();
@@ -124,7 +163,7 @@ class RestoController {
                     $afficherRestos = $this->afficherRestos;
 
                     $this->action = "GererRestos";
-                    
+
                     break;
                 default:
                     break;

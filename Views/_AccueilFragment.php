@@ -14,6 +14,13 @@ Ceci est l'accueil du site<br>
 <li>Refaire toutes les routes, controllers et htaccess</li>
 <li>Passer CNX en Singleton</li>
 <li>...</li>
+<br>
 
-
+<div class="Restaurant">
+    <p class="pRestaurant">Campanile</p>
+    <p class="pRestaurant">Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
 </div>
+</div>
+
+
