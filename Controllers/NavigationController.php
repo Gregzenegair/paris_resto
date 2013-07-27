@@ -15,7 +15,7 @@ class NavigationController {
         }
 
         if ($user == false) {
-            header("Location: ./../Controllers/UserController.php?action=Accueil");
+            header("Location: /Accueil");
             return;
         }
 // --- Fin de controle

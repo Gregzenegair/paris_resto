@@ -15,7 +15,7 @@ if (empty($_SESSION['user'])) {
     array_push($elements, $inputsubmit);
 
 
-    $formulaire = new Form("mainForm", "POST", "./../Controllers/UserController.php?action=Connexion", $elements);
+    $formulaire = new Form("mainForm", "POST", "/Connexion", $elements);
 
     echo $formulaire->genererForm();
 } else if ($_SESSION['user'] == "inactif") {
@@ -24,7 +24,7 @@ if (empty($_SESSION['user'])) {
     Votre compte n'a pas encore été activé, merci de bien vouloir vérifier votre adresse email afin de le valider.
     <script type="text/javascript">
         function leave() {
-            window.location = "./../Controllers/UserController.php?action=Deconnexion";
+            window.location = "/Deconnexion";
         }
         setTimeout("leave()", 5000);
     </script>
@@ -32,7 +32,7 @@ if (empty($_SESSION['user'])) {
     <?PHP
 } else {
     ?>
-    <a href="./../Controllers/UserController.php?action=Deconnexion" class="aGreen">Déconnexion</a>
+    <a href="Deconnexion" class="aGreen">Déconnexion</a>
 
     <?PHP
 }

@@ -1,53 +1,64 @@
 <?php
 
-include_once '../Models/VilleModel.php';
-session_start();
+class VilleController {
 
+    private $action;
+    private $CNX;
 
+    function __construct($action) {
+        include_once '../Models/VilleModel.php';
 
-
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-
-    $CNX = new VilleModel("paris_resto", "root", "");
-
-    switch ($action) {
-
-        case "GererVilles":
-            if (!isset($_GET['departement'])) {
-                $departement = "95";
-            } else {
-                $departement = $_GET['departement'];
-            }
-
-            $resultVillesCount = $CNX->countVilles();
-            $_SESSION['count'] = $resultVillesCount;
-            $resultVilles = $CNX->showVilles($departement);
-            $_SESSION['afficherVilles'] = $resultVilles;
-
-            $action = "GererVilles";
-            break;
-
-        case "Rechercher":
-            $resultVilles = $CNX->seekVilles($_POST['rechercher']);
-            $_SESSION['afficherVilles'] = $resultVilles;
-            $action = "GererVilles";
-            break;
-
-        case "SupprimerVille":
-            $resultVilles = $CNX->deleteVille($_GET['id']);
-            header("Location: ./VilleController.php?action=GererVilles");
-            return;
-            break;
-
-        default:
-            break;
+        $this->action = $action;
+        $this->CNX = new VilleModel("paris_resto", "root", "");
     }
 
+    public function rooting() {
+
+
+        if (isset($this->action)) {
+            $this->action = $_GET['action'];
+
+            switch ($this->action) {
+
+                case "GererVilles":
+                    if (!isset($_GET['departement'])) {
+                        $departement = "95";
+                    } else {
+                        $departement = $_GET['departement'];
+                    }
+                    $villesCount = $this->CNX->countVilles();
+                    $afficherVilles = $this->CNX->showVilles($departement);
+                    $this->action = "GererVilles";
+                    break;
+
+                case "RechercherVille":
+                    $afficherVilles = $this->CNX->seekVilles($_POST['rechercher']);
+                    $this->action = "GererVilles";
+                    break;
+
+                case "SupprimerVille":
+                    $afficherVilles = $this->CNX->deleteVille($_GET['id']);
+                    if (!isset($_GET['departement'])) {
+                        $departement = "95";
+                    } else {
+                        $departement = $_GET['departement'];
+                    }
+                    $villesCount = $this->CNX->countVilles();
+                    $afficherVilles = $this->CNX->showVilles($departement);
+                    $this->action = "GererVilles";
+                    break;
+
+                default:
+                    break;
+            }
 
 
 
-    $redirect = "_" . $action . "Fragment.php";
+
+            $fragment = "_" . $this->action . "Fragment.php";
+        }
+
+        include $_SERVER["DOCUMENT_ROOT"] . "/Views/_MainView.php";
+    }
+
 }
-header("Location: ./../Views/_MainView.php?fragment=" . $redirect);
-?>

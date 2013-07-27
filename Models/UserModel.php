@@ -23,10 +23,11 @@ class UserModel extends CNX {
      */
     public function connectUser($email, $mdp) {
 
-        $aResultats = [];
+        $aResultats = array();
 
+        $email = strip_tags($email);
         $req = $this->_bdd->prepare('SELECT id, mdp, statut, actif FROM users where email = :email');
-        $req->bindParam(':email', strip_tags($email), PDO::PARAM_STR);
+        $req->bindParam(':email', $email, PDO::PARAM_STR);
         $req->execute();
 
         while ($donnees = $req->fetch()) {
@@ -231,7 +232,7 @@ Ceci est un mail automatique, Merci de ne pas y répondre.';
 
         $pseudo = strip_tags($pseudo);
         $email = strip_tags($email);
-        $mdp = strip_tags($mdp);
+        $date_inscription = strip_tags($date_inscription);
         $statut = strip_tags($statut);
 
         $tNomChampTable = ["pseudo", "email", "date_inscription", "statut", "actif"];

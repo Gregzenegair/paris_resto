@@ -1,43 +1,50 @@
 <?php
 
-include_once '../Models/CategorieModel.php';
-session_start();
+class CategorieController {
 
+    private $action;
+    private $CNX;
 
+    function __construct($action) {
+        include_once '../Models/CategorieModel.php';
 
-
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-
-    $CNX = new CategorieModel("paris_resto", "root", "");
-
-    switch ($action) {
-
-        case "GererCategories":
-            $resultCategories = $CNX->showCategories();
-            $_SESSION['afficherCategories'] = $resultCategories;
-            break;
-
-        case "Rechercher":
-            $resultCategories = $CNX->seekCategories($_POST['rechercher']);
-            $_SESSION['afficherCategories'] = $resultCategories;
-            $action = "GererCategories";
-            break;
-        
-        case "SupprimerCategorie":
-            $resultCategories = $CNX->deleteCategorie($_GET['id']);
-            header("Location: ./CategorieController.php?action=GererCategories");
-            return;
-            break;
-
-        default:
-            break;
+        $this->action = $action;
+        $this->CNX = new CategorieModel("paris_resto", "root", "");
     }
 
+    public function rooting() {
 
 
+        if (isset($this->action)) {
 
-    $redirect = "_" . $action . "Fragment.php";
+
+            switch ($this->action) {
+
+                case "GererCategories":
+                    $resultCategories = $this->CNX->showCategories();
+                    $this->action = "GererCategories";
+                    break;
+
+                case "RechercherCategorie":
+                    $resultCategories = $this->CNX->seekCategories($_POST['rechercher']);
+                    $action = "GererCategories";
+                    break;
+
+                case "SupprimerCategorie":
+                    $resultCategories = $this->CNX->deleteCategorie($_GET['id']);
+                    $resultCategories = $this->CNX->showCategories();
+                    $this->action = "GererCategories";
+                    break;
+
+                default :
+                    break;
+            }
+
+
+            $fragment = "_" . $this->action . "Fragment.php";
+        }
+
+        include $_SERVER["DOCUMENT_ROOT"] . "/Views/_MainView.php";
+    }
+
 }
-header("Location: ./../Views/_MainView.php?fragment=" . $redirect);
-?>

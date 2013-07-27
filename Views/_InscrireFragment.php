@@ -37,7 +37,7 @@
     array_push($elements, $inputsubmit);
 
 
-    $formulaire = new Form("mainForm", "POST", "./../Controllers/UserController.php?action=Inscription", $elements);
+    $formulaire = new Form("mainForm", "POST", "/Inscription", $elements);
 
     echo $formulaire->genererForm();
     ?>
@@ -45,4 +45,4 @@
     
 </div>
 
-<script src="js/inscriptionForm.js"></script>
+<script src="/Views/js/inscriptionForm.js"></script>

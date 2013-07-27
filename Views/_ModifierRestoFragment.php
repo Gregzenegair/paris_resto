@@ -5,7 +5,7 @@ NavigationController::Controller($_SESSION['user']);
 // --- Fin de controle
 ?>
 
-<link rel="stylesheet" type="text/css" href="css/btSupprimer.css">
+<link rel="stylesheet" type="text/css" href="/Views/css/btSupprimer.css">
 <div id="masqueGris"></div>
 <div id="mainFrame">
 
@@ -18,17 +18,12 @@ NavigationController::Controller($_SESSION['user']);
 
     $br = new Br(0);
 
-    if (!empty($_SESSION['afficherResto'])) {
+    if (!empty($afficherResto)) {
 
-        $tListeElemCategories = $_SESSION['afficherCategories'];
-        $tListeElemTypesVoie = $_SESSION['afficherTypesVoie'];
-        $tListeElemVilles = $_SESSION['afficherVilles'];
-
-        $tRestos = $_SESSION['afficherResto'];
         $tListePhotos = array();
         $tListeNotes = array();
 
-        foreach ($tRestos as $value) {
+        foreach ($afficherResto as $value) {
             $categorieRestoValue1 = (!empty($value['categorie1'])) ? $value['categorie1'] : "";
             $categorieRestoValue2 = (!empty($value['categorie2'])) ? $value['categorie2'] : "";
             $categorieRestoValue3 = (!empty($value['categorie3'])) ? $value['categorie3'] : "";
@@ -38,13 +33,13 @@ NavigationController::Controller($_SESSION['user']);
 
             $inputNom = new Input("nom", "Nom du restaurant :", "nom", "text", $value['nom'], "", 1, null);
 
-            $selectCategories1 = new DataList("categorie1", "Categories :", $tListeElemCategories, "categorie1", $categorieRestoValue1, "", 1, "selectCategorie");
-            $selectCategories2 = new DataList("categorie2", "", $tListeElemCategories, "categorie2", $categorieRestoValue2, "", 1, "selectCategorie");
-            $selectCategories3 = new DataList("categorie3", "", $tListeElemCategories, "categorie3", $categorieRestoValue3, "", 1, "selectCategorie");
+            $selectCategories1 = new DataList("categorie1", "Categories :", $afficherCategories, "categorie1", $categorieRestoValue1, "", 1, "selectCategorie");
+            $selectCategories2 = new DataList("categorie2", "", $afficherCategories, "categorie2", $categorieRestoValue2, "", 1, "selectCategorie");
+            $selectCategories3 = new DataList("categorie3", "", $afficherCategories, "categorie3", $categorieRestoValue3, "", 1, "selectCategorie");
 
             $inputNumero_tel = new Input("numero_tel", "Numéro de téléphone :", "numero_tel", "text", $value['numero_tel'], "", 1, null);
             $inputEmail = new Input("email", "Email :", "email", "text", $value['email'], null, 1, null);
-            $DatalistTypeVoie = new DataList("type_voie", "", $tListeElemTypesVoie, "type_voie", $value['type_voie'], "required", 1, "select");
+            $DatalistTypeVoie = new DataList("type_voie", "", $afficherTypesVoie, "type_voie", $value['type_voie'], "required", 1, "select");
             $inputNumeroVoie = new Input("numero_voie", "Adresse :", "numero_voie", "input", $value['numero_voie'], "required", 1, null);
             $inputNomVoie = new Input("nom_voie", "", "nom_voie", "text", $value['nom_voie'], "required", 1, null);
 
@@ -52,7 +47,7 @@ NavigationController::Controller($_SESSION['user']);
             $inputHorraires = new Input("horraires", "Horraires :", "horraires", "text", $value['horraires'], "placeholder='Ouvert du lundi au samedi'", 1, null);
             $inputPrix = new Input("prix", "Prix :", "prix", "text", $value['prix'], "placeholder='15€-25€'", 1, null);
 
-            $selectVilles = new DataList("nom_ville", "Ville :", $tListeElemVilles, "nom_ville", $value['nom_ville'], "required", 1, "select");
+            $selectVilles = new DataList("nom_ville", "Ville :", $afficherVilles, "nom_ville", $value['nom_ville'], "required", 1, "select");
             $inputCp = new Input("cp", "Code postal :", "cp", "text", $value['cp'], "required", 1, null);
         }
 
@@ -94,12 +89,12 @@ NavigationController::Controller($_SESSION['user']);
         array_push($elements, $inputButtonNon);
         array_push($elements, $HTMLdivE);
 
-        $formulaire = new Form("mainForm", "POST", "./../Controllers/RestoController.php?action=Modification", $elements);
+        $formulaire = new Form("mainForm", "POST", "/ModificationResto", $elements);
 
         echo $formulaire->genererForm();
     }
     ?>
 </div>
 
-<script src="js/btSupprimer.js"></script>
-<script src="js/ajouterRestoForm.js"></script>
+<script src="/Views/js/btSupprimer.js"></script>
+<script src="/Views/js/ajouterRestoForm.js"></script>

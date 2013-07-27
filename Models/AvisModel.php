@@ -1,6 +1,7 @@
 <?php
 
-require_once 'Utils/DAO.php';require_once 'Utils/CNX.php';
+require_once 'Utils/DAO.php';
+require_once 'Utils/CNX.php';
 
 class AvisModel extends CNX {
 

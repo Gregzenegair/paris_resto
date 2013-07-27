@@ -4,9 +4,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title></title>
     </head>
-    <body>INDEX
+    <body>
         <?php
-        header("Location: Views/Accueil");
+        session_start();
+
+
+        header("Location: Accueil");
         ?>
     </body>
 </html>

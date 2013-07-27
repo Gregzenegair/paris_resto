@@ -1,6 +1,18 @@
 RewriteEngine on #On active le rewrite engine
-RewriteRule ^Views/Accueil$ Views/_MainView.php [L]
-RewriteRule ^Views/(GererUtilisateurs)$ Views/_MainView.php?fragment=_$1.php [L]
-RewriteRule ^Views/(ModifierUtilisateur)$ Views/_MainView.php?fragment_=$1Fragment.php [L]
+#RewriteRule ^Accueil$ Views/_MainView.php [L]
+
+#regle de redirection generale du site
+#mettre la regle d'action depuis la racine, comme /AfficherResto qui va appeller le controler frontal
+RewriteRule ^([a-zA-Z]*)$ Views/_MainView.php?action=$1 [L]
+
+#regle d'action par rapport a un id
+RewriteRule ^([a-zA-Z]*)__([1-9][0-9]*)$ Views/_MainView.php?action=$1&id=$2 [L]
+
+#regle pour les actions par rapport à un système de pages
+RewriteRule ^([a-zA-Z]*)__Page__([0-9]*)$ Views/_MainView.php?action=$1&limiteBasse=$2 [L]
+
+#regle pour les actions par rapport à un système de departements
+RewriteRule ^([a-zA-Z]*)__Departement__([0-9]*)$ Views/_MainView.php?action=$1&departement=$2 [L]
+
 
 #RewriteRule ^(.*)$ $1

@@ -15,21 +15,21 @@ NavigationController::Controller($_SESSION['user']);
 
     $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='laisser vide pour tout afficher'", 5, "rechercher");
     $elements = array($inputRecherche);
-    $formulaire = new Form("mainForm", "POST", "./../Controllers/CategorieController.php?action=Rechercher", $elements);
+    $formulaire = new Form("mainForm", "POST", "/RechercherCategorie", $elements);
     echo $formulaire->genererForm();
 
 
-    if (!empty($_SESSION['afficherCategories'])) {
-        $tRestos = $_SESSION['afficherCategories'];
+    if (isset($resultCategories)) {
+        
         ?>
         <table id="tableauAffichageCategories">
             <tr>
                 <?PHP
                 $i = 0;
-                foreach ($tRestos as $value) {
+                foreach ($resultCategories as $value) {
                     ?>
                     <td><?PHP echo $value['nom']; ?></td>
-                    <td><strong><a class="aRed" href="../Controllers/CategorieController.php?action=SupprimerCategorie&id=<?PHP echo $value['id']; ?>">X</a></strong></td>
+                    <td><strong><a class="aRed" href="/SupprimerCategorie__<?PHP echo $value['id']; ?>">X</a></strong></td>
                     <?PHP
                     if ($i > 1) {
                         ?>

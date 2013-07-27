@@ -15,29 +15,27 @@ NavigationController::Controller($_SESSION['user']);
 
     $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='laisser vide pour tout afficher'", 5, "rechercher");
     $elements = array($inputRecherche);
-    $formulaire = new Form("mainForm", "POST", "./../Controllers/VilleController.php?action=Rechercher", $elements);
+    $formulaire = new Form("mainForm", "POST", "/RechercherVille", $elements);
     echo $formulaire->genererForm();
 
 
-    if (!empty($_SESSION['afficherVilles'])) {
-        $tRestos = $_SESSION['afficherVilles'];
-        $count = $_SESSION['count'];
+    if (!empty($afficherVilles)) {
         ?>
         <div class="clear"></div>
         <table id="tableauAffichageVilles">
             <tr>
                 <?PHP
-                echo "Nombre total de villes : " . $count . "<br>";
+                echo "Nombre total de villes : " . $villesCount . "<br>";
 
                 $i = 1;
                 while ($i <= 95) {
                     if (strlen($i) == 1) {
-                        $echoA = "&departement=0$i";
+                        $echoA = "0$i";
                     } else {
-                        $echoA = "&departement=$i";
+                        $echoA = "$i";
                     }
                     ?>
-                <a class="aGreenVille" href="../Controllers/VilleController.php?action=GererVilles<?PHP echo $echoA; ?>"><?PHP
+                <a class="aGreenVille" href="/GererVilles__Departement__<?PHP echo $echoA; ?>"><?PHP
                     if (strlen($i) == 1) {
                         echo "0$i";
                     } else {
@@ -50,11 +48,11 @@ NavigationController::Controller($_SESSION['user']);
 
 
             $i = 0;
-            foreach ($tRestos as $value) {
+            foreach ($afficherVilles as $value) {
                 ?>
                 <td class="tdVille"><?PHP echo $value['nom']; ?></td>
                 <td><?PHP echo $value['cp']; ?></td>
-                <td><strong><a class="aRed" href="../Controllers/VilleController.php?action=SupprimerVille&id=<?PHP echo $value['id']; ?>">X</a></strong></td>
+                <td><strong><a class="aRed" href="/SupprimerVille__<?PHP echo $value['id']; ?>">X</a></strong></td>
                 <?PHP
                 if ($i > 0) {
                     ?>

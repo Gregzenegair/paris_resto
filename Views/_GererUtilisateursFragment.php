@@ -14,13 +14,12 @@ NavigationController::Controller($_SESSION['user']);
             
     $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='laisser vide pour tout afficher'", 5, "rechercher");
     $elements = array($inputRecherche);
-    $formulaire = new Form("mainForm", "POST", "./../Controllers/UserController.php?action=Rechercher", $elements);
+    $formulaire = new Form("mainForm", "POST", "/RechercherUtilisateur", $elements);
     echo $formulaire->genererForm();
 
 
-    if (!empty($_SESSION['afficherUsers'])) {
-        $tUsers = $_SESSION['afficherUsers'];
-        $count = $_SESSION['count'];
+    if (!empty($afficherUsers)) {
+
         ?>
         <table id="tableauAffichage">
             <tr>
@@ -33,9 +32,8 @@ NavigationController::Controller($_SESSION['user']);
             </tr>
             <?PHP
             
-                        $pagination = $_SESSION['pagination'];
-            echo "Nombre total d'utilsateurs enregistrés : " . $count . "<br>";
-            $part = floor($count / $pagination) + 2;
+            echo "Nombre total d'utilsateurs enregistrés : " . $usersCount . "<br>";
+            $part = floor($usersCount / $pagination) + 2;
             if ($pagination == 1) {
                 $part = $part - 1;
             }
@@ -50,20 +48,20 @@ NavigationController::Controller($_SESSION['user']);
                     $echoA = ($tranche - $pagination);
                 }
                 ?>
-                <a class="aGreenVille" href="../Controllers/UserController.php?action=GererUtilisateurs&limiteBasse=<?PHP echo $echoA; ?>"><?PHP echo $i; ?></a>
+                <a class="aGreenVille" href="/GererUtilisateurs__Page__<?PHP echo $echoA; ?>"><?PHP echo $i; ?></a>
                 <?PHP
                 $i++;
             }
             
             
-            foreach ($tUsers as $value) {
+            foreach ($afficherUsers as $value) {
                 ?>
                 <tr>
                     <td><br></td>
                 </tr>
                 <tr>
                     <td><a class="buttonSubmit"
-                           href="./../Controllers/UserController.php?action=ModifierUtilisateur&id=<?PHP echo $value['id']; ?>">Modifier</a>
+                           href="/ModifierUtilisateur__<?PHP echo $value['id']; ?>">Modifier</a>
                     </td>
                     <td><?PHP echo $value['pseudo']; ?></td>
                     <td><?PHP echo $value['email']; ?></td>

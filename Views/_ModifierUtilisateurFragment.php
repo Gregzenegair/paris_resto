@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="css/btSupprimer.css">
+<link rel="stylesheet" type="text/css" href="/Views/css/btSupprimer.css">
 <div id="masqueGris"></div>
 <div id="mainFrame">
 
@@ -11,21 +11,19 @@
 
     $br = new Br(0);
 
-    if (!empty($_SESSION['afficherUser']) && !empty($_SESSION['afficherStatuts'])) {
-        $tUsers = $_SESSION['afficherUser'];
-        $statuts = $_SESSION['afficherStatuts'];
+    if (!empty($afficherUser) && !empty($afficherUserStatuts)) {
         $tListeActif = array();
         array_push($tListeActif, "Inactif");
         array_push($tListeActif, "Actif");
 
-        foreach ($tUsers as $value) {
+        foreach ($afficherUser as $value) {
             $inputId = new Input("idv", "Id :", "id", "text", $value['id'], "disabled", 1, null);
             $inputIdh = new Input("id", "", "idh", "hidden", $value['id'], "", 1, null);
             $inputPseudo = new Input("pseudo", "Pseudonyme :", "psuedo", "text", $value['pseudo'], "required", 1, null);
             $inputEmail = new Input("email", "Email :", "email", "text", $value['email'], "required", 1, null);
-            $selectStatut = new Select("statut", "Statut :", $statuts, "statut", $tUsers[0]['statut'], 1, "", "select");
+            $selectStatut = new Select("statut", "Statut :", $afficherUserStatuts, "statut", $afficherUser[0]['statut'], 1, "", "select");
             $inputDate_inscription = new Input("date_inscription", "Date d'inscription :", "date_inscription", "date", $value['date_inscription'], "required", 1, null);
-            $selectActif = new Select("actif", "Actif :", $tListeActif, "actif", $tUsers[0]['actif'], 1, "", "select");
+            $selectActif = new Select("actif", "Actif :", $tListeActif, "actif", $afficherUser[0]['actif'], 1, "", "select");
         }
 
         $inputSubmit = new Input("modifier", null, "modifier", "submit", "Modifier", "", 5, "inputGreen");
@@ -52,11 +50,11 @@
         array_push($elements, $inputButtonNon);
         array_push($elements, $HTMLdivE);
 
-        $formulaire = new Form("mainForm", "POST", "./../Controllers/UserController.php?action=Modification", $elements);
+        $formulaire = new Form("mainForm", "POST", "/ModificationUtilisateur", $elements);
 
         echo $formulaire->genererForm();
     }
     ?>
 </div>
 
-<script src="js/btSupprimer.js"></script>
+<script src="/Views/js/btSupprimer.js"></script>
