@@ -160,7 +160,6 @@ ALTER TABLE `paris_resto`.`users` MODIFY COLUMN `commentaire` VARCHAR(1000) CHAR
 
 ALTER TABLE notes ADD CONSTRAINT FK_notes_id_listenotes FOREIGN KEY (id_listenotes) REFERENCES listenotes(id);
 ALTER TABLE notes ADD CONSTRAINT FK_notes_id_categorie_note FOREIGN KEY (id_categorie_note) REFERENCES categories_note(id);
-ALTER TABLE photos ADD CONSTRAINT FK_photos_id_restaurant FOREIGN KEY (id_restaurant) REFERENCES restaurants(id);
 ALTER TABLE restaurants ADD CONSTRAINT `FK_restaurants_id_ville` FOREIGN KEY `FK_restaurants_id_ville` (`id_ville`) REFERENCES `villes` (`id`)
     ON DELETE SET NULL;
 ALTER TABLE restaurants ADD CONSTRAINT FK_restaurants_id_user FOREIGN KEY (id_user) REFERENCES users(id);

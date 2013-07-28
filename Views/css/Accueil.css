@@ -2,6 +2,40 @@
     width: 128px;
 }
 
-.pRestaurant {
+.restaurant p {
     margin: 0;
+}
+
+.restaurant {
+    border-left: transparent 4px solid;
+    border-bottom: transparent 2px solid;
+    display: inline-block;
+    width: 140px;
+    padding: 10px;
+    margin: 4px;
+    transition: all 0.4s;
+    border-radius: 0 4px 4px 0;
+}
+
+.restaurant h4 {
+    border-bottom: #ED7F10 solid 2px;
+    text-decoration: none;
+    margin: 0.5em 0;
+}
+
+.super {
+    background-image: url('/Views/img/bookmarks.png');
+    background-repeat: no-repeat;
+    background-position: top right;
+}
+
+.restaurant:hover {
+    border-left: #396715 4px solid;
+    border-bottom: ivory 2px solid;
+    background-color: #509111;
+    transition: all 0.4s;    
+}
+
+.restaurant:hover h4 {
+    border-bottom: #F7FF3C solid 2px;
 }

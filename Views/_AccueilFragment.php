@@ -6,21 +6,85 @@
  */
 ?>
 <div id="mainFrame">
-Accueil<br>
 
-Ceci est l'accueil du site<br>
-<li>Ajouter la modification des champs de catégorie</li>
-<li>Sécuriser les formulaires, créer une méthode dans la classe CNX pour effectuer la vérification : voir func_get_args</li>
-<li>Refaire toutes les routes, controllers et htaccess</li>
-<li>Passer CNX en Singleton</li>
-<li>...</li>
-<br>
 
-<div class="Restaurant">
-    <p class="pRestaurant">Campanile</p>
-    <p class="pRestaurant">Pontoise</p>
+
+<div class="restaurant super">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
 <img class="imgAccueil" src="/Views/img/restos/photo.jpg">
 </div>
+<div class="restaurant">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Mac Donald's</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant super">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Mac Donald's</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Mac Donald's</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+<div class="restaurant">
+    <h4>Campanile</h4>
+    <p>Pontoise</p>
+<img class="imgAccueil" src="/Views/img/restos/photo.jpg">
+</div>
+
 </div>
 
 
