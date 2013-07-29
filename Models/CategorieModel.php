@@ -23,10 +23,10 @@ class CategorieModel extends CNX {
 
         $req = $this->_bdd->prepare('SELECT c.id, c.nom FROM categories c');
         $req->execute();
-        $resultAfficherStatuts = $req->fetchAll();
+        $resultAfficherCategories = $req->fetchAll();
         $req->closeCursor();
 
-        return $resultAfficherStatuts;
+        return $resultAfficherCategories;
     }
 
     public function seekCategories($recherche) {
@@ -36,9 +36,9 @@ class CategorieModel extends CNX {
         $req->bindParam(':recherche', $recherche, PDO::PARAM_STR);
 
         $req->execute();
-        $resultAfficherUsers = $req->fetchAll();
+        $resultAfficherCategories = $req->fetchAll();
         $req->closeCursor();
-        return $resultAfficherUsers;
+        return $resultAfficherCategories;
     }
 
     public function deleteCategorie($id) {

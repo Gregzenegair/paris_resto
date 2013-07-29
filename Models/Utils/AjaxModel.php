@@ -22,6 +22,7 @@ switch ($action) {
             }
         }
         break;
+        
     case "ajouterRestoVilleCp":
         $cnx = new CNX("paris_resto", "root", "");
 
@@ -37,6 +38,27 @@ switch ($action) {
         } else {
             foreach ($result as $value) {
                 echo $value['cp'];
+            }
+        }
+
+        break;
+        
+        case "afficherVilles":
+        $cnx = new CNX("paris_resto", "root", "");
+
+        $bdd = $cnx->get_bdd();
+
+        $nom = $_GET['nom'] . "%";
+        $req = $bdd->prepare('SELECT nom FROM villes WHERE nom LIKE :nom');
+        $req->bindParam(':nom', $nom, PDO::PARAM_STR);
+        $req->execute();
+        $result = $req->fetchAll();
+
+        if (empty($result[0])) {
+            echo "false";
+        } else {
+            foreach ($result as $value) {
+                echo $value['nom']. ";";
             }
         }
 

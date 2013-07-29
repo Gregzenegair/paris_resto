@@ -65,7 +65,7 @@ class RestoController {
                 case "AjouterResto":
                     $afficherCategories = $this->CNX->showCategories();
                     $afficherTypesVoie = $this->CNX->showTypesVoie();
-                    $afficherVilles = $this->CNX->showVilles();
+                    //$afficherVilles = $this->CNX->showVilles();  // -- Desormais géré en Ajax
                     break;
 
                 case "AjoutResto":
@@ -90,17 +90,24 @@ class RestoController {
 
                     // -- Insertion de la photo
                     if ($_FILES['imageFile']['error'] == 0 && $_FILES['imageFile']['size'] <= 649526) {
-                        $ulPhoto = $this->CNX->insertPhoto($_FILES['imageFile']['name'], $lastInsertId);
-                        if ($ulPhoto) {
-                            $path = $_SERVER["DOCUMENT_ROOT"] . '/Views/img/restos/' . $lastInsertId . '/';
-                            $pathFile = $path . "photo" . strtolower(strrchr($_FILES['imageFile']['name'], '.'));
-                            mkdir($path, 0777, true);
-                            $resultat = move_uploaded_file($_FILES['imageFile']['tmp_name'], $pathFile);
-                            $image = new SimpleImage();
-                            $image->load($pathFile);
-                            $image->resizeToWidth(128);
-                            $image->save($path . "photo_small" . strtolower(strrchr($_FILES['imageFile']['name'], '.')));
+
+                        $path = $_SERVER["DOCUMENT_ROOT"] . '/Views/img/restos/' . $_SESSION['idResto'] . '/';
+
+                        $i = 0;
+                        $pathFile = $path . "photo_$i" . strtolower(strrchr($_FILES['imageFile']['name'], '.'));
+                        while (file_exists($pathFile)) {
+                            $pathFile = $path . "photo_$i" . strtolower(strrchr($_FILES['imageFile']['name'], '.'));
+                            $i++;
                         }
+                        $this->CNX->insertPhoto("photo_$i" . strtolower(strrchr($_FILES['imageFile']['name'], '.')), $_SESSION['idResto']);
+                        if (!file_exists($path)) {
+                            mkdir($path, 0777, true);
+                        }
+                        move_uploaded_file($_FILES['imageFile']['tmp_name'], $pathFile);
+                        $image = new SimpleImage();
+                        $image->load($pathFile);
+                        $image->resizeToWidth(128);
+                        $image->save($path . "photo_" . $i . "_small" . strtolower(strrchr($_FILES['imageFile']['name'], '.')));
                     }
 
                     if (isset($resultat)) {

@@ -4,6 +4,7 @@ require_once 'CategorieController.php';
 require_once 'RestoController.php';
 require_once 'UserController.php';
 include_once 'VilleController.php';
+include_once 'PhotoController.php';
 
 // Capture de l'element action s'il est defini.
 if (isset($_GET['action'])) {
@@ -42,6 +43,13 @@ if (isset($_GET['action'])) {
         case "Inscription": case "Connexion": case "Deconnexion": case "GererUtilisateurs": case "RechercherUtilisateur": case "ModifierUtilisateur": case "ModificationUtilisateur": case "Inscrire":
             $UserController = new UserController($action);
             $UserController->rooting();
+            exit();
+            break;
+        
+        // -- Gestion des photos
+        case "GererPhotos": case "SupprimerPhoto": case "AjouterPhoto": case "AjoutPhoto":
+            $PhotoController = new PhotoController($action);
+            $PhotoController->rooting();
             exit();
             break;
 

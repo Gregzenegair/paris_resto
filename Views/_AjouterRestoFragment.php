@@ -18,9 +18,6 @@ NavigationController::Controller($_SESSION['user']);
 
     $br = new Br(0);
 
-    $tListePhotos = array();
-    $tListeNotes = array();
-
     $inputNom = new Input("nom", "Nom du restaurant :", "nom", "text", "", "required", 1, null);
 
     $selectCategories1 = new DataList("categorie1", "Categories :", $afficherCategories, "categorie1", null, "", 1, "selectCategorie");
@@ -41,7 +38,7 @@ NavigationController::Controller($_SESSION['user']);
     $inputHorraires = new Input("horraires", "Horraires :", "horraires", "text", "", "placeholder='Ouvert du lundi au samedi'", 1, null);
     $inputPrix = new Input("prix", "Prix :", "prix", "text", "", "placeholder='15€-25€'", 1, null);
 
-    $selectVilles = new DataList("nom_ville", "Ville :", $afficherVilles, "nom_ville", "", "required", 1, "select");
+    $selectVilles = new DataList("nom_ville", "Ville :", null, "nom_ville", "", "required", 1, "select");
     $inputCp = new Input("cp", "Code postal :", "cp", "text", "", "required", 1, null);
 
     $inputSubmit = new Input("ajouter", null, "ajouter", "submit", "Ajouter", "", 5, "inputGreen");

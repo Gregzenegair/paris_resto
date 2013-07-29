@@ -60,13 +60,16 @@ class DataList {
         else
             $resultatHTML .= "<datalist id=\"\">";
 
-        foreach ($this->tListeElem as $key => $value) {
-            if ($value == $this->selected || $key == $this->selected)
-                $resultatHTML .= "<option value=\"" . $value . "\" selected></option>";
-            else
-                $resultatHTML .= "<option value=\"" . $value . "\"></option>";
+        if ($this->tListeElem != null || $this->tListeElem != "") {
+            foreach ($this->tListeElem as $key => $value) {
+                if ($value == $this->selected || $key == $this->selected)
+                    $resultatHTML .= "<option value=\"" . $value . "\" selected></option>";
+                else
+                    $resultatHTML .= "<option value=\"" . $value . "\"></option>";
+            }
         }
         $resultatHTML .= "</datalist>";
+
         return $resultatHTML;
     }
 

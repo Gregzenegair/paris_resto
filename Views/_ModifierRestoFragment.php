@@ -20,9 +20,6 @@ NavigationController::Controller($_SESSION['user']);
 
     if (!empty($afficherResto)) {
 
-        $tListePhotos = array();
-        $tListeNotes = array();
-
         foreach ($afficherResto as $value) {
             $categorieRestoValue1 = (!empty($value['categorie1'])) ? $value['categorie1'] : "";
             $categorieRestoValue2 = (!empty($value['categorie2'])) ? $value['categorie2'] : "";
@@ -47,7 +44,7 @@ NavigationController::Controller($_SESSION['user']);
             $inputHorraires = new Input("horraires", "Horraires :", "horraires", "text", $value['horraires'], "placeholder='Ouvert du lundi au samedi'", 1, null);
             $inputPrix = new Input("prix", "Prix :", "prix", "text", $value['prix'], "placeholder='15€-25€'", 1, null);
 
-            $selectVilles = new DataList("nom_ville", "Ville :", $afficherVilles, "nom_ville", $value['nom_ville'], "required", 1, "select");
+            $selectVilles = new DataList("nom_ville", "Ville :", null, "nom_ville", $value['nom_ville'], "required", 1, "select");
             $inputCp = new Input("cp", "Code postal :", "cp", "text", $value['cp'], "required", 1, null);
         }
 

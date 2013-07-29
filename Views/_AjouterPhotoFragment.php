@@ -1,13 +1,36 @@
-Ajouter une photo
+<?PHP
+// --- Controlle de l'utilisateur avant accès à la page
+include_once '../Controllers/NavigationController.php';
+NavigationController::Controller($_SESSION['user']);
+// --- Fin de controle
+?>
 
-<form method="post" action="reception.php" enctype="multipart/form-data">
-     <label for="icone">Icône du fichier (JPG, PNG ou GIF | max. 100 Ko) :</label><br />
-     <input type="file" name="imageFile" id="imageFile" /><br />
-     <label for="mon_fichier">Fichier (tous formats | max. 1 Mo) :</label><br />
-     <input type="hidden" name="MAX_FILE_SIZE" value="102486" />
-     <label for="titre">Titre du fichier (max. 50 caractères) :</label><br />
-     <input type="text" name="titre" value="Titre du fichier" id="titre" /><br />
-     <label for="description">Description de votre fichier (max. 255 caractères) :</label><br />
-     <textarea name="description" id="description"></textarea><br />
-     <input type="submit" name="submit" value="Envoyer" />
-</form>
+<link rel="stylesheet" type="text/css" href="/Views/css/btSupprimer.css">
+<div id="masqueGris"></div>
+<div id="mainFrame">
+
+    <?php
+    spl_autoload_register(function ($nomClasse) {
+                require_once "../Utils/Form/$nomClasse.php";
+            });
+
+    $elements = array();
+
+    $br = new Br(0);
+
+    $photoFormulaire = new ElementHTML('<br><br>
+     <span>Photo (JPEG, PNG, GIF | Max: 500Ko) :</span><br>
+     <input type="file" name="imageFile" id="imageFile" /><br><br>');
+    //$inputIdh = new Input("id", "", "idh", "hidden", $_GET['id'], "", 1, null);
+    $inputSubmit = new Input("ajouter", null, "ajouter", "submit", "Ajouter", "", 5, "inputGreen");
+
+    array_push($elements, $br);
+    array_push($elements, $photoFormulaire);
+    //array_push($elements, $inputIdh);
+    array_push($elements, $inputSubmit);
+
+    $formulaire = new Form("mainForm", "POST", "/AjoutPhoto", $elements, "enctype='multipart/form-data'");
+
+    echo $formulaire->genererForm();
+    ?>
+</div>

@@ -27,7 +27,7 @@ class CategorieController {
 
                 case "RechercherCategorie":
                     $resultCategories = $this->CNX->seekCategories($_POST['rechercher']);
-                    $action = "GererCategories";
+                    $this->action = "GererCategories";
                     break;
 
                 case "SupprimerCategorie":
