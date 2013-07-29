@@ -16,12 +16,23 @@ html {
     background-color: #50911e;
 }
 
-body {
+body{
+    margin: 0;
+    padding: 0;
+}
+
+#title {
+    width: 100%;
+    color: #FFFFFF;
+}
+
+#bodyMain {
     width: 1200px;
     background: rgba(240,240,240,0.9);
     margin: 0;
     margin-left: auto;
     margin-right: auto;
+    box-shadow: 0px 0px 35px 5px black;
 }
 
 #mainFrame {
@@ -50,6 +61,8 @@ body {
     font-style: normal;
     font-weight: normal;
     font-family: "titleFont";
+    width: 100%;
+    background: #222;
 }
 
 header {
@@ -73,10 +86,6 @@ footer {
     float: left;
     border-radius: 4px;
     width: 20%;
-    border-top: 1em solid #295705;
-    border-bottom: 1.4em solid #356b0b;
-    border-left: 0.4em solid #50911e;
-    border-right: 0.4em solid #50911e;
 }
 
 #menu ul {

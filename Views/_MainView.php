@@ -18,29 +18,35 @@ include_once $_SERVER["DOCUMENT_ROOT"] . '/Controllers/FrontController.php';
         <title></title>
     </head>
     <body>
-        <?php
-        $includer = false;
-        if (!isset($fragment)) {
-            $fragment = "_AccueilFragment.php";
-            $includer = true;
-        }
-        if (!file_exists($_SERVER["DOCUMENT_ROOT"] . "/Views/" . $fragment)) {
-            $fragment = "_AccueilFragment.php";
-        }
-        ?>
-        <header>
+        <div id="title">
             <?PHP
             include_once $_SERVER["DOCUMENT_ROOT"] . '/Views/MaintView/_HeaderFragment.php';
-            include_once $_SERVER["DOCUMENT_ROOT"] . '/Views/MaintView/_ConnexionFragment.php';
             ?>
-        </header>
-        <?PHP
-        include_once $_SERVER["DOCUMENT_ROOT"] . '/Views/MaintView/_Menu.php';
-        include_once $_SERVER["DOCUMENT_ROOT"] . '/Views/' . $fragment;
-        ?>
-        <div class="clear"></div>
-        <?PHP
-        include_once $_SERVER["DOCUMENT_ROOT"] . '/Views/MaintView/_FooterFragment.php';
-        ?>
+        </div>
+        <div id="bodyMain">
+            <?php
+            $includer = false;
+            if (!isset($fragment)) {
+                $fragment = "_AccueilFragment.php";
+                $includer = true;
+            }
+            if (!file_exists($_SERVER["DOCUMENT_ROOT"] . "/Views/" . $fragment)) {
+                $fragment = "_AccueilFragment.php";
+            }
+            ?>
+            <header>
+                <?PHP
+                include_once $_SERVER["DOCUMENT_ROOT"] . '/Views/MaintView/_ConnexionFragment.php';
+                ?>
+            </header>
+            <?PHP
+            include_once $_SERVER["DOCUMENT_ROOT"] . '/Views/MaintView/_Menu.php';
+            include_once $_SERVER["DOCUMENT_ROOT"] . '/Views/' . $fragment;
+            ?>
+            <div class="clear"></div>
+            <?PHP
+            include_once $_SERVER["DOCUMENT_ROOT"] . '/Views/MaintView/_FooterFragment.php';
+            ?>
+        </div>
     </body>
 </html>
