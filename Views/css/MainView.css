@@ -21,11 +21,6 @@ body{
     padding: 0;
 }
 
-#title {
-    width: 100%;
-    color: #FFFFFF;
-}
-
 #bodyMain {
     width: 1200px;
     background: rgba(240,240,240,0.9);
@@ -56,6 +51,11 @@ body{
 }
 
 .titrePrincipal {
+    margin-bottom: 1em;
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    color: #e70;
     text-align: center;
     font-size: 3em;
     font-style: normal;
@@ -63,6 +63,8 @@ body{
     font-family: "titleFont";
     width: 100%;
     background: #222;
+    padding-top: 20px;
+    padding-bottom: 14px;
 }
 
 header {
@@ -98,7 +100,7 @@ footer {
     padding: 10px 20px;
     margin: 0;
     margin-right: 8px;
-    border-bottom: 2px solid #ED7F10;
+    border-bottom: 2px solid #e70;
 }
 
 

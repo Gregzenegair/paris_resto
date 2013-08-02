@@ -14,7 +14,9 @@ if (isset($_GET['action'])) {
 
         // -- L'accueil
         case "Accueil":
-            include $_SERVER["DOCUMENT_ROOT"] . "/Views/_MainView.php";
+            $RestoController = new RestoController($action);
+            $RestoController->rooting();
+            //include $_SERVER["DOCUMENT_ROOT"] . "/Views/_MainView.php";
             exit();
             break;
 
@@ -45,7 +47,7 @@ if (isset($_GET['action'])) {
             $UserController->rooting();
             exit();
             break;
-        
+
         // -- Gestion des photos
         case "GererPhotos": case "SupprimerPhoto": case "AjouterPhoto": case "AjoutPhoto":
             $PhotoController = new PhotoController($action);

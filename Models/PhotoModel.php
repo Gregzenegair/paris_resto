@@ -24,7 +24,7 @@ class PhotoModel extends CNX {
         if ($id == null) {
             $req = $this->_bdd->prepare('SELECT p.id, p.nom_fichier FROM photos p');
         } else {
-            $req = $this->_bdd->prepare('SELECT p.id, p.nom_fichier FROM photos p WHERE id = :id');
+            $req = $this->_bdd->prepare('SELECT p.id, p.nom_fichier FROM photos p WHERE id_restaurant = :id');
             $req->bindParam(':id', $id, PDO::PARAM_INT);
         }
 

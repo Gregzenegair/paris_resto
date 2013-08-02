@@ -38,8 +38,12 @@ class RestoController {
         // -- Determine la pagination de l'affichage des restaurants
         $this->pagination = 50;
         $this->RestosCount = $this->CNX->countRestos();
-        $this->afficherRestos = $this->CNX->showRestos(null, $limiteBasse, $this->pagination);
-        $this->action = "GererRestos";
+        if ($this->action != "Accueil") {
+            $this->afficherRestos = $this->CNX->showRestos(null, $limiteBasse, $this->pagination);
+            $this->action = "GererRestos";
+        } else {
+            $this->afficherRestos = $this->CNX->showRestosAccueil(null, $limiteBasse, $this->pagination);
+        }
     }
 
     public function rooting() {
@@ -54,7 +58,14 @@ class RestoController {
                     $pagination = $this->pagination;
                     $RestosCount = $this->RestosCount;
                     $afficherRestos = $this->afficherRestos;
-                    $this->action = "GererRestos";
+                    break;
+
+                case "Accueil":
+                    $this->GererRestos();
+                    $pagination = $this->pagination;
+                    $RestosCount = $this->RestosCount;
+                    $afficherRestos = $this->afficherRestos;
+
                     break;
 
                 case "RechercherResto":

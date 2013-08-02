@@ -18,18 +18,23 @@ class PhotoController {
 
         if (isset($this->action)) {
 
-
             switch ($this->action) {
 
                 case "GererPhotos":
-                    $_SESSION['idResto'] = $_GET['id'];
-                    $afficherPhotos = $this->CNX->showPhotos();
+                    $_SESSION['idResto'] = $_GET['id']; // -- id du restaurant
+                    $id = $_GET['id']; // -- id du restaurant
+                    $afficherPhotos = $this->CNX->showPhotos($id);
                     $this->action = "GererPhotos";
                     break;
 
                 case "SupprimerPhoto":
-                    $id = $_GET['id'];
+
+                    if ($_SESSION['idResto'] == null) {
+                        break;
+                    }
+                    $id = $_SESSION['idResto']; // -- id du restaurant
                     $nomPhoto = $this->CNX->showPhotos($id);
+                    $id = $_GET['id']; // -- id de la photo
                     $path = $_SERVER["DOCUMENT_ROOT"] . '/Views/img/restos/' . $_SESSION['idResto'] . '/';
                     $extensionPhoto = strtolower(strrchr($nomPhoto[0]['nom_fichier'], '.'));
                     $nomFichierPhoto = explode(".", $nomPhoto[0]['nom_fichier']);
@@ -38,17 +43,20 @@ class PhotoController {
                     if (file_exists($pathFile)) {
                         unlink($pathFile);
                         unlink($pathFileSmall);
-                        $ok = true;
                     }
-                    if ($ok) {
-                        $this->CNX->deletePhoto($id);
-                    }
-                    $afficherPhotos = $this->CNX->showPhotos();
+                    $this->CNX->deletePhoto($id);
+                    $id = $_SESSION['idResto']; // -- id du restaurant
+                    $_SESSION['idResto'] = null; // - Pour empecher le renvoi de formulaire
+                    $afficherPhotos = $this->CNX->showPhotos($id);
                     $this->action = "GererPhotos";
                     break;
 
                 case "AjoutPhoto":
 
+                    if ($_SESSION['idResto'] == null) {
+                        break;
+                    }
+                    $id = $_SESSION['idResto']; // -- id du restaurant
                     if ($_FILES['imageFile']['error'] == 0 && $_FILES['imageFile']['size'] <= 649526) {
 
                         $path = $_SERVER["DOCUMENT_ROOT"] . '/Views/img/restos/' . $_SESSION['idResto'] . '/';
@@ -69,7 +77,8 @@ class PhotoController {
                         $image->resizeToWidth(128);
                         $image->save($path . "photo_" . $i . "_small" . strtolower(strrchr($_FILES['imageFile']['name'], '.')));
                     }
-                    $afficherPhotos = $this->CNX->showPhotos();
+                    $afficherPhotos = $this->CNX->showPhotos($id);
+                    $_SESSION['idResto'] = null; // - Pour empecher le renvoi de formulaire
                     $this->action = "GererPhotos";
                     break;
 

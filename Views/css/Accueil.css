@@ -11,14 +11,21 @@
     border-bottom: transparent 2px solid;
     display: inline-block;
     width: 140px;
+    height: 180px;
     padding: 10px;
     margin: 4px;
     transition: all 0.4s;
     border-radius: 0 4px 4px 0;
+    position: relative;
+}
+
+.restaurant img {
+    position: absolute;
+    bottom: 6px;
 }
 
 .restaurant h4 {
-    border-bottom: #ED7F10 solid 2px;
+    border-bottom: #e70 solid 2px;
     text-decoration: none;
     margin: 0.5em 0;
 }
@@ -31,11 +38,15 @@
 
 .restaurant:hover {
     border-left: #396715 4px solid;
-    border-bottom: ivory 2px solid;
     background-color: #509111;
     transition: all 0.4s;    
 }
 
 .restaurant:hover h4 {
     border-bottom: #F7FF3C solid 2px;
+}
+
+.aRestaurant {
+    text-decoration: none;
+    color: #222;
 }

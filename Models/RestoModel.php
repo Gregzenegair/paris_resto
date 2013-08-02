@@ -201,9 +201,9 @@ class RestoModel extends CNX {
         $req->bindParam(':recherche', $recherche, PDO::PARAM_STR);
 
         $req->execute();
-        $resultAfficherUsers = $req->fetchAll();
+        $resultAfficherRestos = $req->fetchAll();
         $req->closeCursor();
-        return $resultAfficherUsers;
+        return $resultAfficherRestos;
     }
 
     /**
@@ -244,9 +244,56 @@ class RestoModel extends CNX {
         }
 
         $req->execute();
-        $resultAfficherUsers = $req->fetchAll();
+        $resultAfficherRestos = $req->fetchAll();
         $req->closeCursor();
-        return $resultAfficherUsers;
+        return $resultAfficherRestos;
+    }
+
+    /**
+     * Retroune un tableau avec tous les restaurants avec les photos
+     * @param type $id
+     * @return array
+     */
+    public function showRestosAccueil($id = null, $limiteBasse = null, $pagination = null) {
+
+        $limiteBasse = (int) $limiteBasse;
+        $pagination = (int) $pagination;
+        if (isset($id)) {
+            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, GROUP_CONCAT(p.nom_fichier) as nom_fichier, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.type_voie, r.type_voie, v.nom as nom_ville, v.cp, r.description, r.horraires, r.prix
+                                                    FROM restaurants r
+                                                    LEFT JOIN villes v
+                                                    ON v.id = r.id_ville
+                                                    LEFT JOIN ligcategories lig
+                                                    on r.id = lig.id_restaurant
+                                                    LEFT JOIN categories c
+                                                    on c.id = lig.id_categorie
+                                                    LEFT JOIN photos p
+                                                    on p.id_restaurant = r.id
+                                                    WHERE r.id = :id
+                                                    ORDER BY r.date_insertion DESC');
+            $req->bindParam(':id', $id, PDO::PARAM_STR);
+        } else {
+            $req = $this->_bdd->prepare('SELECT r.id, r.nom, GROUP_CONCAT(c.nom) as categories, GROUP_CONCAT(p.nom_fichier) as nom_fichier, r.numero_tel, r.email, r.numero_voie, r.nom_voie, r.type_voie, v.nom as nom_ville, v.cp, r.description, r.horraires, r.prix
+                                                    FROM restaurants r
+                                                    LEFT JOIN villes v
+                                                    ON v.id = r.id_ville
+                                                    LEFT JOIN ligcategories lig
+                                                    ON r.id = lig.id_restaurant
+                                                    LEFT JOIN categories c
+                                                    ON c.id = lig.id_categorie
+                                                    LEFT JOIN photos p
+                                                    on p.id_restaurant = r.id
+                                                    GROUP BY r.id
+                                                    ORDER BY r.date_insertion DESC
+                                                    LIMIT :limiteBasse, :pagination');
+            $req->bindParam(':limiteBasse', $limiteBasse, PDO::PARAM_INT);
+            $req->bindParam(':pagination', $pagination, PDO::PARAM_INT);
+        }
+
+        $req->execute();
+        $resultAfficherRestos = $req->fetchAll();
+        $req->closeCursor();
+        return $resultAfficherRestos;
     }
 
     /**
