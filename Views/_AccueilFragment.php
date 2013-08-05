@@ -13,7 +13,7 @@
 
     $inputRecherche = new Input("rechercher", null, "rechercher", "text", "", "placeholder='laisser vide pour tout afficher'", 5, "rechercher");
     $elements = array($inputRecherche);
-    $formulaire = new Form("mainForm", "POST", "/RechercherResto", $elements);
+    $formulaire = new Form("mainForm", "POST", "/RechercherRestoAccueil", $elements);
     echo $formulaire->genererForm();
 
 
@@ -36,7 +36,7 @@
                     $echoA = ($tranche - $pagination);
                 }
                 ?>
-                <a class="aGreenVille" href="/GererRestos__Page__<?PHP echo $echoA; ?>"><?PHP echo $i; ?></a>
+                <a class="aGreenVille" href="/GererRestosAccueil__Page__<?PHP echo $echoA; ?>"><?PHP echo $i; ?></a>
                 <?PHP
                 $i++;
             }

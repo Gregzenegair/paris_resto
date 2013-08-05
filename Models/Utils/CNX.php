@@ -38,6 +38,10 @@ class CNX {
         $this->_bdd->rollback();
     }
 
+    public function cleanArgForBdd($value) {
+            $value = strip_tags(htmlspecialchars(trim($value)));
+            return $value;
+    }
 }
 
 ?>
