@@ -6,4 +6,4 @@
  */
 ?>
 
-<footer>All right reserved Hrycaj Grégory and Noël Romain on Twenthy Thirteen company </footer>
+<footer>All right reserved Hrycaj Grégory on Twenthy Thirteen company </footer>

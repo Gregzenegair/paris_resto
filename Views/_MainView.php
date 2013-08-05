@@ -4,14 +4,14 @@ if (session_status() != PHP_SESSION_ACTIVE) {
 }
 // Ce controller capture les actions venant des différents liens, il est systématiquement appellé via le htaccess
 // C'est par ce biais que se font toutes les redirections du site
-include_once $_SERVER["DOCUMENT_ROOT"] . '/Controllers/FrontController.php';
+    include_once $_SERVER["DOCUMENT_ROOT"] . '/Controllers/FrontController.php';
 ?>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <link href="/Views/css/MainView.css" rel="stylesheet" type="text/css" >
         <link href="/Views/css/Accueil.css" rel="stylesheet" type="text/css" >
         <link href="/Views/css/Formulaires.css" rel="stylesheet" type="text/css" >
