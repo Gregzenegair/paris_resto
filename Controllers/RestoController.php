@@ -65,7 +65,6 @@ class RestoController {
                     $pagination = $this->pagination;
                     $RestosCount = $this->RestosCount;
                     $afficherRestos = $this->afficherRestos;
-
                     break;
 
                 case "RechercherResto":
