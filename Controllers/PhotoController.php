@@ -15,9 +15,6 @@ class PhotoController {
 
     public function rooting() {
 
-
-        if (isset($this->action)) {
-
             switch ($this->action) {
 
                 case "GererPhotos":
@@ -89,7 +86,6 @@ class PhotoController {
 
 
             $fragment = "_" . $this->action . "Fragment.php";
-        }
 
         include $_SERVER["DOCUMENT_ROOT"] . "/Views/_MainView.php";
     }

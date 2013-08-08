@@ -28,89 +28,86 @@ class UserController {
     }
 
     public function rooting() {
-        if (isset($_GET['action'])) {
-            $this->action = $_GET['action'];
 
-            switch ($this->action) {
-                case "Inscription":
-                    $result = $this->CNX->insertUser($_POST['pseudo'], $_POST['email'], md5($_POST['mdp']), 0);
-                    $this->action = "Accueil";
+        switch ($this->action) {
+            case "Inscription":
+                $result = $this->CNX->insertUser($_POST['pseudo'], $_POST['email'], md5($_POST['mdp']), 0);
+                $this->action = "Accueil";
 
-                    break;
+                break;
 
-                case "Connexion":
-                    $result = $this->CNX->connectUser($_POST['email'], $_POST['mdp']);
+            case "Connexion":
+                $result = $this->CNX->connectUser($_POST['email'], $_POST['mdp']);
 
-                    if ($result[0] != 0) {
-                        if ($result['actif'] == 1) {
-                            $_SESSION['user'] = $result;
-                        } else {
-                            $_SESSION['user'] = "inactif";
-                        }
+                if ($result[0] != 0) {
+                    if ($result['actif'] == 1) {
+                        $_SESSION['user'] = $result;
                     } else {
-                        $_SESSION['user'] = "";
+                        $_SESSION['user'] = "inactif";
                     }
-                    $this->action = "Accueil";
-
-                    break;
-
-                case "Deconnexion":
-
+                } else {
                     $_SESSION['user'] = "";
-                    $this->action = "Accueil";
+                }
+                $this->action = "Accueil";
 
-                    break;
+                break;
 
-                // --- Lorsque l'on clique sur le bouton pour voir la liste des utilisateurs
-                case "GererUtilisateurs":
+            case "Deconnexion":
 
-                    if (isset($_GET['limiteBasse'])) {
-                        $limiteBasse = $_GET['limiteBasse'];
-                    } else {
-                        $limiteBasse = $_GET['limiteBasse'] = 0;
-                    }
-                    // -- Determine la pagination de l'affichage des utilisateurs
-                    $this->GererUtilisateus();
-                    $pagination = $this->pagination;
-                    $usersCount = $this->userCount;
-                    $afficherUsers = $this->afficherUsers;
+                $_SESSION['user'] = "";
+                $this->action = "Accueil";
 
-                    break;
+                break;
 
-                case "RechercherUtilisateur":
-                    $afficherUsers = $this->CNX->seekUsers($_POST['rechercher']);
-                    $this->action = "GererUtilisateurs";
-                    break;
+            // --- Lorsque l'on clique sur le bouton pour voir la liste des utilisateurs
+            case "GererUtilisateurs":
 
-                // --- Lorsque l'on clique sur le bouton pour aller modifier 1 utilisateur
-                case "ModifierUtilisateur":
+                if (isset($_GET['limiteBasse'])) {
+                    $limiteBasse = $_GET['limiteBasse'];
+                } else {
+                    $limiteBasse = $_GET['limiteBasse'] = 0;
+                }
+                // -- Determine la pagination de l'affichage des utilisateurs
+                $this->GererUtilisateus();
+                $pagination = $this->pagination;
+                $usersCount = $this->userCount;
+                $afficherUsers = $this->afficherUsers;
 
-                    $afficherUser = $this->CNX->showUsers($_GET['id']);
-                    $afficherUserStatuts = $this->CNX->showStatuts();
+                break;
 
-                    break;
+            case "RechercherUtilisateur":
+                $afficherUsers = $this->CNX->seekUsers($_POST['rechercher']);
+                $this->action = "GererUtilisateurs";
+                break;
 
-                // --- Lorsque l'on clique sur le bouton pour modifier (valider la modification) un utilisateur
-                case "ModificationUtilisateur":
+            // --- Lorsque l'on clique sur le bouton pour aller modifier 1 utilisateur
+            case "ModifierUtilisateur":
 
-                    if (!empty($_POST['modifier'])) {
-                        $this->CNX->updateUser($_POST['id'], $_POST['pseudo'], $_POST['email'], $_POST['date_inscription'], $_POST['statut'], $_POST['actif']);
-                    } else if (!empty($_POST['supprimer'])) {
-                        $this->CNX->deleteUser($_POST['id']);
-                    }
-                    $this->GererUtilisateus();
-                    $pagination = $this->pagination;
-                    $usersCount = $this->userCount;
-                    $afficherUsers = $this->afficherUsers;
-                    $this->action = "GererUtilisateurs";
-                    break;
-                default:
-                    break;
-            }
+                $afficherUser = $this->CNX->showUsers($_GET['id']);
+                $afficherUserStatuts = $this->CNX->showStatuts();
 
+                break;
 
-            $fragment = "_" . $this->action . "Fragment.php";
+            // --- Lorsque l'on clique sur le bouton pour modifier (valider la modification) un utilisateur
+            case "ModificationUtilisateur":
+
+                if (!empty($_POST['modifier'])) {
+                    $this->CNX->updateUser($_POST['id'], $_POST['pseudo'], $_POST['email'], $_POST['date_inscription'], $_POST['statut'], $_POST['actif']);
+                } else if (!empty($_POST['supprimer'])) {
+                    $this->CNX->deleteUser($_POST['id']);
+                }
+                $this->GererUtilisateus();
+                $pagination = $this->pagination;
+                $usersCount = $this->userCount;
+                $afficherUsers = $this->afficherUsers;
+                $this->action = "GererUtilisateurs";
+                break;
+            default:
+                break;
         }
+
+
+        $fragment = "_" . $this->action . "Fragment.php";
 
         include $_SERVER["DOCUMENT_ROOT"] . "/Views/_MainView.php";
     }

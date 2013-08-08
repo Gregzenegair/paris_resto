@@ -14,35 +14,31 @@ class CategorieController {
 
     public function rooting() {
 
+        switch ($this->action) {
 
-        if (isset($this->action)) {
+            case "GererCategories":
+                $resultCategories = $this->CNX->showCategories();
+                $this->action = "GererCategories";
+                break;
 
+            case "RechercherCategorie":
+                $resultCategories = $this->CNX->seekCategories($_POST['rechercher']);
+                $this->action = "GererCategories";
+                break;
 
-            switch ($this->action) {
+            case "SupprimerCategorie":
+                $resultCategories = $this->CNX->deleteCategorie($_GET['id']);
+                $resultCategories = $this->CNX->showCategories();
+                $this->action = "GererCategories";
+                break;
 
-                case "GererCategories":
-                    $resultCategories = $this->CNX->showCategories();
-                    $this->action = "GererCategories";
-                    break;
-
-                case "RechercherCategorie":
-                    $resultCategories = $this->CNX->seekCategories($_POST['rechercher']);
-                    $this->action = "GererCategories";
-                    break;
-
-                case "SupprimerCategorie":
-                    $resultCategories = $this->CNX->deleteCategorie($_GET['id']);
-                    $resultCategories = $this->CNX->showCategories();
-                    $this->action = "GererCategories";
-                    break;
-
-                default :
-                    break;
-            }
-
-
-            $fragment = "_" . $this->action . "Fragment.php";
+            default :
+                break;
         }
+
+
+        $fragment = "_" . $this->action . "Fragment.php";
+
 
         include $_SERVER["DOCUMENT_ROOT"] . "/Views/_MainView.php";
     }

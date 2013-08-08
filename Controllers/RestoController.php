@@ -49,8 +49,6 @@ class RestoController {
     public function rooting() {
         include_once '../Models/RestoModel.php';
 
-        if (isset($this->action)) {
-
             switch ($this->action) {
 
                 case "GererRestos":
@@ -188,7 +186,6 @@ class RestoController {
 
 
             $fragment = "_" . $this->action . "Fragment.php";
-        }
 
         include $_SERVER["DOCUMENT_ROOT"] . "/Views/_MainView.php";
     }
